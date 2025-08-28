@@ -109,6 +109,7 @@
 .tab5{
     display: flex;
     justify-content: center;
+    margin-bottom: 1%;
 }
 .tab5 button{
     height:50px;
