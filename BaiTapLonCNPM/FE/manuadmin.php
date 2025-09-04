@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Sapo – Bảng điều khiển (Clone)</title>
+  <title>Admin menu</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -104,8 +104,8 @@
     <!-- SIDEBAR -->
     <aside class="sidebar">
       <div class="brand">
-        <div class="brand-logo">S</div>
-        <h1>Sapo</h1>
+        <div class="brand-logo">Q</div>
+        <h1>QLYBanHang</h1>
       </div>
 
       <nav class="nav">
@@ -115,30 +115,18 @@
             Tổng quan
           </a>
           <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 7h18M3 12h18M3 17h18" stroke-width="1.5"/></svg> Đơn hàng</a>
-          <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 7h16M4 12h16M4 17h10" stroke-width="1.5"/></svg> Vận chuyển</a>
           <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="14" rx="2" stroke-width="1.5"/><path d="M7 8h10M7 12h10" stroke-width="1.5"/></svg> Sản phẩm</a>
           <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9h18M5 9V5h14v4M5 9v10h14V9" stroke-width="1.5"/></svg> Quản lý kho</a>
+          <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4" stroke-width="1.5"/><path d="M4 21c1.5-4 6-6 8-6s6.5 2 8 6" stroke-width="1.5"/></svg> Nhân viên</a>
           <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4" stroke-width="1.5"/><path d="M4 21c1.5-4 6-6 8-6s6.5 2 8 6" stroke-width="1.5"/></svg> Khách hàng</a>
-          <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 12h16M12 4v16" stroke-width="1.5"/></svg> Khuyến mại</a>
+          <!-- <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 12h16M12 4v16" stroke-width="1.5"/></svg> Khuyến mại</a> -->
           <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="5" width="18" height="14" rx="2" stroke-width="1.5"/><path d="M7 9h6M7 13h10" stroke-width="1.5"/></svg> Sổ quỹ</a>
           <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 6h16M4 12h16M4 18h10" stroke-width="1.5"/></svg> Báo cáo</a>
-          <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14 10a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z" stroke-width="1.5"/><path d="M2 20c1.5-3 5-5 8-5s6.5 2 8 5" stroke-width="1.5"/></svg> Chat OmniAI</a>
         </div>
 
-        <div class="nav-section">
-          <div class="nav-title">KÊNH BÁN HÀNG</div>
-          <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 7h12l2 4-2 4H6L4 11l2-4Z" stroke-width="1.5"/></svg> POS</a>
-        </div>
-
-        <div class="nav-section">
-          <div class="nav-title">ỨNG DỤNG</div>
-          <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 6h16v12H4z" stroke-width="1.5"/></svg> Cấu hình mẫu in</a>
-          <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="6" width="18" height="12" rx="2" stroke-width="1.5"/><path d="M7 10h10M7 14h6" stroke-width="1.5"/></svg> Sapo Invoice</a>
-          <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 3v18M3 12h18" stroke-width="1.5"/></svg> Quản lý công nợ</a>
-        </div>
       </nav>
 
-      <div class="sidebar-footer">Cấu hình</div>
+      <!-- <div class="sidebar-footer">Cấu hình</div> -->
     </aside>
 
     <!-- CONTENT -->
@@ -147,8 +135,8 @@
       <div class="topbar">
         <div class="search">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748b"><circle cx="11" cy="11" r="7" stroke-width="1.6"/><path d="M20 20l-3.5-3.5" stroke-width="1.6"/></svg>
-          <input placeholder="Tìm kiếm (Ctrl + K)" />
-          <span class="chip">cuờng</span>
+          <input placeholder="Tìm kiếm" />
+          
         </div>
         <div class="topbar-actions">
           <button class="icon-btn" title="Thông báo"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748b"><path d="M15 17h5l-1.4-1.4A2 2 0 0 1 18 14.2V11a6 6 0 1 0-12 0v3.2c0 .5-.2 1-.6 1.4L4 17h5" stroke-width="1.5"/><path d="M10 19a2 2 0 0 0 4 0" stroke-width="1.5"/></svg></button>
@@ -160,13 +148,7 @@
       <div class="main">
         <!-- Left column -->
         <div class="left">
-          <div class="banner">
-            <div> Bạn còn <strong>07 ngày</strong> dùng thử miễn phí, kích hoạt gói để tiếp tục sử dụng dịch vụ.</div>
-            <div style="display:flex; gap:8px;">
-              <button class="btn">Liên hệ tư vấn</button>
-              <button class="btn primary">Kích hoạt gói dịch vụ</button>
-            </div>
-          </div>
+          
 
           <div class="grid-2" style="margin-top:14px;">
             <div class="card">
@@ -177,7 +159,7 @@
                     <div class="n">1</div>
                     <div>
                       <div style="font-weight:600">Cập nhật thông tin cửa hàng</div>
-                      <div style="color:var(--muted); font-size:13px">Giúp khách hàng liên hệ nhanh chóng và chính xác hơn</div>
+                      <div style="color:var(--muted); font-size:13px">Cập nhật thông tin cửa hàng</div>
                     </div>
                     <div class="actions"><button class="btn">Thiết lập cửa hàng</button></div>
                   </div>
@@ -185,26 +167,18 @@
                   <div class="step">
                     <div class="n">2</div>
                     <div>
-                      <div style="font-weight:600">Thêm sản phẩm đầu tiên</div>
-                      <div style="color:var(--muted); font-size:13px">Bắt đầu kinh doanh bằng cách thêm sản phẩm của bạn</div>
+                      <div style="font-weight:600">Thêm sản phẩm</div>
+                      <div style="color:var(--muted); font-size:13px">Thêm sản phẩm</div>
                     </div>
                     <div class="actions"><button class="btn">Thêm sản phẩm</button></div>
                   </div>
 
+
                   <div class="step">
                     <div class="n">3</div>
                     <div>
-                      <div style="font-weight:600">Kết nối các kênh bán hàng</div>
-                      <div style="color:var(--muted); font-size:13px">Kết nối Shopee, Tiktok Shop, Website...</div>
-                    </div>
-                    <div class="actions"><button class="btn">Kết nối kênh</button></div>
-                  </div>
-
-                  <div class="step">
-                    <div class="n">4</div>
-                    <div>
                       <div style="font-weight:600">Quản lý đơn hàng</div>
-                      <div style="color:var(--muted); font-size:13px">Theo dõi và xử lý đơn hàng một cách khoa học</div>
+                      <div style="color:var(--muted); font-size:13px">Theo dõi đơn hàng</div>
                     </div>
                     <div class="actions"><button class="btn">Bắt đầu</button></div>
                   </div>
@@ -217,9 +191,6 @@
               <div class="card-bd">
                 <div style="display:flex; gap:10px; align-items:center; margin-bottom:10px;">
                   <select style="padding:8px 10px; border:1px solid var(--border); border-radius:8px;">
-                    <option>Tất cả nguồn đơn</option>
-                  </select>
-                  <select style="padding:8px 10px; border:1px solid var(--border); border-radius:8px;">
                     <option>Tuần này</option>
                     <option>Tháng này</option>
                   </select>
@@ -227,15 +198,12 @@
                 <div class="kpis">
                   <div class="kpi"><div class="label">Doanh thu thuần</div><div class="value">0₫</div></div>
                   <div class="kpi"><div class="label">Tổng đơn</div><div class="value">0</div><div class="muted">—</div></div>
-                  <div class="kpi"><div class="label">Chưa thanh toán</div><div class="value">0</div></div>
                   <div class="kpi"><div class="label">Giá trị trung bình đơn</div><div class="value">0₫</div></div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-
-        
+        </div> 
       </div>
     </section>
   </div>
