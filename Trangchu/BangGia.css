@@ -6,10 +6,10 @@ html, body {
 .banner{
     height:50px;
     width:100%;
-    background-color: #060C23;
+    background-color: white;
     display:flex;
     justify-content: center;
-    color:white;
+    color:#060C23;
     position: fixed;       /* Giữ cố định khi kéo */
     top: 0;               /* Dính vào cạnh trên */
     left: 0;
@@ -63,9 +63,9 @@ html, body {
     width: 90px;
     border-radius: 30px;
     border: none;
-    background-color: #060C23;
-    color: white;
-    border: solid 1px white;
+    background-color: white;
+    color: #060C23;
+    border: solid 1px #060C23;
 }
 .nav2 button{
     height:30px;
@@ -73,7 +73,7 @@ html, body {
     border-radius: 30px;
     border: none;
     background-color: #3692e3;
-    color:white;
+    color:#060C23;
 }
 .nav1 button:hover{
     color: #3692e3;
@@ -83,120 +83,67 @@ html, body {
     background-color: #036dcb;
 }
 .tab2{
-    /* margin-top: 1%; */
-    /* text-align: center; */
-    align-items: center;
-    align-content: center;
-    /* padding-left: 6%; */
+    margin-top: 50px;
     width:100%;
-    height:550px;
-    /* background-color: rebeccapurple; */
-    background: url("img/10.png") no-repeat center center/cover;
-    background-size: cover;
-    margin-bottom: 3%;
-    color:white;
+    height:250px;
+    background-color: #060C23;
+    color: white;
+    align-items: center;
+    text-align: center;
+    align-content: center;
 }
-.tab2-content{
-    position: relative;
-    z-index: 1; /* cho chữ nằm trên overlay */
-    max-width: 600px;
-    margin-left: 6%;
+.tab22{
+    display:flex;
+    justify-content: center;
+    margin-top: 80px;
 }
-.tab2::before{
-    margin-top:50px;
-    content: "";
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 500px;
-    background: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.2));
-    z-index: 0;
+.tab221,.tab222,.tab223{
+    width:250px;
+    height:70px;
+    background-color: white;
+    color:#060C23;
+    text-align: center;
+    align-content: center;
+    border: 1px solid #060C23;
 }
-.tab2 h1{
-    font-size: 45px;
+.tab221{
+    border-top-left-radius:20px;     
 }
-.tab2 p{
-    font-size: 20px;
-}
-.tab2 h2{
-    font-size: 35px;
-}
-.tab3 h1{
-    font-size: 45px;
-}
-.tab3 p{
-    font-size: 20px;
+.tab223{
+    border-top-right-radius: 20px ;
 }
 .tab3{
+    width:100%;
+    height:900px;
+    /* background-color: blanchedalmond; */
     text-align: center;
-    align-items: center;
-    align-content: center;
-    margin-bottom: 3%;
 }
-.tab3 select{
-    margin-left: 30px;
-    height:50px;
-    width:450px;
-    border-radius: 40px;
+.tab32{
+    display:flex;
+    justify-content: center;
 }
-.tab31{
-    font-size: 20px;
+.tab321{
+    width:300px;
+    height:500px;
+    border:1px solid #060C23;
+    margin-top: 50px;
+    display:block;
+    line-height: 2;
 }
-.tab31 select{
-    font-size: 20px;
+.tab321 button{
+    margin-bottom: 20px;
 }
 .tab4{
-    display: flex;
-    justify-content: center;
-}
-.tab41{
-    height:350px;
-    width:250px;
-    /* background-color: aquamarine; */
-    margin:20px;
-    border-radius: 30px;
-    background-image: url(img/10.png);
-    background-size: cover;
-    color: white;
-}
-.tab41 img{
-    height:350px;
-    width:250px;
-    border-radius: 30px;
-}
-/* .tab41{
-    align-items:flex-start ;
-    text-align: left;
+    width:100%;
+    height:200px;
+    background-color: #060C23;
     text-align: center;
-    align-content:center;
-} */
- .first{
-    margin-top: 40px;
-    margin-bottom: 40px;
-    font-size: 20px;
-    margin-left: 15px;
-    margin-right: 15px;
- }
- .second{
-    font-size: 17px;
-    margin-left: 15px;
-    margin-right: 15px;
- }
-.tab5{
-    display: flex;
-    justify-content: center;
-    margin-bottom: 1%;
+    align-content: center;
+    color:white;
+    margin-bottom: 50px;
 }
-/* .tab5 button{
-    height:50px;
-    width:200px;
-    border-radius: 40px;
-    background-color: #3692e3;
-    color: white;
-    border: none;
-} */
- /* CSS chung cho button */
-.tab5 button,
-.tab61 button {
+.tab321 button,.tab4 button,.tab51 button{
+    margin-top: 20px;
     position: relative;
     height: 50px;
     width: 200px;
@@ -209,10 +156,9 @@ html, body {
     z-index: 1;
     transition: color 0.3s ease;
 }
-
-/* Hiệu ứng lan theo chiều ngang bo tròn */
-.tab5 button::before,
-.tab61 button::before {
+.tab321 button::before,
+.tab4 button::before,
+.tab51 button::before{
     content: "";
     position: absolute;
     top: 50%;
@@ -225,18 +171,16 @@ html, body {
     transition: width 1.5s ease;
     z-index: -1;
 }
-
-/* Khi hover, hiệu ứng sẽ lan ngang từ giữa ra */
-.tab5 button:hover::before,
-.tab61 button:hover::before {
+.tab321 button:hover::before,
+.tab4 button:hover::before,
+.tab51 button:hover::before{
     width: 200%; /* đủ rộng để phủ từ giữa sang hai bên */
 }
-
-.tab61{
-    display: flex;
+.tab51{
+    display:flex;
     justify-content: center;
 }
-/* .tab61 button{
+/* .tab51 button{
     height:50px;
     width:200px;
     border-radius: 40px;
@@ -244,11 +188,11 @@ html, body {
     color: white;
     border: none;
 } */
-.tab62{
+.tab52{
     text-align: center;
     margin-bottom: 1%;
 }
-.tab6{
+.tab5{
     align-items: center;
     /* background-color: bisque; */
     background: linear-gradient(90deg, #3ef6a7, #2bc0e4);
@@ -258,12 +202,13 @@ html, body {
     border-bottom-left-radius: 100px;
     border-top-right-radius: 100px;
 }
-.tab61 input{
+.tab51 input{
+    margin-top:15px;
     margin-right: 100px;
     width:400px;
     border-radius: 40px;
 }
-.tab7{
+.tab6{
     display: flex;
     /* justify-content: space-between; */
     justify-content: center;
@@ -273,19 +218,19 @@ html, body {
     width:100%;
     margin-top:5%;
 }
-.tab71{
+.tab61{
     /* margin: auto 0; */
     background-color: #060C23;
     margin-top: 3%;
     margin-right: 25px;
     margin-left: 25px;
 }
-.tab71 a{
+.tab61 a{
     display:block;
     line-height: 1.25;
     color: white;
     text-decoration: none;
 }
-.tab71 a:hover{
+.tab61 a:hover{
     text-decoration: underline;
 }
