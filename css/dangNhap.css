@@ -1,0 +1,76 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+.box {
+    margin: 90px auto;
+    width: 490px;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid #CCD0D5;
+}
+form {
+    display: flex;
+    flex-direction: column;
+    border-radius: 15px solid #000;
+}
+h2 {
+    text-align: center;
+    font-size: 40px;
+    margin-bottom: 20px;
+    color: #2F4F4F;
+}
+.dau_vao {
+    font-size: 20px;
+    position: relative;
+    border-bottom: 2px solid #ccc;
+    margin: 15px 0;
+}
+.dau_vao input {
+    width: 100%;
+    height: 40px;
+    color: #000;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 18px;
+}
+.box a {
+    color: blue;
+    text-decoration: none;
+}
+button {
+    background: #87CEFA;
+    color: #2F4F4F;
+    font-weight: 600;
+    border: none;
+    padding: 12px 20px;
+    cursor: pointer;
+    border-radius: 3px;
+    font-size: 20px;
+    border-radius: 5px;
+}
+.btn{
+    font-size: 20px;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    margin-top: 10px;
+}
+.register {
+    font-size: 20px;
+    text-align: center;
+    /* text-align: center: Căn giữa phần văn bản. */
+    margin-top: 20px;
+    color: #010101;
+}
+.error {
+    color: red;
+    display: none;
+}
+.red {
+    color: red;
+}
