@@ -46,24 +46,24 @@
                 Lựa chọn giải pháp phù hợp với nhu cầu của bạn và dùng thử miễn phí 7 ngày
             </div>
             <div class="tab22">
-                <div class="tab221" onclick="tab221()">
+                <div class="tab221" onclick="showTab('retail')">
                     <b>
                         Cửa hàng bán lẻ
                     </b>
                 </div>
-                <div class="tab222" onclick="tab222()">
+                <div class="tab222" onclick="showTab('restaurant')">
                     <b>
                         Nhà hàng & Dịch vụ
                     </b>
                 </div>
-                <div class="tab223" onclick="tab223()">
+                <div class="tab223" onclick="showTab('website')">
                     <b>
                         Website bán hàng
                     </b>
                 </div>
             </div>
         </div>
-        <div class="tab3">
+        <div id="tab3" class="tab3">
             <div class="tab31">
                 <h2>Giá phần mềm quản lý bán hàng</h2>
                 Sapo cung cấp đa dạng các gói dịch vụ phù hợp với các mô hình kinh doanh từ cửa hàng cho đến các kênh online (Facebook, Sàn TMĐT,...)
@@ -83,7 +83,7 @@
                 </div>
                 <div class="tab321">
                     <h2>PRO</h2>
-                    <h1>170.000</h1>
+                    <h1>249.000</h1>
                     <button>Dùng thử miễn phí →</button><br>
                     <b>Lựa chọn 1 trong 3 kênh bán hàng</b>
                     <ul>
@@ -95,7 +95,7 @@
                 </div>
                 <div class="tab321">
                     <h2>OMNI</h2>
-                    <h1>170.000</h1>
+                    <h1>970.000</h1>
                     <button>Dùng thử miễn phí →</button><br>
                     <b>Lựa chọn 1 trong 3 kênh bán hàng</b>
                     <ul>
@@ -107,7 +107,7 @@
                 </div>
                 <div class="tab321">
                     <h2>GROWTH</h2>
-                    <h1>170.000</h1>
+                    <h1>850.000</h1>
                     <button>Dùng thử miễn phí →</button><br>
                     <b>Lựa chọn 1 trong 3 kênh bán hàng</b>
                     <ul>
@@ -118,22 +118,9 @@
                     </ul>
 
                 </div>
-                <script src="BangGia.js">
-                    document.querySelectorAll(".tab32").forEach(function(element) {
-                    element.addEventListener("click", function() {
-                        const artist = this.getAttribute("data-artist");
-                        const page = artist + ".html"; // VD: mtp.html
-
-                        fetch(page)
-                            .then(response => response.text())
-                            .then(data => {
-                                document.querySelector(".Second2").innerHTML = data;
-                            })
-                            .catch(error => console.error("Lỗi khi tải nội dung:", error));
-                    });
-                });
-                </script>
             </div>
+            <script src="BangGia.js">
+            </script>
         </div>
         <div class="tab4">
             <h1>Bạn chưa chọn được gói dịch vụ phù hợp?</h1>

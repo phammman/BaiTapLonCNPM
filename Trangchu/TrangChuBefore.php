@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="TrangChuBefore.css">
+    <!-- <link rel="stylesheet" href="TrangChuBefore.css"> -->
+    <link rel="stylesheet" href="/Chuyen_de_dinh_huong_CNPM/Trangchu/TrangChuBefore.css">
     <style>
         
     </style>
@@ -19,16 +20,24 @@
                 <b>Giải pháp</b>
             </div>
             <div class="nav">
-                <b>Bảng giá</b>
+                <a href="BangGia.html">
+                    <b>Bảng giá</b>
+                </a>
             </div>
             <div class="nav">
-                <b>Khách hàng</b>
+                <a href="KhachHang.html">
+                    <b>Khách hàng</b>
+                </a>
             </div>
             <div class="nav">
-                <b>Enterpise</b>
+                <a href="">
+                    <b>Enterpise</b>
+                </a>
             </div>
             <div class="nav">
-                <b>Sapo</b>
+                <a href="">
+                    <b>Sapo</b>
+                </a>
             </div>
             <div class="nav">
                 <b>Thêm</b>

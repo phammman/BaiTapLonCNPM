@@ -86,11 +86,16 @@ html, body {
     display: flex;
     justify-content: center;
     margin-top: 50px;
-    margin-right: 20px;
-    margin-left: 20px;
+    margin-right: 0px;
+    margin-left: 0px;
+    background-color: rgb(241, 239, 239);
 }
 .tab21{
     align-content: center;
+    margin-left:20px;
+}
+.tab22{
+    margin-right:40px;
 }
 .tab4{
     width:100%;

@@ -114,7 +114,7 @@ html, body {
 }
 .tab3{
     width:100%;
-    height:900px;
+    height:700px;
     /* background-color: blanchedalmond; */
     text-align: center;
 }
@@ -123,13 +123,16 @@ html, body {
     justify-content: center;
 }
 .tab321{
-    width:300px;
+    border-radius: 30px;
+    margin:10px;
+    width:280px;
     height:500px;
     border:1px solid #060C23;
     margin-top: 50px;
     display:block;
     line-height: 2;
 }
+
 .tab321 button{
     margin-bottom: 20px;
 }
