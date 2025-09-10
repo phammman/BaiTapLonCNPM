@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <!-- <link rel="stylesheet" href="TrangChuBefore.css"> -->
-    <link rel="stylesheet" href="/Chuyen_de_dinh_huong_CNPM/Trangchu/TrangChuBefore.css">
+    <link rel="stylesheet" href="TrangChuBefore.css">
+    <!-- <link rel="stylesheet" href="/Chuyen_de_dinh_huong_CNPM/Trangchu/TrangChuBefore.css"> -->
     <style>
         
     </style>
@@ -20,12 +20,12 @@
                 <b>Giải pháp</b>
             </div>
             <div class="nav">
-                <a href="BangGia.html">
+                <a href="BangGia.php">
                     <b>Bảng giá</b>
                 </a>
             </div>
             <div class="nav">
-                <a href="KhachHang.html">
+                <a href="KhachHang.php">
                     <b>Khách hàng</b>
                 </a>
             </div>
