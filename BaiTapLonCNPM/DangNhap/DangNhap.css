@@ -1,0 +1,190 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+.box {
+    margin: 90px auto;
+    width: 490px;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 0 10px rgba(189, 102, 102, 0.1);
+    border: 1px solid #eff0f1;
+    background: #eccece;
+}
+form {
+    display: flex;
+    flex-direction: column;
+    border-radius: 15px solid #000;
+}
+h2 {
+    text-align: center;
+    font-size: 40px;
+    margin-bottom: 20px;
+    color: #2F4F4F;
+}
+.dau_vao {
+    font-size: 20px;
+    position: relative;
+    border-bottom: 2px solid #ccc;
+    margin: 15px 0;
+}
+.dau_vao input {
+    width: 100%;
+    height: 40px;
+    color: #000;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 18px;
+}
+.box a {
+    color: blue;
+    text-decoration: none;
+}
+button {
+    background: #87CEFA;
+    color: #2F4F4F;
+    font-weight: 600;
+    border: none;
+    padding: 12px 20px;
+    cursor: pointer;
+    border-radius: 3px;
+    font-size: 20px;
+    border-radius: 5px;
+}
+.btn{
+    font-size: 20px;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    margin-top: 10px;
+}
+.register {
+    font-size: 20px;
+    text-align: center;
+    /* text-align: center: Căn giữa phần văn bản. */
+    margin-top: 20px;
+    color: #010101;
+}
+.error {
+    color: red;
+    display: none;
+}
+.red {
+    color: red;
+}
+    header {
+      width: 100%;
+      background: #fff;
+      border-bottom: 1px solid #ddd;
+    }
+    .navbar {
+      max-width: 2000px;
+      margin: 0 auto;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo img {
+      height: 150px;
+
+    }
+    .menu {
+      display: flex;
+      align-items: center;
+      gap: 25px;
+    }
+    .menu a {
+      text-decoration: none;
+      color: #000;
+      font-size: 15px;
+    }
+    .menu a:hover {
+      color: #2f8be6;
+    }
+    .badge {
+      background: pink;
+      color: #fff;
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 5px;
+      margin-left: 5px;
+    }
+    .btn-register {
+      background: linear-gradient(90deg, #00d084, #00c3ff);
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+    .btn-register:hover {
+      opacity: 0.9;
+    }
+body, html {
+    height: 100%;
+    margin: 0;
+}
+body, html {
+    height: 100%;
+    margin: 0;
+    background: #9cb2b8;
+    background-image: url('anhnen.jpg');
+}
+
+.footer {
+    background-color: #f3e9e9;
+    color: #0a0a0a; 
+    text-align: center;
+    padding: 20px 0;
+}
+
+.footer-content {
+    max-width: 600px; 
+    margin: 0 auto; 
+    padding-bottom: 20px;
+}
+
+.footer-columns {
+    display: flex;
+    justify-content: space-around; 
+    padding: 20px 0;
+}
+
+.footer-column {
+    flex: 1; 
+    padding: 0 10px; 
+}
+
+.footer-column h3 {
+    margin-bottom: 10px; 
+}
+
+.footer-column a {
+    color: #131212; 
+    text-decoration: none; 
+    display: block; 
+    margin: 5px 0; 
+}
+
+.footer-column a:hover {
+    text-decoration: underline; 
+}
+
+.btn-free-trial {
+    background-color: #00A3E0; 
+    color: #fff; 
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-free-trial:hover {
+    background-color: #008BB8; 
+}

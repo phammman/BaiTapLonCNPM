@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Demo Background + Overlay</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    .hero {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-left: 60px; /* cách trái một chút */
+      color: white;
+
+      /* ảnh nền */
+      background: url("img/10.png") no-repeat center center/cover;
+    }
+
+    /* lớp phủ tối + gradient */
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.2));
+      z-index: 0;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1; /* cho chữ nằm trên overlay */
+      max-width: 600px;
+    }
+
+    .hero-content h1 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      line-height: 1.3;
+    }
+
+    .hero-content p {
+      font-size: 1.1rem;
+      margin-bottom: 30px;
+    }
+
+    .btn {
+      display: inline-block;
+      background: #00c896;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background: #009e75;
+    }
+  </style>
+</head>
+<body>
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Nền tảng<br>Quản lý bán hàng hợp kênh<br>được sử dụng nhiều nhất Việt Nam</h1>
+      <p>Tiên phong công nghệ Headless Commerce & AI, mang đến trải nghiệm Omnichannel vượt trội cho hàng trăm nghìn nhà bán hàng.</p>
+      <a href="#" class="btn">Dùng thử miễn phí →</a>
+    </div>
+  </section>
+</body>
+</html>

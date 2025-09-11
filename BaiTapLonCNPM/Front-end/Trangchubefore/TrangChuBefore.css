@@ -1,0 +1,296 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.banner{
+    height:50px;
+    width:100%;
+    background-color: #060C23;
+    display:flex;
+    justify-content: center;
+    color:white;
+    position: fixed;       /* Giữ cố định khi kéo */
+    top: 0;               /* Dính vào cạnh trên */
+    left: 0;
+    width: 100%;          /* Chiều ngang toàn màn hình */
+    z-index: 1000;        /* Luôn nằm trên các phần khác */
+}
+.nav{
+    align-items: center;
+    align-content: center;
+    margin-right:70px;
+    /* 70px */
+    height:50px;
+}
+.nav a{
+    text-decoration: none;
+    color:white;
+}
+.nav1{
+    align-items: center;
+    align-content: center;
+    margin-right:70px;
+    height:50px;
+}
+.nav2{
+    align-items: center;
+    align-content: center;
+    margin-right:50px;
+    height:50px;
+}
+.nav img{
+    height: 50px;
+    width:80px;
+}
+.nav b:hover,.nav a:hover{
+    color:#3692e3;
+    text-decoration:underline;
+}
+.banner a{
+    align-content: space-between;
+    align-items: center;
+}
+.item{
+    height:100%;
+    width:100%;
+    margin-right: 10%;
+    margin-left: 10%;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+}
+.item img{
+    height:150px;
+}
+.nav1 button{
+    height:30px;
+    width: 90px;
+    border-radius: 30px;
+    border: none;
+    background-color: #060C23;
+    color: white;
+    border: solid 1px white;
+}
+.nav2 button{
+    height:30px;
+    width: 90px;
+    border-radius: 30px;
+    border: none;
+    background-color: #3692e3;
+    color:white;
+}
+.nav1 button:hover{
+    color: #3692e3;
+    border-color:#3692e3 ;
+}
+.nav2 button:hover{
+    background-color: #036dcb;
+}
+.tab2{
+    /* margin-top: 1%; */
+    /* text-align: center; */
+    align-items: center;
+    align-content: center;
+    /* padding-left: 6%; */
+    width:100%;
+    height:550px;
+    /* background-color: rebeccapurple; */
+    background: url("img/10.png") no-repeat center center/cover;
+    background-size: cover;
+    margin-bottom: 3%;
+    color:white;
+}
+.tab2-content{
+    position: relative;
+    z-index: 1; /* cho chữ nằm trên overlay */
+    max-width: 600px;
+    margin-left: 6%;
+}
+.tab2::before{
+    margin-top:50px;
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 500px;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.2));
+    z-index: 0;
+}
+.tab2 h1{
+    font-size: 45px;
+}
+.tab2 p{
+    font-size: 20px;
+}
+.tab2 h2{
+    font-size: 35px;
+}
+.tab3 h1{
+    font-size: 45px;
+}
+.tab3 p{
+    font-size: 20px;
+}
+.tab3{
+    text-align: center;
+    align-items: center;
+    align-content: center;
+    margin-bottom: 3%;
+}
+.tab3 select{
+    margin-left: 30px;
+    height:50px;
+    width:450px;
+    border-radius: 40px;
+}
+.tab31{
+    font-size: 20px;
+}
+.tab31 select{
+    font-size: 20px;
+}
+.tab4{
+    display: flex;
+    justify-content: center;
+}
+.tab41{
+    height:350px;
+    width:250px;
+    /* background-color: aquamarine; */
+    margin:20px;
+    border-radius: 30px;
+    background-image: url(img/10.png);
+    background-size: cover;
+    color: white;
+}
+.tab41 img{
+    height:350px;
+    width:250px;
+    border-radius: 30px;
+}
+/* .tab41{
+    align-items:flex-start ;
+    text-align: left;
+    text-align: center;
+    align-content:center;
+} */
+ .first{
+    margin-top: 40px;
+    margin-bottom: 40px;
+    font-size: 20px;
+    margin-left: 15px;
+    margin-right: 15px;
+ }
+ .second{
+    font-size: 17px;
+    margin-left: 15px;
+    margin-right: 15px;
+ }
+.tab5{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1%;
+}
+/* .tab5 button{
+    height:50px;
+    width:200px;
+    border-radius: 40px;
+    background-color: #3692e3;
+    color: white;
+    border: none;
+} */
+ /* CSS chung cho button */
+.tab5 button,
+.tab61 button {
+    position: relative;
+    height: 50px;
+    width: 200px;
+    border-radius: 40px;
+    background-color: #3692e3;
+    color: white;
+    border: none;
+    cursor: pointer;
+    overflow: hidden; /* tránh hiệu ứng tràn ra ngoài */
+    z-index: 1;
+    transition: color 0.3s ease;
+}
+
+/* Hiệu ứng lan theo chiều ngang bo tròn */
+.tab5 button::before,
+.tab61 button::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 100%; /* giữ chiều cao bằng button */
+    background: #036dcb; /* màu lan ra */
+    border-radius: 40px; /* để hai đầu bo tròn */
+    transform: translate(-50%, -50%);
+    transition: width 1.5s ease;
+    z-index: -1;
+}
+
+/* Khi hover, hiệu ứng sẽ lan ngang từ giữa ra */
+.tab5 button:hover::before,
+.tab61 button:hover::before {
+    width: 200%; /* đủ rộng để phủ từ giữa sang hai bên */
+}
+
+.tab61{
+    display: flex;
+    justify-content: center;
+}
+/* .tab61 button{
+    height:50px;
+    width:200px;
+    border-radius: 40px;
+    background-color: #3692e3;
+    color: white;
+    border: none;
+} */
+.tab62{
+    text-align: center;
+    margin-bottom: 1%;
+}
+.tab6{
+    align-items: center;
+    /* background-color: bisque; */
+    background: linear-gradient(90deg, #3ef6a7, #2bc0e4);
+    padding:30px;
+    width:1000px;
+    margin: 0 auto;
+    border-bottom-left-radius: 100px;
+    border-top-right-radius: 100px;
+}
+.tab61 input{
+    margin-right: 100px;
+    width:400px;
+    border-radius: 40px;
+}
+.tab7{
+    display: flex;
+    /* justify-content: space-between; */
+    justify-content: center;
+    align-content: center;
+    background-color: #060C23;
+    height: 30%;
+    width:100%;
+    margin-top:5%;
+}
+.tab71{
+    /* margin: auto 0; */
+    background-color: #060C23;
+    margin-top: 3%;
+    margin-right: 25px;
+    margin-left: 25px;
+}
+.tab71 a{
+    display:block;
+    line-height: 1.25;
+    color: white;
+    text-decoration: none;
+}
+.tab71 a:hover{
+    text-decoration: underline;
+}
