@@ -115,10 +115,10 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 10.5 12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1v-10.5z" stroke-width="1.5"/></svg>
             Tổng quan
           </a>
-          <a class="nav-item" href="orders.php" style="color: lightblue;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 7h18M3 12h18M3 17h18" stroke-width="1.5"/></svg> Đơn hàng</a>
+          <a class="nav-item" href="orders.php"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 7h18M3 12h18M3 17h18" stroke-width="1.5"/></svg> Đơn hàng</a>
           <a class="nav-item" href="products.php"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="14" rx="2" stroke-width="1.5"/><path d="M7 8h10M7 12h10" stroke-width="1.5"/></svg> Sản phẩm</a>
           <a class="nav-item" href="inventories.php"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9h18M5 9V5h14v4M5 9v10h14V9" stroke-width="1.5"/></svg> Quản lý kho</a>
-          <a class="nav-item" href="employee.php"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4" stroke-width="1.5"/><path d="M4 21c1.5-4 6-6 8-6s6.5 2 8 6" stroke-width="1.5"/></svg> Nhân viên</a>
+          <a class="nav-item" href="employee.php" style="color: lightblue;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4" stroke-width="1.5"/><path d="M4 21c1.5-4 6-6 8-6s6.5 2 8 6" stroke-width="1.5"/></svg> Nhân viên</a>
           <a class="nav-item" href="customers.php" ><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4" stroke-width="1.5"/><path d="M4 21c1.5-4 6-6 8-6s6.5 2 8 6" stroke-width="1.5"/></svg> Khách hàng</a>
           <!-- <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 12h16M12 4v16" stroke-width="1.5"/></svg> Khuyến mại</a> -->
           <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="5" width="18" height="14" rx="2" stroke-width="1.5"/><path d="M7 9h6M7 13h10" stroke-width="1.5"/></svg> Sổ quỹ</a>
@@ -182,11 +182,12 @@
                         <thead>
                         <tr style="background:#fafafa; color:var(--muted); text-align:left;">
                             <th style="width:48px; padding:14px; border-bottom:1px solid var(--border);"><input type="checkbox" /></th>
-                            <th style="padding:14px; border-bottom:1px solid var(--border);">Mã đơn hàng</th>
-                            <th style="padding:14px; border-bottom:1px solid var(--border); width:120px;">Ngày đặt</th>
-                            <th style="padding:14px; border-bottom:1px solid var(--border); width:150px;">Khách hàng</th>
-                            <th style="padding:14px; border-bottom:1px solid var(--border); width:200px;">Thành tiền</th>
-                            <th style="padding:14px; border-bottom:1px solid var(--border); width:160px;">Trạng thái</th>
+                            <th style="padding:14px; border-bottom:1px solid var(--border); width:120px;">Thông tin</th>
+                            <th style="padding:14px; border-bottom:1px solid var(--border); width:120px;">Email</th>
+                            <th style="padding:14px; border-bottom:1px solid var(--border); width:120px;">Điện thoại</th>
+                            <th style="padding:14px; border-bottom:1px solid var(--border); width:150px;">Chức vụ</th>
+                            <th style="padding:14px; border-bottom:1px solid var(--border); width:200px;">Quyền hạn</th>
+                            <!-- <th style="padding:14px; border-bottom:1px solid var(--border); width:160px;">Tổng chi tiêu</th> -->
                         </tr>
                         </thead>
                         <tbody>
@@ -195,13 +196,14 @@
                             <td style="padding:14px; border-bottom:1px solid #f1f5f9;">
                             <div style="display:flex; align-items:center; gap:12px;">
                                 
-                                <a href="#" style="color:var(--primary); text-decoration:none; font-weight:500;">#1001</a>
+                                <a href="#" style="color:var(--primary); text-decoration:none; font-weight:500;">ABC</a>
                             </div>
                             </td>
-                            <td style="padding:14px; border-bottom:1px solid #f1f5f9;">06/09/2025</td>
-                            <td style="padding:14px; border-bottom:1px solid #f1f5f9;">A</td>
-                            <td style="padding:14px; border-bottom:1px solid #f1f5f9;">100.000</td>
-                            <td style="padding:14px; border-bottom:1px solid #f1f5f9;">Hoàn thành</td>
+                            <td style="padding:14px; border-bottom:1px solid #f1f5f9;">abc@gmail.com</td>
+                            <td style="padding:14px; border-bottom:1px solid #f1f5f9;">0987654321</td>
+                            <td style="padding:14px; border-bottom:1px solid #f1f5f9;">Quản lý</td>
+                            <td style="padding:14px; border-bottom:1px solid #f1f5f9;">admin</td>
+                            <!-- <td style="padding:14px; border-bottom:1px solid #f1f5f9;">100.000</td> -->
                         </tr>
                         </tbody>
                     </table>
