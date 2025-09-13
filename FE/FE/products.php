@@ -1,3 +1,23 @@
+<?php
+// Kết nối database
+$servername = "localhost";
+$username = "root"; // hoặc user bạn đã tạo
+$password = "";     // mật khẩu MySQL (nếu có)
+$dbname = "ql";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+$conn->set_charset("utf8");
+
+if ($conn->connect_error) {
+    die("Kết nối thất bại: " . $conn->connect_error);
+}
+
+// Truy vấn lấy sản phẩm + tên danh mục
+$sql = "SELECT sp.MaSP, sp.TenSP, sp.SoLuongTon, sp.GiaBan, sp.MaSKU, sp.MoTa, sp.GiaVon, dm.TenDM 
+        FROM SanPham sp 
+        LEFT JOIN DanhMuc dm ON sp.MaDM = dm.MaDM";
+$result = $conn->query($sql);
+?>
 <!doctype html>
 <html lang="vi">
 <head>
@@ -177,35 +197,52 @@
                     </div>
 
                     <!-- Table -->
-                    <div style="overflow:auto;">
-                    <table style="width:100%; border-collapse:collapse; background:#fff;">
-                        <thead>
-                        <tr style="background:#fafafa; color:var(--muted); text-align:left;">
-                            <th style="width:48px; padding:14px; border-bottom:1px solid var(--border);"><input type="checkbox" /></th>
-                            <th style="padding:14px; border-bottom:1px solid var(--border);">Sản phẩm</th>
-                            <th style="padding:14px; border-bottom:1px solid var(--border); width:120px;">Có thể bán</th>
-                            <th style="padding:14px; border-bottom:1px solid var(--border); width:150px;">Loại</th>
-                            <th style="padding:14px; border-bottom:1px solid var(--border); width:200px;">Nhãn hiệu</th>
-                            <th style="padding:14px; border-bottom:1px solid var(--border); width:160px;">Giá</th>
-                        </tr>
-                        </thead>
-                        <tbody>
+                    <div class="card-bd">
+
+              <!-- Bảng sản phẩm -->
+              <div style="overflow:auto;">
+              <table style="width:100%; border-collapse:collapse; background:#fff;">
+                <thead>
+                  <tr style="background:#fafafa; color:var(--muted); text-align:left;">
+                    <th style="width:48px; padding:14px; border-bottom:1px solid var(--border);"><input type="checkbox" /></th>
+                    <th style="padding:14px; border-bottom:1px solid var(--border);">Sản phẩm</th>
+                    <th style="padding:14px; border-bottom:1px solid var(--border); width:120px;">Có thể bán</th>
+                    <th style="padding:14px; border-bottom:1px solid var(--border); width:150px;">Loại</th>
+                    <th style="padding:14px; border-bottom:1px solid var(--border); width:200px;">Nhãn hiệu</th>
+                    <th style="padding:14px; border-bottom:1px solid var(--border); width:160px;">Giá</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php if ($result->num_rows > 0): ?>
+                      <?php while($row = $result->fetch_assoc()): ?>
                         <tr>
-                            <td style="padding:14px; border-bottom:1px solid #f1f5f9;"><input type="checkbox" /></td>
-                            <td style="padding:14px; border-bottom:1px solid #f1f5f9;">
+                          <td style="padding:14px; border-bottom:1px solid #f1f5f9;">
+                            <input type="checkbox" />
+                          </td>
+                          <td style="padding:14px; border-bottom:1px solid #f1f5f9;">
                             <div style="display:flex; align-items:center; gap:12px;">
-                                <div style="width:48px; height:48px; border-radius:8px; background:#f1f5f9; display:grid; place-items:center; color:var(--muted);">📷</div>
-                                <a href="#" style="color:var(--primary); text-decoration:none; font-weight:500;">cafe</a>
+                              <div style="width:48px; height:48px; border-radius:8px; background:#f1f5f9; display:grid; place-items:center; color:var(--muted);">📷</div>
+                              <a href="#" style="color:var(--primary); font-weight:500;">
+                                <?= htmlspecialchars($row['TenSP']) ?>
+                              </a>
                             </div>
-                            </td>
-                            <td style="padding:14px; border-bottom:1px solid #f1f5f9;">0</td>
-                            <td style="padding:14px; border-bottom:1px solid #f1f5f9;"></td>
-                            <td style="padding:14px; border-bottom:1px solid #f1f5f9;"></td>
-                            <td style="padding:14px; border-bottom:1px solid #f1f5f9;">28/08/2025</td>
+                          </td>
+                          <td style="padding:14px; border-bottom:1px solid #f1f5f9;"><?= $row['SoLuongTon'] ?></td>
+                          <td style="padding:14px; border-bottom:1px solid #f1f5f9;"><?= htmlspecialchars($row['TenDM'] ?? '') ?></td>
+                          <td style="padding:14px; border-bottom:1px solid #f1f5f9;"><?= htmlspecialchars($row['MaSKU'] ?? '-') ?></td>
+                          <td style="padding:14px; border-bottom:1px solid #f1f5f9;"><?= number_format($row['GiaBan'],0,',','.') ?> đ</td>
                         </tr>
-                        </tbody>
-                    </table>
-                    </div>
+                      <?php endwhile; ?>
+                  <?php else: ?>
+                        <tr>
+                          <td colspan="6" style="text-align:center; padding:14px;">Chưa có sản phẩm nào</td>
+                        </tr>
+                  <?php endif; ?>
+                </tbody>
+              </table>
+              </div>
+
+            </div>
 
                     <!-- Footer controls -->
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-top:14px;">

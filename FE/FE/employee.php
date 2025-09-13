@@ -1,3 +1,24 @@
+<?php
+// Kết nối database
+$servername = "localhost";
+$username = "root"; // thay bằng user MySQL của bạn
+$password = "";     // mật khẩu (nếu có)
+$dbname = "ql";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+$conn->set_charset("utf8");
+
+if ($conn->connect_error) {
+    die("Kết nối thất bại: " . $conn->connect_error);
+}
+
+// Truy vấn danh sách nhân viên + tài khoản
+$sql = "SELECT nv.MaNV, nv.HoTen, nv.ChucVu, nd.TenDangNhap, nd.QuyenHan
+        FROM NhanVien nv
+        LEFT JOIN NguoiDung nd ON nv.MaNV = nd.MaNV";
+
+$result = $conn->query($sql);
+?>
 <!doctype html>
 <html lang="vi">
 <head>
@@ -19,7 +40,7 @@
       --surface-2: #f8fafc;    /* page */
       --chip: #eef2ff;         /* light chip */
     }
-    * { box-sizing: border-box; }
+    /* * { box-sizing: border-box; } */
     html, body { height: 100%; }
     body {
       margin: 0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
@@ -116,9 +137,9 @@
             Tổng quan
           </a>
           <a class="nav-item" href="orders.php"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 7h18M3 12h18M3 17h18" stroke-width="1.5"/></svg> Đơn hàng</a>
-          <a class="nav-item active" href="products.php" style="color: lightblue;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="14" rx="2" stroke-width="1.5"/><path d="M7 8h10M7 12h10" stroke-width="1.5"/></svg> Sản phẩm</a>
+          <a class="nav-item" href="products.php"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="14" rx="2" stroke-width="1.5"/><path d="M7 8h10M7 12h10" stroke-width="1.5"/></svg> Sản phẩm</a>
           <a class="nav-item" href="inventories.php"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9h18M5 9V5h14v4M5 9v10h14V9" stroke-width="1.5"/></svg> Quản lý kho</a>
-          <a class="nav-item" href="employee.php"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4" stroke-width="1.5"/><path d="M4 21c1.5-4 6-6 8-6s6.5 2 8 6" stroke-width="1.5"/></svg> Nhân viên</a>
+          <a class="nav-item active" href="employee.php" style="color: lightblue;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4" stroke-width="1.5"/><path d="M4 21c1.5-4 6-6 8-6s6.5 2 8 6" stroke-width="1.5"/></svg> Nhân viên</a>
           <a class="nav-item" href="customers.php" ><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4" stroke-width="1.5"/><path d="M4 21c1.5-4 6-6 8-6s6.5 2 8 6" stroke-width="1.5"/></svg> Khách hàng</a>
           <!-- <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 12h16M12 4v16" stroke-width="1.5"/></svg> Khuyến mại</a> -->
           <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="5" width="18" height="14" rx="2" stroke-width="1.5"/><path d="M7 9h6M7 13h10" stroke-width="1.5"/></svg> Sổ quỹ</a>
@@ -178,34 +199,45 @@
 
                     <!-- Table -->
                     <div style="overflow:auto;">
-                    <table style="width:100%; border-collapse:collapse; background:#fff;">
-                        <thead>
-                        <tr style="background:#fafafa; color:var(--muted); text-align:left;">
-                            <th style="width:48px; padding:14px; border-bottom:1px solid var(--border);"><input type="checkbox" /></th>
-                            <th style="padding:14px; border-bottom:1px solid var(--border);">Sản phẩm</th>
-                            <th style="padding:14px; border-bottom:1px solid var(--border); width:120px;">Có thể bán</th>
-                            <th style="padding:14px; border-bottom:1px solid var(--border); width:150px;">Loại</th>
-                            <th style="padding:14px; border-bottom:1px solid var(--border); width:200px;">Nhãn hiệu</th>
-                            <th style="padding:14px; border-bottom:1px solid var(--border); width:160px;">Giá</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td style="padding:14px; border-bottom:1px solid #f1f5f9;"><input type="checkbox" /></td>
-                            <td style="padding:14px; border-bottom:1px solid #f1f5f9;">
-                            <div style="display:flex; align-items:center; gap:12px;">
-                                <div style="width:48px; height:48px; border-radius:8px; background:#f1f5f9; display:grid; place-items:center; color:var(--muted);">📷</div>
-                                <a href="#" style="color:var(--primary); text-decoration:none; font-weight:500;">cafe</a>
-                            </div>
-                            </td>
-                            <td style="padding:14px; border-bottom:1px solid #f1f5f9;">0</td>
-                            <td style="padding:14px; border-bottom:1px solid #f1f5f9;"></td>
-                            <td style="padding:14px; border-bottom:1px solid #f1f5f9;"></td>
-                            <td style="padding:14px; border-bottom:1px solid #f1f5f9;">28/08/2025</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    </div>
+            <table style="width:100%; border-collapse:collapse; background:#fff;">
+              <thead>
+                <tr style="background:#fafafa; color:var(--muted); text-align:left;">
+                  <th style="width:48px; padding:14px; border-bottom:1px solid var(--border);"><input type="checkbox" /></th>
+                  <th style="padding:14px; border-bottom:1px solid var(--border); width:160px;">Họ tên</th>
+                  <th style="padding:14px; border-bottom:1px solid var(--border); width:150px;">Tên đăng nhập</th>
+                  <th style="padding:14px; border-bottom:1px solid var(--border); width:120px;">Chức vụ</th>
+                  <th style="padding:14px; border-bottom:1px solid var(--border); width:120px;">Quyền hạn</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php if ($result->num_rows > 0): ?>
+                  <?php while($row = $result->fetch_assoc()): ?>
+                    <tr>
+                      <td style="padding:14px; border-bottom:1px solid #f1f5f9;">
+                        <input type="checkbox" />
+                      </td>
+                      <td style="padding:14px; border-bottom:1px solid #f1f5f9; color:var(--primary); font-weight:500;">
+                        <?= htmlspecialchars($row['HoTen']) ?>
+                      </td>
+                      <td style="padding:14px; border-bottom:1px solid #f1f5f9;">
+                        <?= htmlspecialchars($row['TenDangNhap'] ?? '-') ?>
+                      </td>
+                      <td style="padding:14px; border-bottom:1px solid #f1f5f9;">
+                        <?= htmlspecialchars($row['ChucVu'] ?? '-') ?>
+                      </td>
+                      <td style="padding:14px; border-bottom:1px solid #f1f5f9;">
+                        <?= htmlspecialchars($row['QuyenHan'] ?? '-') ?>
+                      </td>
+                    </tr>
+                  <?php endwhile; ?>
+                <?php else: ?>
+                  <tr>
+                    <td colspan="5" style="text-align:center; padding:14px;">Chưa có nhân viên nào</td>
+                  </tr>
+                <?php endif; ?>
+              </tbody>
+            </table>
+          </div>
 
                     <!-- Footer controls -->
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-top:14px;">
