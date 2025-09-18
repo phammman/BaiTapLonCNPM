@@ -1,63 +1,123 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" 
-    integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" 
-    crossorigin="anonymous" referrerpolicy="no-referrer"/>
-    <link rel="stylesheet" href="./css/dangKy.css">
     <title>Đăng ký</title>
+
+    <link rel="stylesheet" href="dangKy.css">
+    <style>
+        .error {
+            color: red;
+            display: none;
+        }
+
+        .red {
+            color: red;
+
+        }
+    </style>
 </head>
 <body>
+    <?php
+    include("../Trangchuafter/connect.php");
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        // Lấy tên đăng nhập từ form
+        $tenDangNhap = $_POST['tenDangNhap'];
+
+        // Kiểm tra tên đăng nhập đã tồn tại trong cơ sở dữ liệu chưa
+        $sql = "SELECT * FROM nguoidung WHERE TenDangNhap = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", $tenDangNhap);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            // Tên đăng nhập đã tồn tại
+            $error = "Tên đăng nhập đã tồn tại. Vui lòng chọn tên khác.";
+        } else {
+            $hoVaTen = $_POST['hoVaTen'];  // thực hiện hứng dữ liệu bằng cách gán chúng vào 1 biến khác
+            $soDienThoai = $_POST['soDienThoai'];
+            $quyenHan = $_POST['quyenHan'];
+            $gioiTinh = $_POST['gioiTinh'];
+            $tenDangNhap = $_POST['tenDangNhap'];
+            $matKhau = $_POST['matKhau'];
+            $nhapLaiMatKhau = $_POST['nhapLaiMatKhau'];
+
+            $sql = "INSERT INTO nguoidung (TenDangNhap, MatKhau, HoTen, SoDienThoai, GioiTinh, QuyenHan) VALUES (?, ?, ?, ?, ?, ?)";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("ssssss", $tenDangNhap, $matKhau, $hoVaTen, $soDienThoai, $gioiTinh , $quyenHan);
+            if ($stmt->execute()) {
+    // Lưu ID của người dùng vừa tạo
+                $maND = $conn->insert_id; 
+
+                if ($quyenHan == 'Nhanvien') {
+                    $sqlNhanVien = "INSERT INTO nhanvien (HoTen, MaND) VALUES (?, ?)";
+                    $stmtNhanVien = $conn->prepare($sqlNhanVien);
+                    $stmtNhanVien->bind_param("si", $hoVaTen, $maND); // Thêm MaND vào đây
+                    $stmtNhanVien->execute();
+                }elseif ($quyenHan == 'Khachhang') {
+                $sqlKhachHang = "INSERT INTO khachhang (HoTen, MaND) VALUES (?, ?)";
+                $stmtKhachHang = $conn->prepare($sqlKhachHang);
+                $stmtKhachHang->bind_param("si", $hoVaTen, $maND);
+                $stmtKhachHang->execute();
+                }
+                header('Location: dangNhap.php');
+                exit; /
+            }
+        }
+    }
+    ?>
     <div class="box">
         <h2>Đăng ký</h2>
         <form id="formDangKy" action="dangKy.php" method="post">
             <div class="dau_vao">
                 <label for="hoVaTen">Họ và tên</label>
-                <input type="text" id="hoVaTen" name="hoVaTen" placeholder="Nhập họ và tên">
+                <input type="text" id="hoVaTen" name="hoVaTen" placeholder="Nhập họ và tên" style="opacity: 0.6;">
             </div>
             <span class="error " id="hoVaTenError"> Họ và tên không được để trống</span>
-            
             <div class="dau_vao">
                 <label for="soDienThoai">Số điện thoại</label>
-                <input type="text" id="soDienThoai" name="soDienThoai" placeholder="Nhập số điện thoại">
+                <input type="text" id="soDienThoai" name="soDienThoai" placeholder="Nhập số điện thoại" style="opacity: 0.6;">
             </div>
             <span class="error" id="soDienThoaiError"> Số điện thoại không được để trống</span>
             
             <div class="gioi_tinh">
                 <p>Giới tính</p>
-                <input type="radio" name="gioiTinh" value="nam"> Nam
-                <input type="radio" name="gioiTinh" value="nu"> Nữ
+                <input type="radio" name="gioiTinh" value="Nam">Nam
+                <input type="radio" name="gioiTinh" value="Nữ">Nữ
             </div>
             <div class="dau_vao">
                 <label for="tenDangNhap">Tên đăng nhập</label>
-                <input type="text" id="tenDangNhap" name="tenDangNhap" placeholder="Nhập tên đăng nhập">
+                <input type="text" id="tenDangNhap" name="tenDangNhap" placeholder="Nhập tên đăng nhập" style="opacity: 0.6;">
             </div>
-
+            <span class="red"><?php echo empty($error) ? ' ' : $error ?></span>
             <span class="error" id="tenDangNhapError"> Tên đăng nhập không được để trống</span>
+
             <div class="dau_vao">
                 <label for="matKhau">Mật khẩu</label>
-                <input type="password" id="matKhau" name="matKhau" placeholder="Nhập mật khẩu">
-                <div class="eye" onclick="togglePassword('matKhau', this)">
-                    <i class="fa-solid fa-eye-slash"></i>
-                </div>
+                <input type="password" id="matKhau" name="matKhau" placeholder="Nhập mật khẩu" style="opacity: 0.6;">
             </div>
-            <span class="error" id="matKhauError"> Mật khẩu không được để trống</span>
-            
+            <span class="error" id="matKhauError"> Mật Khẩu không được để trống</span>
             <div class="dau_vao">
                 <label for="nhapLaiMatKhau">Nhập lại mật khẩu</label>
-                <input type="password" id="nhapLaiMatKhau" name="nhapLaiMatKhau" placeholder="Nhập lại mật khẩu">
-                <div class="eye" onclick="togglePassword('nhapLaiMatKhau', this)">
-                    <i class="fa-solid fa-eye-slash"></i>
-                </div>
+                <input type="password" id="nhapLaiMatKhau" name="nhapLaiMatKhau" placeholder="Nhập lại mật khẩu" style="opacity: 0.6;">
             </div>
-            <span class="error" id="nhapLaiMatKhauError">Nhập lại mật khẩu sai </span>
+            <span class="error" id="nhapLaiMatKhauError">Nhập lại mật Khẩu sai </span>
+
+            <div class="quyenHan">
+                <p>Quyền hạn: </p>
+                <input type="radio" name="quyenHan" value="Nhanvien"> Nhân viên
+                <input type="radio" name="quyenHan" value="Khachhang"> Khách hàng
+            </div>
+
             <div class="btn-dangKy">
                 <button type="submit">Đăng ký</button>
             </div>
         </form>
     </div>
+    
     <script>
         var hoVaTen = document.getElementById('hoVaTen');
         var soDienThoai = document.getElementById('soDienThoai');
@@ -136,4 +196,5 @@
         }
     </script>
 </body>
+
 </html>

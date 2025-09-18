@@ -43,14 +43,17 @@ h2 {
     top: 70%;
     transform: translateY(-50%);
 }
-.gioi_tinh {
+.gioi_tinh,
+.quyenHan {
     font-size: 20px;
     margin: 15px 0;
 }
-.gioi_tinh p {
+.gioi_tinh,
+.quyenHan p {
     margin-bottom: 10px;
 }
-.gioi_tinh input{
+.gioi_tinh input,
+.quyenHan input{
     margin-left: 20px;
 }
 .btn-dangKy{
@@ -69,11 +72,4 @@ h2 {
     font-size: 18px;
     border-radius: 5px;
     width: 40%;
-}
-.error {
-    color: red;
-    display: none;
-}
-.red {
-    color: red;
 }

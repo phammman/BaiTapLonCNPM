@@ -12,7 +12,7 @@
 <body>
     <div class="header">
         <div class="info-header">
-            <img src="image/1.png.png" alt="">
+            <img src="image/1.png" alt="">
             <select>
                     <option value="1">Giải pháp</option>
                     <option value="2">Xây dựng nền tảng bán hàng</option>
@@ -24,9 +24,9 @@
             
         </div>
         <div class="info-header">
-            <img src="image/2.png.png" alt="">
+            <img src="image/2.png" alt="">
             <div class="btn">
-                <a href="dangKy.html"><button>Đăng ký tư vấn</button></a>
+                <a href="../login/dangKy.php"><button>Đăng ký tư vấn</button></a>
             </div>
         </div>
     </div>
@@ -208,6 +208,5 @@
             document.body.classList.toggle('scrolled', window.scrollY > 0);
         });
     </script>
-
 </body>
 </html>
