@@ -1,0 +1,239 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.banner{
+    height:50px;
+    width:100%;
+    background-color: white;
+    display:flex;
+    justify-content: center;
+    color:#060C23;
+    position: fixed;       /* Giữ cố định khi kéo */
+    top: 0;               /* Dính vào cạnh trên */
+    left: 0;
+    width: 100%;          /* Chiều ngang toàn màn hình */
+    z-index: 1000;        /* Luôn nằm trên các phần khác */
+}
+.nav{
+    align-items: center;
+    align-content: center;
+    margin-right:70px;
+    height:50px;
+}
+.nav1{
+    align-items: center;
+    align-content: center;
+    margin-right:70px;
+    height:50px;
+}
+.nav2{
+    align-items: center;
+    align-content: center;
+    margin-right:50px;
+    height:50px;
+}
+.nav img{
+    height: 50px;
+    width:80px;
+}
+.nav:hover{
+    color:#3692e3;
+    text-decoration:underline;
+}
+.banner a{
+    align-content: space-between;
+    align-items: center;
+}
+.item{
+    height:100%;
+    width:100%;
+    margin-right: 10%;
+    margin-left: 10%;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+}
+.item img{
+    height:150px;
+}
+.nav1 button{
+    height:30px;
+    width: 90px;
+    border-radius: 30px;
+    border: none;
+    background-color: white;
+    color: #060C23;
+    border: solid 1px #060C23;
+}
+.nav2 button{
+    height:30px;
+    width: 90px;
+    border-radius: 30px;
+    border: none;
+    background-color: #3692e3;
+    color:#060C23;
+}
+.nav1 button:hover{
+    color: #3692e3;
+    border-color:#3692e3 ;
+}
+.nav2 button:hover{
+    background-color: #036dcb;
+}
+.tab2{
+    margin-top: 50px;
+    width:100%;
+    height:250px;
+    background-color: #060C23;
+    color: white;
+    align-items: center;
+    text-align: center;
+    align-content: center;
+}
+.tab22{
+    display:flex;
+    justify-content: center;
+    margin-top: 80px;
+}
+.tab221,.tab222,.tab223{
+    width:250px;
+    height:70px;
+    background-color: white;
+    color:#060C23;
+    text-align: center;
+    align-content: center;
+    border: 1px solid #060C23;
+}
+.tab221{
+    border-top-left-radius:20px;     
+}
+.tab223{
+    border-top-right-radius: 20px ;
+}
+.tab3{
+    width:100%;
+    height:700px;
+    /* background-color: blanchedalmond; */
+    text-align: center;
+}
+.tab32{
+    display:flex;
+    justify-content: center;
+}
+.tab321{
+    border-radius: 30px;
+    margin:10px;
+    width:280px;
+    height:500px;
+    border:1px solid #060C23;
+    margin-top: 50px;
+    display:block;
+    line-height: 2;
+}
+
+.tab321 button{
+    margin-bottom: 20px;
+}
+.tab4{
+    width:100%;
+    height:200px;
+    background-color: #060C23;
+    text-align: center;
+    align-content: center;
+    color:white;
+    margin-bottom: 50px;
+}
+.tab321 button,.tab4 button,.tab51 button{
+    margin-top: 20px;
+    position: relative;
+    height: 50px;
+    width: 200px;
+    border-radius: 40px;
+    background-color: #3692e3;
+    color: white;
+    border: none;
+    cursor: pointer;
+    overflow: hidden; /* tránh hiệu ứng tràn ra ngoài */
+    z-index: 1;
+    transition: color 0.3s ease;
+}
+.tab321 button::before,
+.tab4 button::before,
+.tab51 button::before{
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 100%; /* giữ chiều cao bằng button */
+    background: #036dcb; /* màu lan ra */
+    border-radius: 40px; /* để hai đầu bo tròn */
+    transform: translate(-50%, -50%);
+    transition: width 1.5s ease;
+    z-index: -1;
+}
+.tab321 button:hover::before,
+.tab4 button:hover::before,
+.tab51 button:hover::before{
+    width: 200%; /* đủ rộng để phủ từ giữa sang hai bên */
+}
+.tab51{
+    display:flex;
+    justify-content: center;
+}
+/* .tab51 button{
+    height:50px;
+    width:200px;
+    border-radius: 40px;
+    background-color: #3692e3;
+    color: white;
+    border: none;
+} */
+.tab52{
+    text-align: center;
+    margin-bottom: 1%;
+}
+.tab5{
+    align-items: center;
+    /* background-color: bisque; */
+    background: linear-gradient(90deg, #3ef6a7, #2bc0e4);
+    padding:30px;
+    width:1000px;
+    margin: 0 auto;
+    border-bottom-left-radius: 100px;
+    border-top-right-radius: 100px;
+}
+.tab51 input{
+    margin-top:15px;
+    margin-right: 100px;
+    width:400px;
+    border-radius: 40px;
+}
+.tab6{
+    display: flex;
+    /* justify-content: space-between; */
+    justify-content: center;
+    align-content: center;
+    background-color: #060C23;
+    height: 30%;
+    width:100%;
+    margin-top:5%;
+}
+.tab61{
+    /* margin: auto 0; */
+    background-color: #060C23;
+    margin-top: 3%;
+    margin-right: 25px;
+    margin-left: 25px;
+}
+.tab61 a{
+    display:block;
+    line-height: 1.25;
+    color: white;
+    text-decoration: none;
+}
+.tab61 a:hover{
+    text-decoration: underline;
+}
