@@ -1,3 +1,24 @@
+<?php
+// Kết nối database
+$servername = "localhost";
+$username = "root"; // thay bằng user MySQL của bạn
+$password = "";     // mật khẩu (nếu có)
+$dbname = "chuyendedinhhuongcnpm"; // thay bằng tên database của bạn
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+$conn->set_charset("utf8");
+
+if ($conn->connect_error) {
+    die("Kết nối thất bại: " . $conn->connect_error);
+}
+
+// Truy vấn danh sách nhân viên + tài khoản
+$sql = "SELECT nv.MaNV, nv.HoTen, nv.ChucVu, nd.TenDangNhap, nd.QuyenHan
+        FROM NhanVien nv
+        LEFT JOIN NguoiDung nd ON nv.MaNV = nd.MaNV";
+
+$result = $conn->query($sql);
+?>
 <!doctype html>
 <html lang="vi">
 <head>
@@ -19,7 +40,7 @@
       --surface-2: #f8fafc;    /* page */
       --chip: #eef2ff;         /* light chip */
     }
-    * { box-sizing: border-box; }
+    /* * { box-sizing: border-box; } */
     html, body { height: 100%; }
     body {
       margin: 0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
@@ -64,12 +85,9 @@
     .btn.primary { background: var(--primary); color:#fff; border-color: var(--primary); }
 
     /* Cards */
-    .card { background:#f1f5f9; border:1px solid var(--border); border-radius:12px; }
+    .card { background:#fff; border:1px solid var(--border); border-radius:12px; }
     .card .card-hd { padding:14px; border-bottom:1px solid var(--border); font-weight:600; }
     .card .card-bd { padding: 14px; }
-    .card-bd{ display:flex;justify-content: center;}
-    .card-info{background-color: #fff;margin-right:2%;width:70%;border-radius: 5%;}
-    .card-channel{background-color: #fff;width:28%;border-radius: 5%;}
 
     .grid-2 { display:grid; grid-template-columns: 1fr 1fr; gap:14px; }
     .kpis { display:grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap:12px; }
@@ -114,15 +132,15 @@
 
       <nav class="nav">
         <div class="nav-section">
-          <a class="nav-item active" href="#">
+          <a class="nav-item" href="manuadmin.php">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 10.5 12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1v-10.5z" stroke-width="1.5"/></svg>
             Tổng quan
           </a>
-          <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 7h18M3 12h18M3 17h18" stroke-width="1.5"/></svg> Đơn hàng</a>
-          <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="14" rx="2" stroke-width="1.5"/><path d="M7 8h10M7 12h10" stroke-width="1.5"/></svg> Sản phẩm</a>
-          <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9h18M5 9V5h14v4M5 9v10h14V9" stroke-width="1.5"/></svg> Quản lý kho</a>
-          <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4" stroke-width="1.5"/><path d="M4 21c1.5-4 6-6 8-6s6.5 2 8 6" stroke-width="1.5"/></svg> Nhân viên</a>
-          <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4" stroke-width="1.5"/><path d="M4 21c1.5-4 6-6 8-6s6.5 2 8 6" stroke-width="1.5"/></svg> Khách hàng</a>
+          <a class="nav-item" href="orders.php"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 7h18M3 12h18M3 17h18" stroke-width="1.5"/></svg> Đơn hàng</a>
+          <a class="nav-item" href="products.php"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="14" rx="2" stroke-width="1.5"/><path d="M7 8h10M7 12h10" stroke-width="1.5"/></svg> Sản phẩm</a>
+          <a class="nav-item" href="inventories.php"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9h18M5 9V5h14v4M5 9v10h14V9" stroke-width="1.5"/></svg> Quản lý kho</a>
+          <a class="nav-item active" href="employee.php" style="color: lightblue;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4" stroke-width="1.5"/><path d="M4 21c1.5-4 6-6 8-6s6.5 2 8 6" stroke-width="1.5"/></svg> Nhân viên</a>
+          <a class="nav-item" href="customers.php" ><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4" stroke-width="1.5"/><path d="M4 21c1.5-4 6-6 8-6s6.5 2 8 6" stroke-width="1.5"/></svg> Khách hàng</a>
           <!-- <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 12h16M12 4v16" stroke-width="1.5"/></svg> Khuyến mại</a> -->
           <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="5" width="18" height="14" rx="2" stroke-width="1.5"/><path d="M7 9h6M7 13h10" stroke-width="1.5"/></svg> Sổ quỹ</a>
           <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 6h16M4 12h16M4 18h10" stroke-width="1.5"/></svg> Báo cáo</a>
@@ -155,99 +173,85 @@
 
             <div class="left">
                 <div class="card">
-                    <div></div>
-                    <div class="card-hd">Thêm sản phẩm</div>
-                    <div class="card-bd">
-                        <div class="card-info">
-                            <div>
-                                <h3>Thông tin sản phẩm</h3>
-                                <table>
-                                    <tr>
-                                        <td colspan="2">
-                                            <label for="name">Tên sản phẩm</label><br>
-                                            <input type="text" id="name" name="name" placeholder="Nhập tên sản phẩm">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <label for="code">mã SKU</label><br>
-                                            <input type="text" id="code" name="code" placeholder="Nhập mã SKU">
-                                        </td>
-                                        <td>
-                                            <label for="barcode">Mã vạch/Barcode</label><br>
-                                            <input type="text" id="barcode" name="barcode" placeholder="Nhập mã vạch">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2">
-                                            <label for="unit">Đơn vị tính</label><br>
-                                            <input type="text" id="unit" name="unit" placeholder="Nhập đơn vị tính">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2">
-                                            <label for="des">Mô tả</label><br>
-                                            <textarea id="des" name="des" placeholder="Nhập mô tả sản phẩm"></textarea>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                            <div class="price-info">
-                                <h3>Thông tin giá</h3>
-                                <table>
-                                    <tr>
-                                        <td>
-                                            <label for="price">Giá bán</label><br>
-                                            <input type="text" id="price" name="price" placeholder="Nhập giá bán">
-                                        </td>
-                                        <td>
-                                            <label for="cost">Giá so sánh</label><br>
-                                            <input type="text" id="cost" name="cost" placeholder="Nhập giá so sánh sản phẩm">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2">
-                                            <label for="tax">Giá vốn</label><br>
-                                            <input type="text" id="tax" name="tax" placeholder="Nhập giá vốn sản phẩm">
-                                        </td>
-                                    </tr>
-                            </div>
-                            <div>
+                <div class="card-hd">Danh sách nhân viên</div>
+                <div class="card-bd">
+                    <!-- Tabs -->
+                    <div style="border-bottom:1px solid var(--border); padding-bottom:12px; margin-bottom:12px;">
+                    <nav style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
+                        <div style="display:flex; align-items:center; gap:12px;">
+                        <button style="background:transparent; border:none; color:var(--primary); font-weight:700; padding:8px 12px; border-bottom:3px solid var(--primary);">Tất cả</button>
+                        </div>
+                        <div style="display:flex; gap:8px; align-items:center;">
+                        <a href="#"><button class="btn primary">Thêm nhân viên</button></a>
+                        </div>
+                    </nav>
 
-                            </div>
-                        </div>
-                        <div class="card-channel">
-                            <div class="img">
-                                <h3>Ảnh sản phẩm</h3>
-                                <a>Thêm ảnh</a>
-                            </div>
-                            <div class="item">
-                                <label for="category">Danh mục</label><br>
-                                <select id="category" name="category">
-                                    <option value="category1">Danh mục 1</option>
-                                    <option value="category2">Danh mục 2</option>
-                                    <option value="category3">Danh mục 3</option>
-                                </select>
-                                <br>
-                                <label for="brand">Nhãn hiệu</label><br>
-                                <select id="brand" name="brand">
-                                    <option value="brand1">Nhãn hiệu 1</option>
-                                    <option value="brand2">Nhãn hiệu 2</option>
-                                    <option value="brand3">Nhãn hiệu 3</option>
-                                </select>
-                                <br>
-                                <label for="type">Loại sản phẩm</label><br>
-                                <select id="type" name="type">
-                                    <option value="type1">Loại 1</option>
-                                    <option value="type2">Loại 2</option>
-                                    <option value="type3">Loại 3</option>
-                                </select>
-                            </div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                        </div>
+                    <div style="margin-top:12px; display:flex; gap:12px; align-items:center;">
+                        <input placeholder="Tìm kiếm theo mã sản phẩm, tên sản phẩm, barcode" style="flex:1; padding:12px 14px; border:1px solid var(--border); border-radius:10px; background:#fff;" />
+                        <!-- <div style="display:flex; gap:8px;">
+                        <select style="padding:8px 10px; border:1px solid var(--border); border-radius:8px; background:#fff;"><option>Kênh bán hàng</option></select>
+                        <select style="padding:8px 10px; border:1px solid var(--border); border-radius:8px; background:#fff;"><option>Loại sản phẩm</option></select>
+                        <select style="padding:8px 10px; border:1px solid var(--border); border-radius:8px; background:#fff;"><option>Tag</option></select>
+                        <button class="btn">Bộ lọc khác</button>
+                        </div> -->
                     </div>
+                    </div>
+
+                    <!-- Table -->
+                    <div style="overflow:auto;">
+            <table style="width:100%; border-collapse:collapse; background:#fff;">
+              <thead>
+                <tr style="background:#fafafa; color:var(--muted); text-align:left;">
+                  <th style="width:48px; padding:14px; border-bottom:1px solid var(--border);"><input type="checkbox" /></th>
+                  <th style="padding:14px; border-bottom:1px solid var(--border); width:160px;">Họ tên</th>
+                  <th style="padding:14px; border-bottom:1px solid var(--border); width:150px;">Tên đăng nhập</th>
+                  <th style="padding:14px; border-bottom:1px solid var(--border); width:120px;">Chức vụ</th>
+                  <th style="padding:14px; border-bottom:1px solid var(--border); width:120px;">Quyền hạn</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php if ($result->num_rows > 0): ?>
+                  <?php while($row = $result->fetch_assoc()): ?>
+                    <tr>
+                      <td style="padding:14px; border-bottom:1px solid #f1f5f9;">
+                        <input type="checkbox" />
+                      </td>
+                      <td style="padding:14px; border-bottom:1px solid #f1f5f9; color:var(--primary); font-weight:500;">
+                        <?= htmlspecialchars($row['HoTen']) ?>
+                      </td>
+                      <td style="padding:14px; border-bottom:1px solid #f1f5f9;">
+                        <?= htmlspecialchars($row['TenDangNhap'] ?? '-') ?>
+                      </td>
+                      <td style="padding:14px; border-bottom:1px solid #f1f5f9;">
+                        <?= htmlspecialchars($row['ChucVu'] ?? '-') ?>
+                      </td>
+                      <td style="padding:14px; border-bottom:1px solid #f1f5f9;">
+                        <?= htmlspecialchars($row['QuyenHan'] ?? '-') ?>
+                      </td>
+                    </tr>
+                  <?php endwhile; ?>
+                <?php else: ?>
+                  <tr>
+                    <td colspan="5" style="text-align:center; padding:14px;">Chưa có nhân viên nào</td>
+                  </tr>
+                <?php endif; ?>
+              </tbody>
+            </table>
+          </div>
+
+                    <!-- Footer controls -->
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:14px;">
+                    <div style="color:var(--muted);">Từ 1 đến 1 trên tổng 1</div>
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <div style="color:var(--muted);">Hiển thị</div>
+                        <select style="padding:6px 8px; border:1px solid var(--border); border-radius:6px;"><option>20</option></select>
+                    </div>
+                    </div>
+
+                    <div style="text-align:center; margin-top:18px; color:var(--muted);">
+                    Tìm hiểu thêm về <a href="#">sản phẩm</a>
+                    </div>
+                </div>
                 </div>
             </div>
 
