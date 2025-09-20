@@ -1,23 +1,30 @@
 <?php
-// Kết nối database
-$servername = "localhost";
-$username = "root"; // thay bằng user MySQL của bạn
-$password = "";     // mật khẩu (nếu có)
-$dbname = "ql";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
+// Kết nối MySQL
+$conn = new mysqli("localhost", "root", "", "ql");
 $conn->set_charset("utf8");
 
-if ($conn->connect_error) {
-    die("Kết nối thất bại: " . $conn->connect_error);
-}
-
-// Truy vấn danh sách nhân viên + tài khoản
-$sql = "SELECT nv.MaNV, nv.HoTen, nv.ChucVu, nd.TenDangNhap, nd.QuyenHan
-        FROM NhanVien nv
-        LEFT JOIN NguoiDung nd ON nv.MaNV = nd.MaNV";
+// Query
+$sql = "
+    SELECT 
+        kh.MaKH,
+        kh.HoTen,
+        kh.Email,
+        kh.DienThoai,
+        COUNT(DISTINCT dh.MaDH) AS SoDonHang,
+        MAX(dh.MaDH) AS DonHangGanNhat,
+        COALESCE(SUM(ct.SoLuong * ct.DonGia), 0) AS TongChiTieu
+    FROM KhachHang kh
+    LEFT JOIN DonHang dh ON kh.MaKH = dh.MaKH
+    LEFT JOIN ChiTietDonHang ct ON dh.MaDH = ct.MaDH
+    GROUP BY kh.MaKH, kh.HoTen, kh.Email, kh.DienThoai
+";
 
 $result = $conn->query($sql);
+
+// Debug nếu query lỗi
+if (!$result) {
+    die("Lỗi SQL: " . $conn->error);
+}
 ?>
 <!doctype html>
 <html lang="vi">
@@ -139,8 +146,8 @@ $result = $conn->query($sql);
           <a class="nav-item" href="orders.php"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 7h18M3 12h18M3 17h18" stroke-width="1.5"/></svg> Đơn hàng</a>
           <a class="nav-item" href="products.php"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="14" rx="2" stroke-width="1.5"/><path d="M7 8h10M7 12h10" stroke-width="1.5"/></svg> Sản phẩm</a>
           <a class="nav-item" href="inventories.php"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9h18M5 9V5h14v4M5 9v10h14V9" stroke-width="1.5"/></svg> Quản lý kho</a>
-          <a class="nav-item active" href="employee.php" style="color: lightblue;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4" stroke-width="1.5"/><path d="M4 21c1.5-4 6-6 8-6s6.5 2 8 6" stroke-width="1.5"/></svg> Nhân viên</a>
-          <a class="nav-item" href="customers.php" ><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4" stroke-width="1.5"/><path d="M4 21c1.5-4 6-6 8-6s6.5 2 8 6" stroke-width="1.5"/></svg> Khách hàng</a>
+          <a class="nav-item" href="employee.php"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4" stroke-width="1.5"/><path d="M4 21c1.5-4 6-6 8-6s6.5 2 8 6" stroke-width="1.5"/></svg> Nhân viên</a>
+          <a class="nav-item active" href="customers.php" style="color: lightblue;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4" stroke-width="1.5"/><path d="M4 21c1.5-4 6-6 8-6s6.5 2 8 6" stroke-width="1.5"/></svg> Khách hàng</a>
           <!-- <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 12h16M12 4v16" stroke-width="1.5"/></svg> Khuyến mại</a> -->
           <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="5" width="18" height="14" rx="2" stroke-width="1.5"/><path d="M7 9h6M7 13h10" stroke-width="1.5"/></svg> Sổ quỹ</a>
           <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 6h16M4 12h16M4 18h10" stroke-width="1.5"/></svg> Báo cáo</a>
@@ -172,87 +179,109 @@ $result = $conn->query($sql);
         <div class="left">
 
             <div class="left">
-                <div class="card">
-                <div class="card-hd">Danh sách nhân viên</div>
-                <div class="card-bd">
-                    <!-- Tabs -->
-                    <div style="border-bottom:1px solid var(--border); padding-bottom:12px; margin-bottom:12px;">
-                    <nav style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
-                        <div style="display:flex; align-items:center; gap:12px;">
-                        <button style="background:transparent; border:none; color:var(--primary); font-weight:700; padding:8px 12px; border-bottom:3px solid var(--primary);">Tất cả</button>
-                        </div>
-                        <div style="display:flex; gap:8px; align-items:center;">
-                        <a href="#"><button class="btn primary">Thêm nhân viên</button></a>
-                        </div>
-                    </nav>
+                    
+                
+<div class="main" style="font-family: Arial, sans-serif; width: 80%; margin: 20px auto;">
 
-                    <div style="margin-top:12px; display:flex; gap:12px; align-items:center;">
-                        <input placeholder="Tìm kiếm theo mã sản phẩm, tên sản phẩm, barcode" style="flex:1; padding:12px 14px; border:1px solid var(--border); border-radius:10px; background:#fff;" />
-                        <!-- <div style="display:flex; gap:8px;">
-                        <select style="padding:8px 10px; border:1px solid var(--border); border-radius:8px; background:#fff;"><option>Kênh bán hàng</option></select>
-                        <select style="padding:8px 10px; border:1px solid var(--border); border-radius:8px; background:#fff;"><option>Loại sản phẩm</option></select>
-                        <select style="padding:8px 10px; border:1px solid var(--border); border-radius:8px; background:#fff;"><option>Tag</option></select>
-                        <button class="btn">Bộ lọc khác</button>
-                        </div> -->
-                    </div>
-                    </div>
 
-                    <!-- Table -->
-                    <div style="overflow:auto;">
-            <table style="width:100%; border-collapse:collapse; background:#fff;">
-              <thead>
-                <tr style="background:#fafafa; color:var(--muted); text-align:left;">
-                  <th style="width:48px; padding:14px; border-bottom:1px solid var(--border);"><input type="checkbox" /></th>
-                  <th style="padding:14px; border-bottom:1px solid var(--border); width:160px;">Họ tên</th>
-                  <th style="padding:14px; border-bottom:1px solid var(--border); width:150px;">Tên đăng nhập</th>
-                  <th style="padding:14px; border-bottom:1px solid var(--border); width:120px;">Chức vụ</th>
-                  <th style="padding:14px; border-bottom:1px solid var(--border); width:120px;">Quyền hạn</th>
-                </tr>
-              </thead>
-              <tbody>
-                <?php if ($result->num_rows > 0): ?>
-                  <?php while($row = $result->fetch_assoc()): ?>
-                    <tr>
-                      <td style="padding:14px; border-bottom:1px solid #f1f5f9;">
-                        <input type="checkbox" />
-                      </td>
-                      <td style="padding:14px; border-bottom:1px solid #f1f5f9; color:var(--primary); font-weight:500;">
-                        <?= htmlspecialchars($row['HoTen']) ?>
-                      </td>
-                      <td style="padding:14px; border-bottom:1px solid #f1f5f9;">
-                        <?= htmlspecialchars($row['TenDangNhap'] ?? '-') ?>
-                      </td>
-                      <td style="padding:14px; border-bottom:1px solid #f1f5f9;">
-                        <?= htmlspecialchars($row['ChucVu'] ?? '-') ?>
-                      </td>
-                      <td style="padding:14px; border-bottom:1px solid #f1f5f9;">
-                        <?= htmlspecialchars($row['QuyenHan'] ?? '-') ?>
-                      </td>
-                    </tr>
-                  <?php endwhile; ?>
-                <?php else: ?>
-                  <tr>
-                    <td colspan="5" style="text-align:center; padding:14px;">Chưa có nhân viên nào</td>
-                  </tr>
-                <?php endif; ?>
-              </tbody>
-            </table>
+    <div style="max-width:800px; margin:auto; background:#fff; border-radius:10px; padding:20px;">
+    <h2 style="margin-bottom:20px;">Thêm mới khách hàng</h2>
+    
+    <form action="save_customer.php" method="post">
+      <!-- Thông tin cơ bản -->
+      <div style="border:1px solid #ddd; border-radius:10px; padding:20px; margin-bottom:20px;">
+        <h3 style="margin-bottom:15px;">Thông tin cơ bản</h3>
+        <div style="display:flex; gap:10px; margin-bottom:15px;">
+          <div style="flex:1;">
+            <label>Họ</label>
+            <input type="text" name="Ho" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:5px; box-sizing:border-box;" required>
           </div>
+          <div style="flex:1;">
+            <label>Tên</label>
+            <input type="text" name="Ten" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:5px; box-sizing:border-box;" required>
+          </div>
+        </div>
+        <div style="display:flex; gap:10px; margin-bottom:15px;">
+          <div style="flex:1;">
+            <label>Email</label>
+            <input type="email" name="Email" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:5px; box-sizing:border-box;" required>
+          </div>
+          <div style="flex:1;">
+            <label>Số điện thoại</label>
+            <input type="text" name="DienThoai" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:5px; box-sizing:border-box;" required>
+          </div>
+        </div>
+        <div style="display:flex; gap:10px; margin-bottom:15px;">
+          <div style="flex:1;">
+            <label>Ngày sinh</label>
+            <input type="date" name="NgaySinh" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:5px; box-sizing:border-box;" required>
+          </div>
+          
+        </div>
+      </div>
 
-                    <!-- Footer controls -->
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:14px;">
-                    <div style="color:var(--muted);">Từ 1 đến 1 trên tổng 1</div>
-                    <div style="display:flex; align-items:center; gap:8px;">
-                        <div style="color:var(--muted);">Hiển thị</div>
-                        <select style="padding:6px 8px; border:1px solid var(--border); border-radius:6px;"><option>20</option></select>
-                    </div>
-                    </div>
+      <!-- Địa chỉ nhận hàng -->
+      <div style="border:1px solid #ddd; border-radius:10px; padding:20px;">
+        <h3 style="margin-bottom:15px;">Địa chỉ nhận hàng</h3>
+        
+        <div style="display:flex; gap:10px; margin-bottom:15px;">
+          <div style="flex:1;">
+            <label>Tỉnh/Thành phố</label>
+            <input type="text" name="Tinh" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:5px; box-sizing:border-box;" required>
+            <!-- <select name="Tinh" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:5px;">
+              <option value="">Chọn Tỉnh thành</option>
+              <option>Hà Nội</option>
+              <option>Hồ Chí Minh</option>
+              <option>Đà Nẵng</option>
+            </select> -->
+          </div>
+          <div style="flex:1;">
+            <label>Quận/Huyện</label>
+            <input type="text" name="Quan" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:5px; box-sizing:border-box;" required>
+            <!-- <select name="Quan" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:5px;">
+              <option value="">Chọn Quận huyện</option>
+            </select> -->
+          </div>
+        </div>
+        <div style="display:flex; gap:10px; margin-bottom:15px;">
+          <div style="flex:1;">
+            <label>Phường/Xã</label>
+            <input type="text" name="Phuong" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:5px; box-sizing:border-box;" required>
+            <!-- <select name="Phuong" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:5px;">
+              <option value="">Chọn Phường xã</option>
+            </select> -->
+          </div>
+          <div style="flex:2;">
+            <label>Địa chỉ cụ thể</label>
+            <input type="text" name="DiaChiCuThe" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:5px; box-sizing:border-box;" required>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:20px; text-align:right;">
+        <button type="button" 
+            onclick="window.location.href='customers.php'" 
+            style="padding:10px 20px; border:1px solid #ccc; border-radius:5px;">
+            Hủy
+        </button>
+
+        <button type="submit" style="background:#007bff; color:#fff; border:none; padding:10px 20px; border-radius:5px; cursor:pointer;">Lưu khách hàng</button>
+      </div>
+    </form>
+  </div>
+
+    <!-- <div style="text-align:right; margin-top:20px;">
+        <button type="submit" formmethod="POST" style="padding:10px 20px; background:#007bff; color:white; border:none; border-radius:5px;">Lưu</button>
+        <button type="reset" style="padding:10px 20px; border:1px solid #ccc; border-radius:5px;">Hủy</button>
+    </div> -->
+</div>
+
+                    
 
                     <div style="text-align:center; margin-top:18px; color:var(--muted);">
-                    Tìm hiểu thêm về <a href="#">sản phẩm</a>
+                    Tìm hiểu thêm về <a href="#">khách hàng</a>
                     </div>
-                </div>
-                </div>
+                    
             </div>
 
         </div> 

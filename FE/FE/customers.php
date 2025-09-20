@@ -26,6 +26,20 @@ if (!$result) {
     die("Lỗi SQL: " . $conn->error);
 }
 ?>
+
+<?php if (isset($_GET['success']) && $_GET['success'] == 1): ?>
+    <div style="padding: 10px; background: #d4edda; color: #155724; border: 1px solid #c3e6cb; border-radius: 5px; margin-bottom: 15px;">
+        ✅ Thêm khách hàng thành công!
+    </div>
+<?php endif; ?>
+
+<?php if (isset($_GET['error'])): ?>
+    <div style="padding: 10px; background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; border-radius: 5px; margin-bottom: 15px;">
+        ❌ Lỗi: <?php echo htmlspecialchars($_GET['error']); ?>
+    </div>
+<?php endif; ?>
+
+
 <!doctype html>
 <html lang="vi">
 <head>
@@ -180,7 +194,7 @@ if (!$result) {
 
             <div class="left">
                 <div class="card">
-                <div class="card-hd">Danh sách sản phẩm</div>
+                <div class="card-hd">Danh sách khách hàng</div>
                 <div class="card-bd">
                     <!-- Tabs -->
                     <div style="border-bottom:1px solid var(--border); padding-bottom:12px; margin-bottom:12px;">
@@ -189,7 +203,7 @@ if (!$result) {
                         <button style="background:transparent; border:none; color:var(--primary); font-weight:700; padding:8px 12px; border-bottom:3px solid var(--primary);">Tất cả</button>
                         </div>
                         <div style="display:flex; gap:8px; align-items:center;">
-                        <a href="#"><button class="btn primary">Thêm sản phẩm</button></a>
+                        <a href="customersadd2.php"><button class="btn primary">Thêm khách hàng</button></a>
                         </div>
                     </nav>
 
@@ -225,9 +239,11 @@ if (!$result) {
                     <td style="padding:14px; border-bottom:1px solid #f1f5f9;"><input type="checkbox" /></td>
                     <td style="padding:14px; border-bottom:1px solid #f1f5f9;">
                         <div style="display:flex; align-items:center; gap:12px;">
-                            <a href="#" style="color:var(--primary); text-decoration:none; font-weight:500;">
+                            <a href="customer_detail3.php?MaKH=<?php echo $row['MaKH']; ?>" 
+                              style="color:var(--primary); text-decoration:none; font-weight:500;">
                                 <?php echo htmlspecialchars($row['HoTen']); ?>
                             </a>
+
                         </div>
                     </td>
                     <td style="padding:14px; border-bottom:1px solid #f1f5f9;"><?php echo htmlspecialchars($row['Email']); ?></td>

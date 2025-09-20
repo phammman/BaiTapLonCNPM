@@ -153,7 +153,7 @@
 
             <div class="left">
                 <div class="card">
-                <div class="card-hd">Danh sách sản phẩm</div>
+                <div class="card-hd">Danh sách đơn hàng</div>
                 <div class="card-bd">
                     <!-- Tabs -->
                     <div style="border-bottom:1px solid var(--border); padding-bottom:12px; margin-bottom:12px;">
@@ -162,7 +162,7 @@
                         <button style="background:transparent; border:none; color:var(--primary); font-weight:700; padding:8px 12px; border-bottom:3px solid var(--primary);">Tất cả</button>
                         </div>
                         <div style="display:flex; gap:8px; align-items:center;">
-                        <a href="#"><button class="btn primary">Thêm sản phẩm</button></a>
+                        <a href="#"><button class="btn primary">Thêm đơn hàng</button></a>
                         </div>
                     </nav>
 
