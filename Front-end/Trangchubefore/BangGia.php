@@ -21,7 +21,7 @@
     <div>
          <div class="banner">
             <div class="nav">
-                <a href="TrangchuBefore.html">
+                <a href="TrangchuBefore.php">
                     <img src="img/4.svg">
                 </a>
             </div>
@@ -29,22 +29,22 @@
                 <b>Giải pháp</b>
             </div>
             <div class="nav">
-                <a href="BangGia.html">
+                <a href="BangGia.php">
                     <b>Bảng giá</b>
                 </a>
             </div>
             <div class="nav">
-                <a href="KhachHang.html">
+                <a href="KhachHang.php">
                     <b>Khách hàng</b>
                 </a>
             </div>
             <div class="nav">
-                <a href="">
-                    <b>Enterpise</b>
+                <a href="enterprise.php">
+                    <b>Enterprise</b>
                 </a>
             </div>
             <div class="nav">
-                <a href="sapo.html">
+                <a href="sapo.php">
                     <b>Sapo</b>
                 </a>
             </div>

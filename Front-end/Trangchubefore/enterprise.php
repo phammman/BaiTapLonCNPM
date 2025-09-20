@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="enterprise.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" 
+    integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" 
+    crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <title>enterprise</title>
+</head>
+<body>
+    <div class="header">
+        <div class="info-header">
+            <img src="image/1.png" alt="">
+            <select>
+                    <option value="1">Giải pháp</option>
+                    <option value="2">Xây dựng nền tảng bán hàng</option>
+                    <option value="3">Tăng trưởng chuỗi bán lẻ</option>
+                    <option value="4">Tăng trưởng chuỗi đại lý O2O</option>
+                    <option value="5">Thiết kế Website bán hàng</option>
+                    <option value="6">Omnichanel toàn diện</option>
+            </select>
+            
+        </div>
+        <div class="info-header">
+            <img src="image/2.png" alt="">
+            <div class="btn">
+                <a href="../login/dangKy.php"><button>Đăng ký tư vấn</button></a>
+            </div>
+        </div>
+    </div>
+    <div class="giaiPhap">
+        <div class="giaiPhap-title">
+            <b>Giải pháp bán hàng hợp kênh thúc đẩy <span>tăng trưởng toàn diện</span><br> cho doanh nghiệp vừa & lớn</b>
+        </div>
+        <div class="list-giaiPhap">
+            <div class="icon-giaiPhap">
+                <i class="fa-solid fa-circle-check"></i>
+                <p>Thiết kế lộ trình tiến đến bán hàng hợp kênh</p>
+            </div>
+            <div class="icon-giaiPhap">
+                <i class="fa-solid fa-circle-check"></i>
+                <p>Tăng CLV và trải nghiệm khách hàng</p>
+            </div>
+            <div class="icon-giaiPhap">
+                <i class="fa-solid fa-circle-check"></i>
+                <p>Quản lý tập trung hiệu quả và toàn diện</p>
+            </div>
+        </div>
+    </div>
+    <div class="mid">
+        <h2><b>Trọn bộ giải pháp phát triển kinh doanh từ Sapo Enterprise</b></h2>
+        <p>Giúp doanh nghiệp tăng cường hiệu suất, mở rộng quy mô - Tất cả trên một nền tảng</p>
+        <div class="info">
+            <div class="content">
+                <img src="image/xay-dung-nen-tang-ban-hang.png" alt="">
+                <div class="info-content">
+                    <b class="title">Xây dụng nền tảng bán hàng</b>
+                    <p>Cung cấp bộ công cụ và dịch vụ xây dựng nền tảng bán hàng đa kênh từ cơ bản đến nâng cao cho doanh nghiệp</p>
+                    <h3>Khám phá thêm</h3>
+                </div>
+            </div>
+            <div class="content">
+                <img src="image/tang-truong-chuoi-ban-le.png" alt="">
+                <div class="info-content">
+                    <b class="title">Tăng trưởng chuỗi bán lẻ</b>
+                    <p>Giúp doanh nghiệp kinh doanh chuỗi bán lẻ dễ dàng quản lý và mở rộng chuỗi hệ thống một cách hiệu quả</p>
+                    <h3>Khám phá thêm</h3>
+                </div>
+            </div>
+            <div class="content">
+                <img src="image/tang-truong-chuoi-dai-ly-o2o.png" alt="">
+                <div class="info-content">
+                    <b class="title">Tăng trưởng chuối đại lý O2O</b>
+                    <p>Giải pháp quản lý chuỗi giúp doanh nghiệp nhanh chóng mở rộng, tối ưu quản lý hệ thống, nâng cao doanh thu</p>
+                    <h3>Khám phá thêm</h3>
+                </div>
+            </div>
+            <div class="content">
+                <img src="image/omnichannel-toan-dien.png" alt=""><br>
+                <div class="info-content">
+                    <b class="title">Omnichnnel toàn diện</b>
+                    <p>Thiết kế lộ trình riêng cho doanh nghiệp tiến tới Omnichannel toàn diện - Tương tác đa điểm, bán hàng đa kênh</p>
+                    <h3>Khám phá thêm</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="khacBiet">
+        <div class="btn">
+            <a href="dangKy.html"><button>Đăng ký tư vấn</button></a>
+        </div>
+        <div class="title-khacBiet">
+            <b>Điều gì làm nên sự khác biệt vượt trội của giải pháp Sapo Enterprise?</b>
+        </div>
+        <div class="container">
+            <div class="left-container">
+                <div class="item">
+                    <b>Kết nối, mở rộng không giới hạn</b>
+                    <p>Hệ sinh thái mở của Sapo Enterprise cho phép tích hợp dễ dàng với các hệ thống chuyên biệt của bên thứ 3, đảm bảo đồng bộ dữ liệu</p>
+                </div>
+                <div class="item">
+                    <b>Tùy chỉnh cao, đáp ứng mọi nhu cầu</b>
+                    <p>Sapo Enterprise thiết kế các tính năng phù hợp với quy trình và đặc thù riêng của doanh nghiệp, đảm bảo phù hợp với từng mô hình kinh doanh</p>
+                </div>
+                <div class="item">
+                    <b>Hệ sinh thái đối tác chất lượng cao</b>
+                    <p>Cung cấp giải pháp kỹ thuật tiêu chuẩn cao, đảm bảo doanh nghiệp triển khai nhanh chóng, hiệu quả, và đạt tăng trưởng với "cam kết doanh thu"9</p>
+                </div>
+            </div>
+            <div class="mid-container">
+                <img src="image/$.png" alt="">
+            </div>
+            <div class="right-container">
+                <div class="item">
+                    <b>Ứng dụng AI & Headless Commerce</b>
+                    <p>Tiên phong ứng dụng công nghệ Headless Commerce và AI đem đến giải pháp tối ưu hóa vận hành, nâng cao trải nghiệm khách hàng</p>
+                </div>
+                <div class="item">
+                    <b>Dịch vụ hỗ trợ cao cấp, chuyên sâu</b>
+                    <p>Sapo Enterprise cam kết đồng hành cùng doanh nghiệp với dịch vụ hỗ trợ chuyên sâu, đem đến các giải pháp tối ưu nhất cho từng giai đoạn phát triển</p>
+                </div>
+                <div class="item">
+                    <b>Đội ngũ chuyên gia kinh nghiệm</b>
+                    <p>Với đội ngũ chuyên gia 16 năm kinh nghiệm trong lĩnh vực TMĐT và Omnichannel, Sapo Enterprise sẵn sàng tư vấn và triển khai giải pháp</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="why-chosse">
+        <div class="block-title">
+            <p>Hơn cả một nền tảng - Sapo là đối tác đồng hành của doanh nghiệp</p>
+            <h2>Khám phá lý do các doanh nghiệp hàng đầu chọn Sapo Enterprise?</h2>
+        </div>
+        <div class="row">
+            <div class="left-row">
+                <img src="image/ly-do-doanh-nghiep-chon-sapo-enterprise.png" max width="600px" alt="">
+            </div>
+            <div class="right-row">
+                <div class="item">
+                    <b>Cam kết doanh thu và tối ưu hóa vận hành</b>
+                    <p>Giải pháp công nghệ kết hợp tư vấn, hỗ trợ doanh nghiệp với quy trình "vận hành - đào tạo - chuyển giao", tối ưu nguồn lực và chi phí nhờ công cụ tự động hóa thông minh</p>
+                </div>
+                <div class="item">
+                    <b>Trải nghiệm khách hàng đa kênh liền mạch</b>
+                    <p>Đảm bảo trải nghiệm mua sắm đồng nhất trên mọi kênh, từ trực tuyến đến cửa hàng, từ đó nâng cao sự hài lòng và tối đa hóa doanh thu trên mọi nền tảng</p>
+                </div>
+                <div class="item">
+                    <b>Khả năng mở rộng linh hoạt</b>
+                    <p>Cơ chế open APIs và đồng bộ dữ liệu thời gian thực, hỗ trợ doanh nghiệp tích hợp ứng dụng khác dễ dàng, mở rộng quy mô mà vẫn đảm bảo quản lý dữ liệu chính xác</p>
+                </div>
+                <div class="item">
+                    <b>Bảo mật cao, an toàn dữ liệu</b>
+                    <p>Đặt an toàn dữ liệu lên hàng đầu với các tiêu chuẩn bảo mật cao nhất, đảm bảo dữ liệu của doanh nghiệp và khách hàng luôn được bảo vệ tối ưu</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="left-footer">
+            <div class="info-left">
+                <b>Giải pháp</b>
+                <a href="">Xây dựng nền tảng bán hàng</a>
+                <a href="">Tăng trưởng chuỗi bán lẻ</a>
+                <a href="">Tăng trưởng chuỗi đại lý</a>
+                <a href="">Ominichannel toàn diện</a>
+            </div>
+            <div class="public">
+                <b>Mạng xã hội</b>
+                <div class="icon">
+                    <i class="fa-brands fa-facebook"></i>
+                    <i class="fa-brands fa-youtube"></i>
+                </div>
+            </div>
+        </div>
+        <div class="right-footer">
+            <div class="footer-logo">
+                <img src="image/1.png.png" alt=""><br>
+                <b>CÔNG TY CỔ PHẦN CÔNG NGHỆ SAPO (SAPO TECHNOLOGY JSC)</b>
+            </div>
+            <div class="location">
+                <b>Trụ sở: </b>
+                <p>Tầng 6, Tòa Ladeco, 266 Đội Cấn, Quận Ba Đình, TP Hà Nội</p>
+            </div>
+            <div class="location">
+                <b>Chi nhánh: </b>
+                <div class="list-location">
+                    <p> Lầu 5, Tòa Lữ Gia, Số 70 Lữ Gia, Quận 11, TP HCM</p>
+                    <p> Số 83 Xô Viết Nghệ Tĩnh, Quận Cẩm Lệ, TP Đà Nẵng</p>
+                    <a href=""><i>Xem thêm 16 chi nhanhhs của Sapo trên toàn quốc</i></a>
+                </div>
+            </div>
+            <div class="location">
+                <b>Hotline:  </b>
+                <p>19006750</p>
+            </div>
+            <div class="location">
+                <b>Email: </b>
+                <p>enter3@sapo.vn</p>
+            </div>
+        </div>
+    </div>
+    <script>
+        window.addEventListener('scroll', function() {
+            document.body.classList.toggle('scrolled', window.scrollY > 0);
+        });
+    </script>
+</body>
+</html>

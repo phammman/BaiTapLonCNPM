@@ -7,16 +7,27 @@
  <link rel="stylesheet" href="sapo.css">
  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-
+<style>
+  .logo a{
+    text-decoration: none;
+    font-size: 28px;
+    font-weight: bold;
+    color: #00b894;
+  }
+</style>
 </head>
 <body>
   <header>
-    <div class="logo">Sapo</div>
+    <div class="logo">
+      <a href="TrangChuBefore.php">
+        Sapo
+      </a>
+    </div>
     <nav>
       <ul>
-        <li><a href="#">Sapo</a></li>
-        <li><a href="#">Bảng giá</a></li>
-        <li><a href="#">Hướng dẫn</a></li>
+        <li><a href="sapo.php">Sapo</a></li>
+        <li><a href="BangGia.php">Bảng giá</a></li>
+        <li><a href="KhachHang.php">Khách hàng</a></li>
         <li><a href="#">Tra cứu</a></li>
       </ul>
     </nav>
