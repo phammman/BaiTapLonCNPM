@@ -1,4 +1,19 @@
+<?php
+include("connect.php");
 
+if (isset($_GET['TenDangNhap'])) {
+    $TenDangNhap = $_GET['TenDangNhap'];
+    
+    $TenDangNhap = mysqli_real_escape_string($conn, $TenDangNhap);
+    
+    $sql = "SELECT nv.*, nd.SoDienThoai, nd.TenDangNhap, nd.MatKhau 
+            FROM nhanvien nv 
+            JOIN nguoidung nd ON nv.MaND = nd.MaND 
+            WHERE nd.TenDangNhap LIKE '%$TenDangNhap%'";
+    
+    $result = mysqli_query($conn, $sql);
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -74,11 +89,8 @@
         .all-css{
             font-size: 20px; border:none; background: none; padding:8px 16px; color:rgb(0 136 255); border-bottom: 3px solid rgb(0 136 255); cursor: pointer;
         }
-        .search-nv {width: 60%; margin: 20px ; flex:1; display:flex; align-items:center; justify-self: center; gap:10px;background-color: #ececec; border:1px solid #e2e8f0; padding:10px 12px; border-radius:10px; }
+        .search-nv {width: 50%; margin: 20px; flex:1; display:flex; align-items:center; gap:10px; background:#f1f5f9; border:1px solid #e2e8f0; padding:10px 12px; border-radius:10px; }
         .search-nv input { flex:1; border:none; outline:none; background:transparent; font-size:14px;}
-        .search-nv:hover{
-            background-color: #bcbcbc;
-        }
         table {
             margin: 20px 0;font-size: 18px; width: 100%; border-collapse: collapse; border: none; border-color: #f8fafc;
         }
@@ -118,6 +130,10 @@
         .xoa:hover{
             color: red;
             background-color:rgba(243, 189, 185, 0.72);
+        }
+        .error-message {
+            color: red;
+            font-weight: bold; 
         }
     </style>
 </head>
@@ -163,10 +179,10 @@
                 <div class="all">
                     <button class = "all-css"><b>Tất cả</b></button>
                 </div>
-                <form action="search.php" method="get">
+                <form action="searchNhanVien.php" method="get">
                     <div class="search-nv">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748b"><circle cx="11" cy="11" r="7" stroke-width="1.6"/><path d="M20 20l-3.5-3.5" stroke-width="1.6"/></svg>
-                        <input type = "text" name = "TenDangNhap" placeholder="Tìm kiếm nhân viên" >
+                        <input type = "text" placeholder="Tìm kiếm nhân viên" >
                     </div>
                 </form>
                 <table border = 2  align = "center";>
@@ -175,32 +191,31 @@
                     <th>Họ tên</th>
                     <th>Tên đăng nhập</th>
                     <th>Chức vụ</th>
-                    <th>
-                        Trạng thái
+                    <th>Trạng Thái</th>
                 </tr>
                 <?php
-                include("connect.php");
-                $sql = "SELECT nv.*, nd.SoDienThoai, nd.TenDangNhap, nd.MatKhau 
-                        FROM nhanvien nv 
-                        JOIN nguoidung nd ON nv.MaND = nd.MaND" ;
-                $result = mysqli_query($conn, $sql);
-                while ($row = mysqli_fetch_array($result)) {
-                ?>
-                    <tr>
-                        <td><?php echo $row["MaNV"];?></td>
-                        <td><a class ="name" href="xemNhanVien.php?MaNV=<?php echo $row["MaNV"];?>">  <?php echo $row["HoTen"];?></a></td>
-                        <td><?php echo $row["TenDangNhap"]?></td>
-                        <td><?php echo $row["ChucVu"];?></td>
-                        <td>
-                            <a class = "sua" href="suaNhanVien.php?MaNV=<?php echo $row["MaNV"];?>">Cập nhật</a>
-                            <a class = "xoa" href="xoaNhanVien.php?MaNV=<?php echo $row["MaNV"];?>"><b>Xóa</b></a>
-                        </td>
-                    </tr>
-                <?php  
-                }
+                    if (mysqli_num_rows($result) > 0) {
+                        while ($row = mysqli_fetch_array($result)) {
+                            ?>
+                            <tr>
+                                <td><?php echo $row["MaNV"]; ?></td>
+                                <td><a class="name" href="xemNhanVien.php?MaNV=<?php echo $row["MaNV"]; ?>"><?php echo $row["HoTen"]; ?></a></td>
+                                <td><?php echo $row["TenDangNhap"]; ?></td>
+                                <td><?php echo $row["ChucVu"]; ?></td>
+                                <td>
+                                    <a class="sua" href="suaNhanVien.php?MaNV=<?php echo $row["MaNV"]; ?>">Cập nhật</a>
+                                    <a class="xoa" href="xoaNhanVien.php?MaNV=<?php echo $row["MaNV"]; ?>"><b>Xóa</b></a>
+                                </td>
+                            </tr>
+                            <?php
+                        }
+                    } else {
+                        echo "<tr><td colspan='5' class='error-message'>Không tìm thấy nhân viên nào.</td></tr>";
+                    }
                 ?>
             </table>
         </div>
     </div>
 </body>
 </html>
+ 

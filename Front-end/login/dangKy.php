@@ -5,7 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Đăng ký</title>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" 
+    integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" 
+    crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link rel="stylesheet" href="dangKy.css">
     <style>
         .error {
@@ -51,7 +53,6 @@
             if ($stmt->execute()) {
     // Lưu ID của người dùng vừa tạo
                 $maND = $conn->insert_id; 
-
                 if ($quyenHan == 'Nhanvien') {
                     $sqlNhanVien = "INSERT INTO nhanvien (HoTen, MaND) VALUES (?, ?)";
                     $stmtNhanVien = $conn->prepare($sqlNhanVien);
@@ -64,7 +65,7 @@
                 $stmtKhachHang->execute();
                 }
                 header('Location: dangNhap.php');
-                exit; /
+                exit; 
             }
         }
     }
@@ -98,20 +99,26 @@
             <div class="dau_vao">
                 <label for="matKhau">Mật khẩu</label>
                 <input type="password" id="matKhau" name="matKhau" placeholder="Nhập mật khẩu" style="opacity: 0.6;">
+                <div class="eye" onclick="togglePassword('matKhau', this)">
+                    <i class="fa-solid fa-eye-slash"></i>
+                </div>
             </div>
-            <span class="error" id="matKhauError"> Mật Khẩu không được để trống</span>
+            <span class="error" id="matKhauError"> Mật khẩu không được để trống</span>
+            
             <div class="dau_vao">
                 <label for="nhapLaiMatKhau">Nhập lại mật khẩu</label>
                 <input type="password" id="nhapLaiMatKhau" name="nhapLaiMatKhau" placeholder="Nhập lại mật khẩu" style="opacity: 0.6;">
+                <div class="eye" onclick="togglePassword('nhapLaiMatKhau', this)">
+                    <i class="fa-solid fa-eye-slash"></i>
+                </div>
             </div>
-            <span class="error" id="nhapLaiMatKhauError">Nhập lại mật Khẩu sai </span>
+            <span class="error" id="nhapLaiMatKhauError">Nhập lại mật khẩu sai </span>
 
             <div class="quyenHan">
                 <p>Quyền hạn: </p>
                 <input type="radio" name="quyenHan" value="Nhanvien"> Nhân viên
                 <input type="radio" name="quyenHan" value="Khachhang"> Khách hàng
             </div>
-
             <div class="btn-dangKy">
                 <button type="submit">Đăng ký</button>
             </div>

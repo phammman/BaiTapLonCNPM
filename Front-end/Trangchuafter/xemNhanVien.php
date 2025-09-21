@@ -53,16 +53,28 @@
         
         .view {
             padding: 10px 20px 30px;
-            margin: 50px auto;
+            margin: 30px;
             width: 50%;
         }
         .title {
-            font-size: 20px;
-            margin:0;
-            border-bottom: 1px solid #979494;
-            margin: 0 0px 20px 0px;
+            display: flex;
+            align-items: center; /* Canh giữa theo chiều dọc */
+        }
+        .title a{
+            padding: 0 10px;
+            border: 1px solid #cecece;
+            margin-right: 10px; 
+            font-size: 24px; 
+            border-radius: 5px;
+            font-size: 24px;
+            color: gray;
+            text-decoration: none;
+        }
+        .title h2 {
+            margin: 0; 
         }
         table {
+            margin-top: 30px;
             border: 1px solid #cecece;
             width: 100%;
             font-size: 20px;
@@ -73,17 +85,19 @@
             text-align: center;
             padding: 10px;
         }
-        
         .btn{
             text-align: center; 
             margin-top: 30px;
         }
-        a{
+        .main a{
             font-size: 20px;
             text-decoration: none;
             color: white;
             padding: 5px 20px;
             margin: 5px;
+        }
+        .main{
+            margin-left: 30px;
         }
         .back{
             background-color: #1C8552;
@@ -147,6 +161,7 @@
             </div>
             <div class="view">
                 <div class="title">
+                    <a href="quanLyNhanVien.php">&larr;</a>
                     <h2>Quản lý nhân viên</h2>
                 </div>
                 <div class="main">
@@ -184,9 +199,7 @@
                             <td><?php echo $row['ChucVu'];?></td>
                         </tr>
                     </table>
-                    <div class="btn">
-                        <a class = "back" href="quanLyNhanVien.php">Trở lại</a>
-                    </div>
+                    
                 </div>
             </div>
         </div>
