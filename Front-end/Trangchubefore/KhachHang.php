@@ -3,41 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="http://localhost/Chuyen_de_dinh_huong_CNPM/Front-end/Trangchubefore/">
     <link rel="stylesheet" href="KhachHang.css">
     <link rel="">
     <title>Document</title>
+     <style>
+        .nav a{
+            color:#060C23;
+            text-decoration: none;
+        }
+        .nav a:hover{
+            color:#3692e3;
+            text-decoration:underline;      
+        }
+    </style>
 </head>
 <body>
     <div>
          <div class="banner">
             <div class="nav">
-                <a href="TrangchuBefore.html">
+                <a href="TrangchuBefore.php">
                     <img src="img/4.svg">
                 </a>
             </div>
-            <div class="nav">
+            <div class="nav" style="margin-right: 60px;">
                 <b>Giải pháp</b>
             </div>
             <div class="nav">
-                <b>Bảng giá</b>
+                <a href="BangGia.php">
+                    <b>Bảng giá</b>
+                </a>
             </div>
             <div class="nav">
-                <b>Khách hàng</b>
+                <a href="KhachHang.php">
+                    <b>Khách hàng</b>
+                </a>
             </div>
             <div class="nav">
-                <b>Enterpise</b>
+                <a href="enterprise.php">
+                    <b>Enterprise</b>
+                </a>
             </div>
             <div class="nav">
-                <b>Sapo</b>
+                <a href="sapo.php">
+                    <b>Sapo</b>
+                </a>
             </div>
             <div class="nav">
-                <b>Thêm</b>
+                <a href="">
+                    <b>Thêm</b>
+                </a>
             </div>
             <div class="nav1">
-                <button>Đăng nhập</button>
+                <button onclick="location.href='/Chuyen_de_dinh_huong_CNPM/Front-end/Trangchuafter/DangNhap.php'">Đăng nhập</button>
             </div>
             <div class="nav2">
-                <button>Đăng ký</button>
+                <button onclick="location.href='/Chuyen_de_dinh_huong_CNPM/Front-end/Trangchuafter/DangKy.php'">Đăng ký</button>
             </div>
         </div>
         <div class="tab2">

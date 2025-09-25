@@ -1,5 +1,23 @@
 <?php
-session_start();
+// Kết nối database
+$servername = "localhost";
+$username = "root"; // thay bằng user MySQL của bạn
+$password = "";     // mật khẩu (nếu có)
+$dbname = "chuyendedinhhuongcnpm"; // thay bằng tên database của bạn
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+$conn->set_charset("utf8");
+
+if ($conn->connect_error) {
+    die("Kết nối thất bại: " . $conn->connect_error);
+}
+
+// Truy vấn danh sách nhân viên + tài khoản
+$sql = "SELECT nv.MaNV, nv.HoTen, nv.ChucVu, nd.TenDangNhap, nd.QuyenHan
+        FROM NhanVien nv
+        LEFT JOIN NguoiDung nd ON nv.MaNV = nd.MaNV";
+
+$result = $conn->query($sql);
 ?>
 <!doctype html>
 <html lang="vi">
@@ -22,7 +40,7 @@ session_start();
       --surface-2: #f8fafc;    /* page */
       --chip: #eef2ff;         /* light chip */
     }
-    * { box-sizing: border-box; }
+    /* * { box-sizing: border-box; } */
     html, body { height: 100%; }
     body {
       margin: 0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
@@ -57,7 +75,8 @@ session_start();
     .avatar { width:32px; height:32px; border-radius:50%; background:#22c55e; display:grid; place-items:center; color:#fff; font-weight:700; }
 
     /* Main layout */
-    .main { display:grid; grid-template-columns: 1fr 320px; gap: 18px; padding: 18px; }
+    /* .main { display:grid; grid-template-columns: 1fr 320px; gap: 18px; padding: 18px; } */
+    .main { display:grid; gap: 18px; padding: 18px; }
 
     /* Banner */
     .banner { background:#eff6ff; border:1px dashed #bfdbfe; padding:12px 14px; border-radius:10px; display:flex; align-items:center; justify-content:space-between; gap:12px; }
@@ -113,23 +132,14 @@ session_start();
 
       <nav class="nav">
         <div class="nav-section">
-          <a class="nav-item active" href="#">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 10.5 12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1v-10.5z" stroke-width="1.5"/></svg>
-            Tổng quan
-          </a>
-          <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 7h18M3 12h18M3 17h18" stroke-width="1.5"/></svg> Đơn hàng</a>
-          <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="14" rx="2" stroke-width="1.5"/><path d="M7 8h10M7 12h10" stroke-width="1.5"/></svg> Sản phẩm</a>
-          <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9h18M5 9V5h14v4M5 9v10h14V9" stroke-width="1.5"/></svg> Quản lý kho</a>
-          <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4" stroke-width="1.5"/><path d="M4 21c1.5-4 6-6 8-6s6.5 2 8 6" stroke-width="1.5"/></svg> Nhân viên</a>
-          <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4" stroke-width="1.5"/><path d="M4 21c1.5-4 6-6 8-6s6.5 2 8 6" stroke-width="1.5"/></svg> Khách hàng</a>
-          <a class="nav-item active" href="manuadmin.php" style="color: lightblue;">
+          <a class="nav-item" href="manuadmin.php">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 10.5 12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1v-10.5z" stroke-width="1.5"/></svg>
             Tổng quan
           </a>
           <a class="nav-item" href="orders.php"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 7h18M3 12h18M3 17h18" stroke-width="1.5"/></svg> Đơn hàng</a>
           <a class="nav-item" href="products.php"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="14" rx="2" stroke-width="1.5"/><path d="M7 8h10M7 12h10" stroke-width="1.5"/></svg> Sản phẩm</a>
           <a class="nav-item" href="inventories.php"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9h18M5 9V5h14v4M5 9v10h14V9" stroke-width="1.5"/></svg> Quản lý kho</a>
-          <a class="nav-item" href="employee.php"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4" stroke-width="1.5"/><path d="M4 21c1.5-4 6-6 8-6s6.5 2 8 6" stroke-width="1.5"/></svg> Nhân viên</a>
+          <a class="nav-item active" href="employee.php" style="color: lightblue;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4" stroke-width="1.5"/><path d="M4 21c1.5-4 6-6 8-6s6.5 2 8 6" stroke-width="1.5"/></svg> Nhân viên</a>
           <a class="nav-item" href="customers.php" ><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4" stroke-width="1.5"/><path d="M4 21c1.5-4 6-6 8-6s6.5 2 8 6" stroke-width="1.5"/></svg> Khách hàng</a>
           <!-- <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 12h16M12 4v16" stroke-width="1.5"/></svg> Khuyến mại</a> -->
           <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="5" width="18" height="14" rx="2" stroke-width="1.5"/><path d="M7 9h6M7 13h10" stroke-width="1.5"/></svg> Sổ quỹ</a>
@@ -152,74 +162,101 @@ session_start();
         </div>
         <div class="topbar-actions">
           <button class="icon-btn" title="Thông báo"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748b"><path d="M15 17h5l-1.4-1.4A2 2 0 0 1 18 14.2V11a6 6 0 1 0-12 0v3.2c0 .5-.2 1-.6 1.4L4 17h5" stroke-width="1.5"/><path d="M10 19a2 2 0 0 0 4 0" stroke-width="1.5"/></svg></button>
-
           <div class="avatar">cu</div>
-          <div class="avatar"><?php echo substr($_SESSION['TenDangNhap'], 0, 2); ?></div>
         </div>
       </div>
 
       <!-- Main -->
-      <div class="main">
+    <div class="main">
         <!-- Left column -->
         <div class="left">
-          
 
-          <div class="grid-2" style="margin-top:14px;">
-            <div class="card">
-              <div class="card-hd">Xin chào, cường</div>
-              <div class="card-hd">Xin chào <?php echo $_SESSION['TenDangNhap']; ?></div>
-              <div class="card-bd">
-                <div class="steps">
-                  <div class="step">
-                    <div class="n">1</div>
-                    <div>
-                      <div style="font-weight:600">Cập nhật thông tin cửa hàng</div>
-                      <div style="color:var(--muted); font-size:13px">Cập nhật thông tin cửa hàng</div>
+            <div class="left">
+                <div class="card">
+                <div class="card-hd">Danh sách nhân viên</div>
+                <div class="card-bd">
+                    <!-- Tabs -->
+                    <div style="border-bottom:1px solid var(--border); padding-bottom:12px; margin-bottom:12px;">
+                    <nav style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
+                        <div style="display:flex; align-items:center; gap:12px;">
+                        <button style="background:transparent; border:none; color:var(--primary); font-weight:700; padding:8px 12px; border-bottom:3px solid var(--primary);">Tất cả</button>
+                        </div>
+                        <div style="display:flex; gap:8px; align-items:center;">
+                        <a href="#"><button class="btn primary">Thêm nhân viên</button></a>
+                        </div>
+                    </nav>
+
+                    <div style="margin-top:12px; display:flex; gap:12px; align-items:center;">
+                        <input placeholder="Tìm kiếm theo mã sản phẩm, tên sản phẩm, barcode" style="flex:1; padding:12px 14px; border:1px solid var(--border); border-radius:10px; background:#fff;" />
+                        <!-- <div style="display:flex; gap:8px;">
+                        <select style="padding:8px 10px; border:1px solid var(--border); border-radius:8px; background:#fff;"><option>Kênh bán hàng</option></select>
+                        <select style="padding:8px 10px; border:1px solid var(--border); border-radius:8px; background:#fff;"><option>Loại sản phẩm</option></select>
+                        <select style="padding:8px 10px; border:1px solid var(--border); border-radius:8px; background:#fff;"><option>Tag</option></select>
+                        <button class="btn">Bộ lọc khác</button>
+                        </div> -->
                     </div>
-                    <div class="actions"><button class="btn">Thiết lập cửa hàng</button></div>
-                  </div>
-
-                  <div class="step">
-                    <div class="n">2</div>
-                    <div>
-                      <div style="font-weight:600">Thêm sản phẩm</div>
-                      <div style="color:var(--muted); font-size:13px">Thêm sản phẩm</div>
                     </div>
-                    <div class="actions"><button class="btn">Thêm sản phẩm</button></div>
-                  </div>
 
-
-                  <div class="step">
-                    <div class="n">3</div>
-                    <div>
-                      <div style="font-weight:600">Quản lý đơn hàng</div>
-                      <div style="color:var(--muted); font-size:13px">Theo dõi đơn hàng</div>
-                    </div>
-                    <div class="actions"><button class="btn">Bắt đầu</button></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="card">
-              <div class="card-hd">Kết quả kinh doanh</div>
-              <div class="card-bd">
-                <div style="display:flex; gap:10px; align-items:center; margin-bottom:10px;">
-                  <select style="padding:8px 10px; border:1px solid var(--border); border-radius:8px;">
-                    <option>Tuần này</option>
-                    <option>Tháng này</option>
-                  </select>
-                </div>
-                <div class="kpis">
-                  <div class="kpi"><div class="label">Doanh thu thuần</div><div class="value">0₫</div></div>
-                  <div class="kpi"><div class="label">Tổng đơn</div><div class="value">0</div><div class="muted">—</div></div>
-                  <div class="kpi"><div class="label">Giá trị trung bình đơn</div><div class="value">0₫</div></div>
-                </div>
-              </div>
-            </div>
+                    <!-- Table -->
+                    <div style="overflow:auto;">
+            <table style="width:100%; border-collapse:collapse; background:#fff;">
+              <thead>
+                <tr style="background:#fafafa; color:var(--muted); text-align:left;">
+                  <th style="width:48px; padding:14px; border-bottom:1px solid var(--border);"><input type="checkbox" /></th>
+                  <th style="padding:14px; border-bottom:1px solid var(--border); width:160px;">Họ tên</th>
+                  <th style="padding:14px; border-bottom:1px solid var(--border); width:150px;">Tên đăng nhập</th>
+                  <th style="padding:14px; border-bottom:1px solid var(--border); width:120px;">Chức vụ</th>
+                  <th style="padding:14px; border-bottom:1px solid var(--border); width:120px;">Quyền hạn</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php if ($result->num_rows > 0): ?>
+                  <?php while($row = $result->fetch_assoc()): ?>
+                    <tr>
+                      <td style="padding:14px; border-bottom:1px solid #f1f5f9;">
+                        <input type="checkbox" />
+                      </td>
+                      <td style="padding:14px; border-bottom:1px solid #f1f5f9; color:var(--primary); font-weight:500;">
+                        <?= htmlspecialchars($row['HoTen']) ?>
+                      </td>
+                      <td style="padding:14px; border-bottom:1px solid #f1f5f9;">
+                        <?= htmlspecialchars($row['TenDangNhap'] ?? '-') ?>
+                      </td>
+                      <td style="padding:14px; border-bottom:1px solid #f1f5f9;">
+                        <?= htmlspecialchars($row['ChucVu'] ?? '-') ?>
+                      </td>
+                      <td style="padding:14px; border-bottom:1px solid #f1f5f9;">
+                        <?= htmlspecialchars($row['QuyenHan'] ?? '-') ?>
+                      </td>
+                    </tr>
+                  <?php endwhile; ?>
+                <?php else: ?>
+                  <tr>
+                    <td colspan="5" style="text-align:center; padding:14px;">Chưa có nhân viên nào</td>
+                  </tr>
+                <?php endif; ?>
+              </tbody>
+            </table>
           </div>
+
+                    <!-- Footer controls -->
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:14px;">
+                    <div style="color:var(--muted);">Từ 1 đến 1 trên tổng 1</div>
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <div style="color:var(--muted);">Hiển thị</div>
+                        <select style="padding:6px 8px; border:1px solid var(--border); border-radius:6px;"><option>20</option></select>
+                    </div>
+                    </div>
+
+                    <div style="text-align:center; margin-top:18px; color:var(--muted);">
+                    Tìm hiểu thêm về <a href="#">sản phẩm</a>
+                    </div>
+                </div>
+                </div>
+            </div>
+
         </div> 
-      </div>
+    </div>
     </section>
   </div>
 

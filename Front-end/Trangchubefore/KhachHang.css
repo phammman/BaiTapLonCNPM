@@ -38,7 +38,7 @@ html, body {
     height: 50px;
     width:80px;
 }
-.nav:hover{
+.nav a:hover{
     color:#3692e3;
     text-decoration:underline;
 }

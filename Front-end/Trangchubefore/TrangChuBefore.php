@@ -5,7 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="TrangChuBefore.css">
+
     <!-- <link rel="stylesheet" href="/Chuyen_de_dinh_huong_CNPM/Trangchu/TrangChuBefore.css"> -->
+
+    <!-- <link rel="stylesheet" href="Chuyen_de_dinh_huong_CNPM/Trangchubefore/TrangChuBefore.css"> -->
+    <!-- <link rel="stylesheet" href="/Chuyen_de_dinh_huong_CNPM/Front-end/css/style.css"> -->
+    <!-- <link rel="stylesheet" href="/Chuyen_de_dinh_huong_CNPM/Front-end/css/responsive.css"> -->
     <style>
         
     </style>
@@ -14,9 +19,11 @@
     <div>
         <div class="banner">
             <div class="nav">
-                <img src="img/4.svg">
+                <a href="TrangChuBefore.php">
+                    <img src="img/4.svg">
+                </a>
             </div>
-            <div class="nav">
+            <div class="nav" style="margin-right: 60px;">
                 <b>Giải pháp</b>
             </div>
             <div class="nav">
@@ -30,12 +37,12 @@
                 </a>
             </div>
             <div class="nav">
-                <a href="">
-                    <b>Enterpise</b>
+                <a href="enterprise.php">
+                    <b>Enterprise</b>
                 </a>
             </div>
             <div class="nav">
-                <a href="">
+                <a href="sapo.php">
                     <b>Sapo</b>
                 </a>
             </div>
@@ -43,10 +50,10 @@
                 <b>Thêm</b>
             </div>
             <div class="nav1">
-                <button>Đăng nhập</button>
+                <button onclick="location.href='/Chuyen_de_dinh_huong_CNPM/Front-end/Trangchuafter/DangNhap.php'">Đăng nhập</button>
             </div>
             <div class="nav2">
-                <button>Đăng ký</button>
+                <button onclick="location.href='/Chuyen_de_dinh_huong_CNPM/Front-end/Trangchuafter/DangKy.php'">Đăng ký</button>
             </div>
         </div>
         <div class="tab2">
@@ -93,7 +100,7 @@
             </div>
         </div>
         <div class="tab5">
-            <button>Dùng thử miễn phí →</button>
+            <button onclick="location.href='/Chuyen_de_dinh_huong_CNPM/Front-end/Trangchuafter/DangKy.php'">Dùng thử miễn phí →</button>
         </div>
         <div class="tab6">
             <div class="tab62">
@@ -102,7 +109,7 @@
             </div>
             <div class="tab61">
                 <input type="text" placeholder="Nhập tên cửa hàng/daonh nghiệp của bạn">
-                <button>Dùng thử miễn phí →</button>
+                <button onclick="location.href='/Chuyen_de_dinh_huong_CNPM/Front-end/Trangchuafter/DangKy.php'">Dùng thử miễn phí →</button>
             </div>
         </div>
         <div class="tab7">

@@ -110,6 +110,7 @@
       </div>
 
       <nav class="nav">
+
         <div class="nav-section">
           <a class="nav-item active" href="#">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 10.5 12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1v-10.5z" stroke-width="1.5"/></svg>
@@ -120,6 +121,17 @@
           <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9h18M5 9V5h14v4M5 9v10h14V9" stroke-width="1.5"/></svg> Quản lý kho</a>
           <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4" stroke-width="1.5"/><path d="M4 21c1.5-4 6-6 8-6s6.5 2 8 6" stroke-width="1.5"/></svg> Nhân viên</a>
           <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4" stroke-width="1.5"/><path d="M4 21c1.5-4 6-6 8-6s6.5 2 8 6" stroke-width="1.5"/></svg> Khách hàng</a>
+
+         <div class="nav-section">
+          <a class="nav-item" href="manuadmin.php">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 10.5 12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1v-10.5z" stroke-width="1.5"/></svg>
+            Tổng quan
+          </a>
+          <a class="nav-item" href="orders.php" ><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 7h18M3 12h18M3 17h18" stroke-width="1.5"/></svg> Đơn hàng</a>
+          <a class="nav-item active" href="products.php" style="color: lightblue;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="14" rx="2" stroke-width="1.5"/><path d="M7 8h10M7 12h10" stroke-width="1.5"/></svg> Sản phẩm</a>
+          <a class="nav-item" href="inventories.php"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9h18M5 9V5h14v4M5 9v10h14V9" stroke-width="1.5"/></svg> Quản lý kho</a>
+          <a class="nav-item" href="employee.php"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4" stroke-width="1.5"/><path d="M4 21c1.5-4 6-6 8-6s6.5 2 8 6" stroke-width="1.5"/></svg> Nhân viên</a>
+          <a class="nav-item" href="customers.php" ><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4" stroke-width="1.5"/><path d="M4 21c1.5-4 6-6 8-6s6.5 2 8 6" stroke-width="1.5"/></svg> Khách hàng</a>
           <!-- <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 12h16M12 4v16" stroke-width="1.5"/></svg> Khuyến mại</a> -->
           <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="5" width="18" height="14" rx="2" stroke-width="1.5"/><path d="M7 9h6M7 13h10" stroke-width="1.5"/></svg> Sổ quỹ</a>
           <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 6h16M4 12h16M4 18h10" stroke-width="1.5"/></svg> Báo cáo</a>
@@ -161,7 +173,10 @@
                         <button style="background:transparent; border:none; color:var(--primary); font-weight:700; padding:8px 12px; border-bottom:3px solid var(--primary);">Tất cả</button>
                         </div>
                         <div style="display:flex; gap:8px; align-items:center;">
+
                         <a href="#"><button class="btn primary">Thêm sản phẩm</button></a>
+
+                        <a href="quanlysp/add.html"><button class="btn primary">Thêm sản phẩm</button></a>
                         </div>
                     </nav>
 
@@ -190,19 +205,41 @@
                         </tr>
                         </thead>
                         <tbody>
+
+
+
+                        <?php
+                        include('connect.php');
+
+                        $lietke_sql = "SELECT * FROM sanpham order by MaSP, TenSP, GiaBan, SoLuongTon, MaDM, MaSKU, MoTa, GiaVon";
+
+                        $result = mysqli_query($conn, $lietke_sql);
+
+                        While ( $r = mysqli_fetch_assoc($result)){  
+                        ?>
                         <tr>
                             <td style="padding:14px; border-bottom:1px solid #f1f5f9;"><input type="checkbox" /></td>
                             <td style="padding:14px; border-bottom:1px solid #f1f5f9;">
                             <div style="display:flex; align-items:center; gap:12px;">
                                 <div style="width:48px; height:48px; border-radius:8px; background:#f1f5f9; display:grid; place-items:center; color:var(--muted);">📷</div>
+
                                 <a href="#" style="color:var(--primary); text-decoration:none; font-weight:500;">cafe</a>
                             </div>
                             </td>
                             <td style="padding:14px; border-bottom:1px solid #f1f5f9;">0</td>
+
+                                <a href="quanlysp/edit.php?MaSP=<?php echo $r['MaSP'];?>" class="click" style="color:var(--primary); text-decoration:none; font-weight:500;"><?php echo $r['TenSP']; ?></a>
+                            </div>
+                            </td>
+                            <td style="padding:14px; border-bottom:1px solid #f1f5f9;"><?php echo $r['SoLuongTon']; ?></td>
                             <td style="padding:14px; border-bottom:1px solid #f1f5f9;"></td>
                             <td style="padding:14px; border-bottom:1px solid #f1f5f9;"></td>
                             <td style="padding:14px; border-bottom:1px solid #f1f5f9;">28/08/2025</td>
                         </tr>
+
+
+                        
+                        <?php } ?>
                         </tbody>
                     </table>
                     </div>
@@ -226,7 +263,10 @@
         </div> 
     </div>
     </section>
+
   </div>
+
+    </div>
 
   <!-- Gợi ý dùng với PHP: đổi tên file thành index.php, nhúng các phần header/sidebar bằng include nếu muốn. Không cần backend để chạy giao diện. -->
 </body>
