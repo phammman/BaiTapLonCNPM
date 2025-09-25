@@ -7,15 +7,16 @@
 
     // $result = mysqli_query($conn , $sua_sql);
     // $row = mysqli_fetch_assoc($result);
-    include('connect.php');
+    // include('connect.php');
+    include __DIR__ . "/../connect.php";
 
-    $masp = isset($_GET['MaSP']) ? (int)$_GET['MaSP'] : 0;
+    $makh = isset($_GET['MaKH']) ? (int)$_GET['MaKH'] : 0;
 
-    if ($masp <= 0) {
-        die("Mã sản phẩm không hợp lệ");
+    if ($makh <= 0) {
+        die("Mã khách hàng không hợp lệ");
     }
 
-    $sua_sql = "SELECT * FROM sanpham WHERE MaSP = $masp";
+    $sua_sql = "SELECT * FROM khachhang WHERE MaKH = $makh";
     $result = mysqli_query($conn, $sua_sql);
 
     if (!$result) {
@@ -24,10 +25,9 @@
 
     $row = mysqli_fetch_assoc($result);
     if (!$row) {
-        die("Không tìm thấy sản phẩm với MaSP = $masp");
+        die("Không tìm thấy khách hàng với MaKH = $makh");
     }
 ?>
-
 <!doctype html>
 <html lang="vi">
 <head>
@@ -244,8 +244,45 @@
         background-color: #e1e2e2ff;
         border: 3px solid #e1e2e2ff;
     }
+    .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    /* padding-bottom:10%; */
+    }
+
+    .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    margin-top: 20px;
+    }
+
+    .card h3 {
+    margin-top: 0;
+    font-size: 18px;
+    }
+
+    .card label {
+    font-weight: 500;
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 4px;
+    }
+
+    .card input[type="text"],
+    .card input[type="email"],
+    .card input[type="tel"]{
+    width:200%;
+    padding: 10px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 14px;
+    margin-bottom:2%;
+    }
     .btn{
-      background-color:#ff4613;
+        background-color:#ff4613;
       color:white;
       height:50px;
       width:100px;
@@ -254,11 +291,12 @@
       text-align: center;
       display: inline-block;
     }
+      
   </style>
 </head>
 <body>
   <form class="app" action="update.php" method="post">
-      <input type="hidden" name="MaSP" value="<?php echo $masp; ?>" id="">
+    <input type="hidden" name="MaKH" value="<?php echo $row['MaKH']; ?>">
     <!-- SIDEBAR -->
     <aside class="sidebar">
       <div class="brand">
@@ -268,20 +306,19 @@
 
       <nav class="nav">
         <div class="nav-section">
-          <a class="nav-item" href="manuadmin.php">
+          <a class="nav-item" href="/Chuyen_de_dinh_huong_CNPM/Front-end/Trangchuafter/manuadmin.php">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 10.5 12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1v-10.5z" stroke-width="1.5"/></svg>
             Tổng quan
           </a>
-          <a class="nav-item" href="orders.php" ><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 7h18M3 12h18M3 17h18" stroke-width="1.5"/></svg> Đơn hàng</a>
-          <a class="nav-item active" href="products.php" style="color: lightblue;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="14" rx="2" stroke-width="1.5"/><path d="M7 8h10M7 12h10" stroke-width="1.5"/></svg> Sản phẩm</a>
-          <a class="nav-item" href="inventories.php"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9h18M5 9V5h14v4M5 9v10h14V9" stroke-width="1.5"/></svg> Quản lý kho</a>
-          <a class="nav-item" href="employee.php"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4" stroke-width="1.5"/><path d="M4 21c1.5-4 6-6 8-6s6.5 2 8 6" stroke-width="1.5"/></svg> Nhân viên</a>
-          <a class="nav-item" href="customers.php" ><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4" stroke-width="1.5"/><path d="M4 21c1.5-4 6-6 8-6s6.5 2 8 6" stroke-width="1.5"/></svg> Khách hàng</a>
+          <a class="nav-item" href="/Chuyen_de_dinh_huong_CNPM/Front-end/Trangchuafter/orders.php" ><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 7h18M3 12h18M3 17h18" stroke-width="1.5"/></svg> Đơn hàng</a>
+          <a class="nav-item active" href="/Chuyen_de_dinh_huong_CNPM/Front-end/Trangchuafter/products.php" style="color: lightblue;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="14" rx="2" stroke-width="1.5"/><path d="M7 8h10M7 12h10" stroke-width="1.5"/></svg> Sản phẩm</a>
+          <a class="nav-item" href="/Chuyen_de_dinh_huong_CNPM/Front-end/Trangchuafter/inventories.php"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9h18M5 9V5h14v4M5 9v10h14V9" stroke-width="1.5"/></svg> Quản lý kho</a>
+          <a class="nav-item" href="/Chuyen_de_dinh_huong_CNPM/Front-end/Trangchuafter/employee.php"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4" stroke-width="1.5"/><path d="M4 21c1.5-4 6-6 8-6s6.5 2 8 6" stroke-width="1.5"/></svg> Nhân viên</a>
+          <a class="nav-item" href="/Chuyen_de_dinh_huong_CNPM/Front-end/Trangchuafter/customers.php" ><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4" stroke-width="1.5"/><path d="M4 21c1.5-4 6-6 8-6s6.5 2 8 6" stroke-width="1.5"/></svg> Khách hàng</a>
           <!-- <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 12h16M12 4v16" stroke-width="1.5"/></svg> Khuyến mại</a> -->
           <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="5" width="18" height="14" rx="2" stroke-width="1.5"/><path d="M7 9h6M7 13h10" stroke-width="1.5"/></svg> Sổ quỹ</a>
           <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 6h16M4 12h16M4 18h10" stroke-width="1.5"/></svg> Báo cáo</a>
         </div>
-
 
       </nav>
 
@@ -308,77 +345,37 @@
         <!-- Left column -->
          <section class="content">
             <div class="topbutton">
-                <button onclick="location.href='Trangchuafter/products.php'">&larr;</button>
-                <h2>Thêm sản phẩm</h2>
+                <button onclick="location.href='/Chuyen_de_dinh_huong_CNPM/Front-end/Trangchuafter/customers.php'">&larr;</button>
+                <h2>Thêm Khách Hàng</h2>
             </div>
-            <div class="form-grid">
-                <!-- Left column -->
-                <div>
-                <div class="card">
-                    <h3>Thông tin sản phẩm</h3>
-                    <label for="name">Tên sản phẩm</label>
-                    <input type="text" id="name" placeholder="Nhập tên sản phẩm" name="TenSP" value="<?php echo htmlspecialchars($row['TenSP']); ?>">
+            <div class="card">
+                <h3>Thông tin cơ bản</h3>
+                <div class="form-grid">
+                    <!-- Cột trái -->
+                    <div>
+                    <label for="fullname">Họ và tên</label>
+                    <input type="text" id="fullname" name="HoTen" placeholder="Nhập họ và tên" required value="<?php echo htmlspecialchars($row['HoTen']); ?>">
 
-                    <label for="sku">Mã SKU</label>
-                    <input type="text" id="sku" placeholder="Nhập mã SKU" name="MaSKU" value="<?php echo htmlspecialchars($row['MaSKU']); ?>" required>
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="Email" placeholder="Nhập email" required value="<?php echo htmlspecialchars($row['Email']); ?>">
 
-                    <label for="barcode">Số lượng sản phẩm</label>
-                    <input type="text" id="barcode" placeholder="Nhập số lượng sản phẩm" name="SoLuongTon" value="<?php echo htmlspecialchars($row['SoLuongTon']); ?>" required>
+                    <label for="address">Địa chỉ</label>
+                    <input type="text" id="address" name="DiaChi" placeholder="Nhập địa chỉ" required value="<?php echo htmlspecialchars($row['DiaChi']); ?>">
 
-                    <label for="unit">Đơn vị tính</label>
-                    <input type="text" id="unit" placeholder="Nhập đơn vị tính" name="DonViTinh" >
-
-                    <label for="description">Mô tả</label>
-                    <textarea id="description" placeholder="Nhập mô tả sản phẩm" name="MoTa"><?php echo htmlspecialchars($row['MoTa']); ?></textarea>
+                    <label for="phone">Số điện thoại</label>
+                    <input type="tel" id="phone" name="DienThoai" placeholder="Nhập số điện thoại" required value="<?php echo htmlspecialchars($row['DienThoai']); ?>">
+                  </div>
                 </div>
-
-                <div class="card">
-                    <h3>Thông tin giá</h3>
-                    <label>Giá bán</label>
-                    <input type="number" placeholder="Nhập giá bán" name="GiaBan" value="<?php echo htmlspecialchars($row['GiaBan']); ?>">
-                    <label>Giá so sánh</label>
-                    <input type="number" placeholder="Nhập giá so sánh sản phẩm" name="GiaSoSanh">
-                    <label>Giá vốn</label>
-                    <input type="number" placeholder="Nhập giá vốn sản phẩm" name="GiaVon" value="<?php echo htmlspecialchars($row['GiaVon']); ?>">
-                </div>
-
-                <button type="submit" class="btn" style="background-color: #1373ff;">Cập nhật</button>
-                 <a href="delete.php?MaSP=<?php echo $row['MaSP']; ?>" 
-                  onclick="return confirm('Bạn có muốn xóa sản phẩm này không?');" 
-                  class="btn" 
-                  style="background-color:#ff4613;color:white;height:50px;width:100px">
-                  Xóa
-                </a>
-
-                </div>
-
-                <!-- Right column -->
-                <div>
-                <div class="card">
-                    <h3>Ảnh sản phẩm</h3>
-                    <input type="file">
-                </div>
-
-                <div class="card">
-                    <h3>Danh mục & Thuộc tính</h3>
-                    <label>Danh mục</label>
-                    <select name="MaDM">
-                      <option value="1" <?php echo ($row['MaDM'] == 1) ? 'selected' : ''; ?>>Danh mục 1</option>
-                      <option value="2" <?php echo ($row['MaDM'] == 2) ? 'selected' : ''; ?>>Danh mục 2</option>
-                    </select>
-                    <label>Nhãn hiệu</label>
-                    <select name="NhaHieu">
-                      <option value="1">Nhãn hiệu 1</option>
-                      <option value="2">Nhãn hiệu 2</option>
-                    </select>
-                    <label>Loại sản phẩm</label>
-                    <select name="LoaiSP">
-                      <option value="1">Loại 1</option>
-                      <option value="2">Loại 2</option>
-                    </select>
-                </div>
-                </div>
-            </div>
+              </div>
+              <div>
+                  <button type="submit" class="btn" style="background-color: #1373ff;">Cập nhật</button>
+                     <a href="delete.php?MaKH=<?php echo $row['MaKH']; ?>" 
+                      onclick="return confirm('Bạn có muốn xóa sản phẩm này không?');" 
+                      class="btn" 
+                      style="background-color:#ff4613;color:white;height:50px;width:100px">
+                      Xóa
+                    </a>
+              </div>
             </section>
         </div>
     </section>

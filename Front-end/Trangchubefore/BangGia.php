@@ -54,10 +54,10 @@
                 </a>
             </div>
             <div class="nav1">
-                <button>Đăng nhập</button>
+                <button onclick="location.href='/Chuyen_de_dinh_huong_CNPM/Front-end/Trangchuafter/DangNhap.php'">Đăng nhập</button>
             </div>
             <div class="nav2">
-                <button>Đăng ký</button>
+                <button onclick="location.href='/Chuyen_de_dinh_huong_CNPM/Front-end/Trangchuafter/DangKy.php'">Đăng ký</button>
             </div>
         </div>
         <div class="tab2">

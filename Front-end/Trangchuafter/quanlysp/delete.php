@@ -13,7 +13,8 @@
     // header("location:orders.php");
 
 
-    include('connect.php');
+    // include('connect.php');
+        include __DIR__ . "/../connect.php";
 
         if (isset($_GET['MaSP'])) {
             $masp = $_GET['MaSP'];
@@ -24,7 +25,9 @@
             $sql2 = "DELETE FROM sanpham WHERE MaSP = $masp";
             mysqli_query($conn, $sql2);
 
-            header('Location:products.php'); 
+            // header('Location:products.php'); 
+            header("Location: ../products.php");
+
             exit;
         }
 ?>

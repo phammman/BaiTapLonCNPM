@@ -227,15 +227,15 @@
 
       <nav class="nav">
         <div class="nav-section">
-          <a class="nav-item" href="#">
+          <a class="nav-item" href="/Chuyen_de_dinh_huong_CNPM/Front-end/Trangchuafter/manuadmin.php">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 10.5 12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1v-10.5z" stroke-width="1.5"/></svg>
             Tổng quan
           </a>
-          <a class="nav-item active" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 7h18M3 12h18M3 17h18" stroke-width="1.5"/></svg> Đơn hàng</a>
-          <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="14" rx="2" stroke-width="1.5"/><path d="M7 8h10M7 12h10" stroke-width="1.5"/></svg> Sản phẩm</a>
-          <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9h18M5 9V5h14v4M5 9v10h14V9" stroke-width="1.5"/></svg> Quản lý kho</a>
-          <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4" stroke-width="1.5"/><path d="M4 21c1.5-4 6-6 8-6s6.5 2 8 6" stroke-width="1.5"/></svg> Nhân viên</a>
-          <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4" stroke-width="1.5"/><path d="M4 21c1.5-4 6-6 8-6s6.5 2 8 6" stroke-width="1.5"/></svg> Khách hàng</a>
+          <a class="nav-item active" href="/Chuyen_de_dinh_huong_CNPM/Front-end/Trangchuafter/orders.php" ><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 7h18M3 12h18M3 17h18" stroke-width="1.5"/></svg> Đơn hàng</a>
+          <a class="nav-item" href="/Chuyen_de_dinh_huong_CNPM/Front-end/Trangchuafter/products.php" style="color: lightblue;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="14" rx="2" stroke-width="1.5"/><path d="M7 8h10M7 12h10" stroke-width="1.5"/></svg> Sản phẩm</a>
+          <a class="nav-item" href="/Chuyen_de_dinh_huong_CNPM/Front-end/Trangchuafter/inventories.php"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9h18M5 9V5h14v4M5 9v10h14V9" stroke-width="1.5"/></svg> Quản lý kho</a>
+          <a class="nav-item" href="/Chuyen_de_dinh_huong_CNPM/Front-end/Trangchuafter/employee.php"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4" stroke-width="1.5"/><path d="M4 21c1.5-4 6-6 8-6s6.5 2 8 6" stroke-width="1.5"/></svg> Nhân viên</a>
+          <a class="nav-item" href="/Chuyen_de_dinh_huong_CNPM/Front-end/Trangchuafter/customers.php" ><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4" stroke-width="1.5"/><path d="M4 21c1.5-4 6-6 8-6s6.5 2 8 6" stroke-width="1.5"/></svg> Khách hàng</a>
           <!-- <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 12h16M12 4v16" stroke-width="1.5"/></svg> Khuyến mại</a> -->
           <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="5" width="18" height="14" rx="2" stroke-width="1.5"/><path d="M7 9h6M7 13h10" stroke-width="1.5"/></svg> Sổ quỹ</a>
           <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 6h16M4 12h16M4 18h10" stroke-width="1.5"/></svg> Báo cáo</a>
@@ -266,69 +266,92 @@
         <!-- Left column -->
          <section class="content">
             <div class="topbutton">
-                <button type="button" onclick="location.href='orders.php'">&larr;</button>
+                <button type="button" onclick="location.href='/Chuyen_de_dinh_huong_CNPM/Front-end/Trangchuafter/orders.php'">&larr;</button>
                 <h2>Tạo đơn hàng</h2>
             </div>
             <div class="product-section card">
               <h3>Sản phẩm</h3>
-              <div id="searchInput"  style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
-                <input type="text" placeholder="Tìm theo tên, mã SKU... (F3)" style="flex:1; padding: 8px; border: 1px solid #e5e7eb; border-radius: 6px; margin-right: 10px;">
-                <button style="padding: 8px 12px; border: 1px solid #e5e7eb; border-radius: 6px; background: #fff; cursor:pointer;">Chọn nhiều</button>
+              <div style="position: relative; margin-bottom: 10px;">
+                <input type="text" id="searchInput" placeholder="Tìm theo tên, mã SKU... (F3)" 
+                      style="flex:1; padding: 8px; border: 1px solid #e5e7eb; border-radius: 6px; margin-right: 10px; width:100%;">
+                <div id="suggestions" 
+                    style="position:absolute; top:40px; left:0; background:white; border:1px solid #ddd; border-radius:6px; 
+                            max-height:200px; overflow-y:auto; display:none; width:100%; z-index:10;"></div>
+              </div>
+              
+              <div class="runsp" id="selectedProducts" 
+              style="border: 1px solid #e5e7eb; border-radius: 10px; padding: 20px; text-align: center; background: #f8fafc; margin-bottom: 10px;">
+              <div id="selectedProducts" style="margin-top: 20px;"></div>
+                <p id="emptyMsg" style="color: #64748b;">Bạn chưa thêm sản phẩm nào</p>
               </div>
 
-              <div id="suggestions" style="position:absolute; background:white; border:1px solid #ddd; border-radius:6px; max-height:200px; overflow-y:auto; display:none; width:300px; z-index:10;"></div>
-
-              <div style="border: 1px solid #e5e7eb; border-radius: 10px; padding: 20px; text-align: center; background: #f8fafc; margin-bottom: 10px;">
-                <p style="color: #64748b;">Bạn chưa thêm sản phẩm nào</p>
-                <button type="button" id="btnAddProduct" style="padding: 8px 14px; border-radius: 6px; background: #1373ff; color: white; border: none; cursor:pointer;">Thêm sản phẩm</button>
-              </div>
-
-              <a href="#" style="display: inline-flex; align-items: center; color: #1373ff; font-size: 14px; text-decoration: none; gap: 4px;">
-                <span style="font-size:18px;">+</span> Thêm sản phẩm hoặc dịch vụ tùy chỉnh
-              </a>
               <script>
-                document.getElementById("btnAddProduct").addEventListener("click", function() {
-                    document.getElementById("searchInput").focus();
-                });
-
                 const searchInput = document.getElementById("searchInput");
                 const suggestions = document.getElementById("suggestions");
+                const selectedProducts = document.getElementById("selectedProducts");
+                const emptyMsg = document.getElementById("emptyMsg");
 
+                // Tìm kiếm sản phẩm
                 searchInput.addEventListener("keyup", function() {
-                    let keyword = this.value.trim();
-                    if (keyword.length < 1) {
-                        suggestions.style.display = "none";
-                        return;
-                    }
+                  let keyword = this.value.trim();
+                  if (keyword.length < 1) {
+                    suggestions.style.display = "none";
+                    return;
+                  }
 
-                    fetch("search_product.php?q=" + encodeURIComponent(keyword))
+                  fetch("search_product.php?q=" + encodeURIComponent(keyword))
                     .then(response => response.json())
                     .then(data => {
-                        suggestions.innerHTML = "";
-                        if (data.length > 0) {
-                            data.forEach(item => {
-                                let div = document.createElement("div");
-                                div.textContent = item.TenSP + " (" + item.MaSP + ")";
-                                div.style.padding = "8px";
-                                div.style.cursor = "pointer";
-                                div.addEventListener("click", function() {
-                                    alert("Bạn đã chọn sản phẩm: " + item.TenSP);
-                                    searchInput.value = "";
-                                    suggestions.style.display = "none";
-                                });
-                                suggestions.appendChild(div);
-                            });
-                            suggestions.style.display = "block";
-                        } else {
-                            suggestions.innerHTML = "<div style='padding:8px; color:#999;'>Không tìm thấy sản phẩm</div>";
-                            suggestions.style.display = "block";
-                        }
+                      suggestions.innerHTML = "";
+                      if (data.length > 0) {
+                        data.forEach(item => {
+                          let div = document.createElement("div");
+                          div.textContent = item.TenSP + " (" + item.MaSP + ")";
+                          div.style.padding = "8px";
+                          div.style.cursor = "pointer";
+
+                          // Khi click chọn sản phẩm
+                          div.addEventListener("click", function() {
+                            searchInput.value = ""; // xóa ô tìm kiếm
+                            suggestions.style.display = "none";
+                            addProductCard(item);
+                          });
+
+                          suggestions.appendChild(div);
+                        });
+                        suggestions.style.display = "block";
+                      } else {
+                        suggestions.innerHTML = "<div style='padding:8px; color:#999;'>Không tìm thấy sản phẩm</div>";
+                        suggestions.style.display = "block";
+                      }
                     });
                 });
-                </script>
+
+                // Hàm thêm thẻ sản phẩm
+                function addProductCard(product) {
+                  // Ẩn dòng "Bạn chưa thêm sản phẩm nào"
+                  if (emptyMsg) {
+                    emptyMsg.style.display = "none";
+                  }
+
+                  let card = document.createElement("div");
+                  card.classList.add("product-card");
+                  card.style.cssText = "border:1px solid #e5e7eb; border-radius:10px;padding:12px; margin-bottom:10px; background:#fff; display:flex; justify-content:space-between; align-items:center";
+
+                  card.innerHTML = `
+                    <div>
+                      <strong>${product.TenSP}</strong><br>
+                      Giá: ${Number(product.GiaBan).toLocaleString()} đ
+                    </div>
+                    <div>
+                      <label>Số lượng:</label>
+                      <input type="number" value="1" min="1" style="width:60px; padding:4px; border:1px solid #ddd; border-radius:6px;">
+                    </div>
+                  `;
+                  selectedProducts.appendChild(card);
+                }
+              </script>
             </div>
-
-
             <div class="payment-section card" style="margin-top: 20px; border: 1px solid #e5e7eb; border-radius: 10px; padding: 16px; background: #fff;">
               <h3 style="margin-bottom: 16px;">Thanh toán</h3>
 
@@ -354,6 +377,59 @@
                 <span>0₫</span>
               </div>
             </div>
+
+           <div style="position: relative; margin-bottom: 10px;margin-top: 20px; border: 1px solid #e5e7eb; border-radius: 10px; padding: 16px; background: #fff;">
+            <label for="searchCustomer">Khách hàng</label>
+            <input type="text" id="searchCustomer" placeholder="Tìm khách hàng theo tên, email, số ĐT..."
+                  style="flex:1; padding: 8px; border: 1px solid #e5e7eb; border-radius: 6px; margin-right: 10px; width:100%;">
+            <div id="customerSuggestions"
+                style="position:absolute; margin-top:5px; left:0; background:white; border:1px solid #ddd; border-radius:6px; 
+                            max-height:200px; overflow-y:auto; display:none; width:100%; z-index:10;"></div>
+          </div>
+
+
+          <script>
+            const searchCustomer = document.getElementById("searchCustomer");
+            const customerSuggestions = document.getElementById("customerSuggestions");
+
+            searchCustomer.addEventListener("keyup", function() {
+                let keyword = this.value.trim();
+                if (keyword.length < 1) {
+                    customerSuggestions.style.display = "none";
+                    return;
+                }
+
+                fetch("search_customer.php?q=" + encodeURIComponent(keyword))
+                .then(response => response.json())
+                .then(data => {
+                    customerSuggestions.innerHTML = "";
+                    if (data.length > 0) {
+                        data.forEach(item => {
+                            let div = document.createElement("div");
+                            div.textContent = item.HoTen + " - " + item.Email + " (" + item.DienThoai + ")";
+                            div.style.padding = "8px";
+                            div.style.cursor = "pointer";
+
+                            div.addEventListener("click", function() {
+                                searchCustomer.value = item.HoTen; // điền tên KH vào input
+                                customerSuggestions.style.display = "none";
+
+                                // Nếu bạn muốn tự động gán Email / SDT vào các ô khác thì thêm ở đây
+                                // document.getElementById("email").value = item.Email;
+                                // document.getElementById("phone").value = item.DienThoai;
+                            });
+
+                            customerSuggestions.appendChild(div);
+                        });
+                        customerSuggestions.style.display = "block";
+                    } else {
+                        customerSuggestions.innerHTML = "<div style='padding:8px; color:#999;'>Không tìm thấy khách hàng</div>";
+                        customerSuggestions.style.display = "block";
+                    }
+                });
+            });
+          </script>
+
 
             <div class="extra-info card" style="margin-top: 20px; border: 1px solid #e5e7eb; border-radius: 10px; padding: 16px; background: #fff;">
               <h3 style="margin-bottom: 30px;">Thông tin bổ sung</h3>

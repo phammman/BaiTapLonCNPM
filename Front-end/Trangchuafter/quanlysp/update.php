@@ -1,5 +1,7 @@
 <?php
-      include('connect.php');
+      // include('connect.php');
+      include __DIR__ . "/../connect.php";
+
         
         $masp = $_POST['MaSP'] ?? '';
         $tensp = $_POST['TenSP'] ?? '';
@@ -15,5 +17,7 @@
 
     mysqli_query($conn, $capnhat_sql);
 
-    header("location:products.php");
+    // header("location:products.php");
+    header("Location: ../products.php");
+
 ?>

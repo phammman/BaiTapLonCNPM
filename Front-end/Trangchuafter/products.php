@@ -161,7 +161,7 @@
                         <button style="background:transparent; border:none; color:var(--primary); font-weight:700; padding:8px 12px; border-bottom:3px solid var(--primary);">Tất cả</button>
                         </div>
                         <div style="display:flex; gap:8px; align-items:center;">
-                        <a href="add.html"><button class="btn primary">Thêm sản phẩm</button></a>
+                        <a href="quanlysp/add.html"><button class="btn primary">Thêm sản phẩm</button></a>
                         </div>
                     </nav>
 
@@ -205,7 +205,7 @@
                             <td style="padding:14px; border-bottom:1px solid #f1f5f9;">
                             <div style="display:flex; align-items:center; gap:12px;">
                                 <div style="width:48px; height:48px; border-radius:8px; background:#f1f5f9; display:grid; place-items:center; color:var(--muted);">📷</div>
-                                <a href="edit.php?MaSP=<?php echo $r['MaSP'];?>" class="click" style="color:var(--primary); text-decoration:none; font-weight:500;"><?php echo $r['TenSP']; ?></a>
+                                <a href="quanlysp/edit.php?MaSP=<?php echo $r['MaSP'];?>" class="click" style="color:var(--primary); text-decoration:none; font-weight:500;"><?php echo $r['TenSP']; ?></a>
                             </div>
                             </td>
                             <td style="padding:14px; border-bottom:1px solid #f1f5f9;"><?php echo $r['SoLuongTon']; ?></td>

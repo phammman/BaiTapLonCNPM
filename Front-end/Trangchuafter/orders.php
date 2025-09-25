@@ -162,7 +162,7 @@
                         <button style="background:transparent; border:none; color:var(--primary); font-weight:700; padding:8px 12px; border-bottom:3px solid var(--primary);">Tất cả</button>
                         </div>
                         <div style="display:flex; gap:8px; align-items:center;">
-                        <a href="add_orders.php"><button class="btn primary">Thêm đơn hàng</button></a>
+                        <a href="quanlydonhang/add.php"><button class="btn primary">Thêm đơn hàng</button></a>
                         </div>
                     </nav>
 

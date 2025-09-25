@@ -189,7 +189,7 @@ if (!$result) {
                         <button style="background:transparent; border:none; color:var(--primary); font-weight:700; padding:8px 12px; border-bottom:3px solid var(--primary);">Tất cả</button>
                         </div>
                         <div style="display:flex; gap:8px; align-items:center;">
-                        <a href="#"><button class="btn primary">Thêm khách hàng</button></a>
+                        <a href="quanlykhachhang/add.html"><button class="btn primary">Thêm khách hàng</button></a>
                         </div>
                     </nav>
 
@@ -206,47 +206,47 @@ if (!$result) {
 
                     <!-- Table -->
                     <div style="overflow:auto;">
-    <table style="width:100%; border-collapse:collapse; background:#fff;">
-        <thead>
-            <tr style="background:#fafafa; color:var(--muted); text-align:left;">
-                <th style="width:48px; padding:14px; border-bottom:1px solid var(--border);"><input type="checkbox" /></th>
-                <th style="padding:14px; border-bottom:1px solid var(--border); width:120px;">Thông tin</th>
-                <th style="padding:14px; border-bottom:1px solid var(--border); width:120px;">Email</th>
-                <th style="padding:14px; border-bottom:1px solid var(--border); width:120px;">Điện thoại</th>
-                <th style="padding:14px; border-bottom:1px solid var(--border); width:150px;">Số đơn hàng</th>
-                <th style="padding:14px; border-bottom:1px solid var(--border); width:200px;">Đơn hàng gần nhất</th>
-                <th style="padding:14px; border-bottom:1px solid var(--border); width:160px;">Tổng chi tiêu</th>
-            </tr>
-        </thead>
-        <tbody>
-        <?php if ($result->num_rows > 0): ?>
-            <?php while($row = $result->fetch_assoc()): ?>
-                <tr>
-                    <td style="padding:14px; border-bottom:1px solid #f1f5f9;"><input type="checkbox" /></td>
-                    <td style="padding:14px; border-bottom:1px solid #f1f5f9;">
-                        <div style="display:flex; align-items:center; gap:12px;">
-                            <a href="#" style="color:var(--primary); text-decoration:none; font-weight:500;">
-                                <?php echo htmlspecialchars($row['HoTen']); ?>
-                            </a>
-                        </div>
-                    </td>
-                    <td style="padding:14px; border-bottom:1px solid #f1f5f9;"><?php echo htmlspecialchars($row['Email']); ?></td>
-                    <td style="padding:14px; border-bottom:1px solid #f1f5f9;"><?php echo htmlspecialchars($row['DienThoai']); ?></td>
-                    <td style="padding:14px; border-bottom:1px solid #f1f5f9;"><?php echo $row['SoDonHang']; ?></td>
-                    <td style="padding:14px; border-bottom:1px solid #f1f5f9;">#<?php echo $row['DonHangGanNhat']; ?></td>
-                    <td style="padding:14px; border-bottom:1px solid #f1f5f9;">
-                        <?php echo number_format($row['TongChiTieu'], 0, ',', '.'); ?>
-                    </td>
-                </tr>
-            <?php endwhile; ?>
-        <?php else: ?>
-            <tr>
-                <td colspan="7" style="padding:14px; text-align:center;">Không có dữ liệu</td>
-            </tr>
-        <?php endif; ?>
-        </tbody>
-    </table>
-</div>
+                      <table style="width:100%; border-collapse:collapse; background:#fff;">
+                          <thead>
+                              <tr style="background:#fafafa; color:var(--muted); text-align:left;">
+                                  <th style="width:48px; padding:14px; border-bottom:1px solid var(--border);"><input type="checkbox" /></th>
+                                  <th style="padding:14px; border-bottom:1px solid var(--border); width:120px;">Thông tin</th>
+                                  <th style="padding:14px; border-bottom:1px solid var(--border); width:120px;">Email</th>
+                                  <th style="padding:14px; border-bottom:1px solid var(--border); width:120px;">Điện thoại</th>
+                                  <th style="padding:14px; border-bottom:1px solid var(--border); width:150px;">Số đơn hàng</th>
+                                  <th style="padding:14px; border-bottom:1px solid var(--border); width:200px;">Đơn hàng gần nhất</th>
+                                  <th style="padding:14px; border-bottom:1px solid var(--border); width:160px;">Tổng chi tiêu</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                          <?php if ($result->num_rows > 0): ?>
+                              <?php while($row = $result->fetch_assoc()): ?>
+                                  <tr>
+                                      <td style="padding:14px; border-bottom:1px solid #f1f5f9;"><input type="checkbox" /></td>
+                                      <td style="padding:14px; border-bottom:1px solid #f1f5f9;">
+                                          <div style="display:flex; align-items:center; gap:12px;">
+                                              <a href="quanlykhachhang/edit.php?MaKH=<?php echo $row['MaKH']; ?>" style="color:var(--primary); text-decoration:none; font-weight:500;">
+                                                  <?php echo htmlspecialchars($row['HoTen']); ?>
+                                              </a>
+                                          </div>
+                                      </td>
+                                      <td style="padding:14px; border-bottom:1px solid #f1f5f9;"><?php echo htmlspecialchars($row['Email']); ?></td>
+                                      <td style="padding:14px; border-bottom:1px solid #f1f5f9;"><?php echo htmlspecialchars($row['DienThoai']); ?></td>
+                                      <td style="padding:14px; border-bottom:1px solid #f1f5f9;"><?php echo $row['SoDonHang']; ?></td>
+                                      <td style="padding:14px; border-bottom:1px solid #f1f5f9;">#<?php echo $row['DonHangGanNhat']; ?></td>
+                                      <td style="padding:14px; border-bottom:1px solid #f1f5f9;">
+                                          <?php echo number_format($row['TongChiTieu'], 0, ',', '.'); ?>
+                                      </td>
+                                  </tr>
+                              <?php endwhile; ?>
+                          <?php else: ?>
+                              <tr>
+                                  <td colspan="7" style="padding:14px; text-align:center;">Không có dữ liệu</td>
+                              </tr>
+                          <?php endif; ?>
+                          </tbody>
+                      </table>
+                  </div>
 
                     <!-- Footer controls -->
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-top:14px;">

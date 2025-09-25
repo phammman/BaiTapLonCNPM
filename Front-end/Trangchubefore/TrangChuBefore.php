@@ -97,7 +97,7 @@
             </div>
         </div>
         <div class="tab5">
-            <button>Dùng thử miễn phí →</button>
+            <button onclick="location.href='/Chuyen_de_dinh_huong_CNPM/Front-end/Trangchuafter/DangKy.php'">Dùng thử miễn phí →</button>
         </div>
         <div class="tab6">
             <div class="tab62">
@@ -106,7 +106,7 @@
             </div>
             <div class="tab61">
                 <input type="text" placeholder="Nhập tên cửa hàng/daonh nghiệp của bạn">
-                <button>Dùng thử miễn phí →</button>
+                <button onclick="location.href='/Chuyen_de_dinh_huong_CNPM/Front-end/Trangchuafter/DangKy.php'">Dùng thử miễn phí →</button>
             </div>
         </div>
         <div class="tab7">
