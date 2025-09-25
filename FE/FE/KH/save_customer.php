@@ -18,9 +18,12 @@ $sql = "INSERT INTO KhachHang (HoTen, DienThoai, DiaChi, Email)
         VALUES ('$HoTen', '$DienThoai', '$DiaChi', '$Email')";
 
 if ($conn->query($sql) === TRUE) {
-    echo "Thêm khách hàng thành công! <a href='add_customer.php'>Quay lại</a>";
+    // Chuyển hướng kèm thông báo
+    header("Location: customers.php?success=1");
+    exit();
 } else {
-    echo "Lỗi: " . $conn->error;
+    header("Location: customers.php?error=" . urlencode($conn->error));
+    exit();
 }
 
 $conn->close();
