@@ -161,7 +161,7 @@
                         <button style="background:transparent; border:none; color:var(--primary); font-weight:700; padding:8px 12px; border-bottom:3px solid var(--primary);">Tất cả</button>
                         </div>
                         <div style="display:flex; gap:8px; align-items:center;">
-                        <a href="#"><button class="btn primary">Thêm sản phẩm</button></a>
+                        <a href="themDonHang.php"><button class="btn primary">Thêm sản phẩm</button></a>
                         </div>
                     </nav>
 
