@@ -137,11 +137,7 @@
                         // Cập nhật thành công vào bảng nhân viên
                         header('Location: quanLyNhanVien.php');
                         exit;
-                    } else {
-                        echo "Lỗi cập nhật thông tin nhân viên: " . mysqli_error($conn);
-                    }
-                } else {
-                    echo "Lỗi cập nhật thông tin người dùng: " . mysqli_error($conn);
+                    } 
                 }
             }
         }

@@ -157,9 +157,7 @@ if (isset($_POST["them"])) {
             echo "Error adding user: " . $conn->error;
         }
         $stmtUser->close();
-    } else {
-        echo "Vui lòng điền đầy đủ thông tin.";
-    }
+    } 
 }
 ?>
     <div class="container">

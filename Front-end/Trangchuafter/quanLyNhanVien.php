@@ -163,10 +163,10 @@
                 <div class="all">
                     <button class = "all-css"><b>Tất cả</b></button>
                 </div>
-                <form action="search.php" method="get">
+                <form action="searchNhanVien.php" method="get">
                     <div class="search-nv">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748b"><circle cx="11" cy="11" r="7" stroke-width="1.6"/><path d="M20 20l-3.5-3.5" stroke-width="1.6"/></svg>
-                        <input type = "text" name = "TenDangNhap" placeholder="Tìm kiếm nhân viên" >
+                        <input type = "text" name = "TenDangNhap" placeholder="Tìm kiếm nhân viên theo tên đăng nhập" >
                     </div>
                 </form>
                 <table border = 2  align = "center";>

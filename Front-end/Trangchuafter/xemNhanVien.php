@@ -121,9 +121,7 @@
     $stmt->execute();
     $result = $stmt->get_result();
     $row = $result->fetch_assoc();
-    
-    // $result = mysqli_query($conn, $sql);
-    // $row = mysqli_fetch_array($result);
+   
     ?>
     <div class="container">
         <div class="sidebar">
