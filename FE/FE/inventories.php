@@ -1,17 +1,12 @@
 <?php
-// Bật hiển thị lỗi PHP để dễ debug
+
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+include 'db_connect.php';
 
-// Kết nối CSDL
-$conn = new mysqli("localhost", "root", "", "ql");
-if ($conn->connect_error) {
-    die("Kết nối thất bại: " . $conn->connect_error);
-}
-$conn->set_charset("utf8");
 
-// Truy vấn sản phẩm
+
 $sql = "SELECT MaSP, TenSP, MaSKU, SoLuongTon, GiaBan, GiaVon FROM SanPham";
 $result = $conn->query($sql);
 ?>

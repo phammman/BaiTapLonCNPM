@@ -1,11 +1,5 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "ql"; // đổi thành tên CSDL của bạn
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-if ($conn->connect_error) { die("Kết nối thất bại: " . $conn->connect_error); }
+include 'db_connect.php';
 
 $Ho = $_POST['Ho'];
 $Ten = $_POST['Ten'];
@@ -18,7 +12,7 @@ $sql = "INSERT INTO KhachHang (HoTen, DienThoai, DiaChi, Email)
         VALUES ('$HoTen', '$DienThoai', '$DiaChi', '$Email')";
 
 if ($conn->query($sql) === TRUE) {
-    // Chuyển hướng kèm thông báo
+
     header("Location: customers.php?success=1");
     exit();
 } else {
