@@ -1,16 +1,5 @@
 <?php
-// Kết nối database
-$servername = "localhost";
-$username = "root"; // thay bằng user MySQL của bạn
-$password = "";     // mật khẩu (nếu có)
-$dbname = "ql";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-$conn->set_charset("utf8");
-
-if ($conn->connect_error) {
-    die("Kết nối thất bại: " . $conn->connect_error);
-}
+include 'db_connect.php';
 
 // Truy vấn danh sách nhân viên + tài khoản
 $sql = "SELECT nv.MaNV, nv.HoTen, nv.ChucVu, nd.TenDangNhap, nd.QuyenHan

@@ -1,63 +1,53 @@
 <?php
-// Kết nối MySQL
-$conn = new mysqli("localhost", "root", "", "ql");
-$conn->set_charset("utf8");
+include 'db_connect.php';
 
-// Lấy từ khóa tìm kiếm
-$keyword = isset($_GET['keyword']) ? trim($_GET['keyword']) : "";
+// Doanh thu theo ngày
+$sql_revenue = "SELECT dh.NgayLap, SUM(ct.SoLuong * ct.DonGia) AS DoanhThu
+                FROM DonHang dh
+                JOIN ChiTietDonHang ct ON dh.MaDH = ct.MaDH
+                GROUP BY dh.NgayLap
+                ORDER BY dh.NgayLap ASC";
+$result_revenue = $conn->query($sql_revenue);
 
-var_dump($_GET['keyword']);
-
-
-
-// Câu query gốc
-$sql = "
-    SELECT 
-        kh.MaKH,
-        kh.HoTen,
-        kh.Email,
-        kh.DienThoai,
-        COUNT(DISTINCT dh.MaDH) AS SoDonHang,
-        MAX(dh.MaDH) AS DonHangGanNhat,
-        COALESCE(SUM(ct.SoLuong * ct.DonGia), 0) AS TongChiTieu
-    FROM KhachHang kh
-    LEFT JOIN DonHang dh ON kh.MaKH = dh.MaKH
-    LEFT JOIN ChiTietDonHang ct ON dh.MaDH = ct.MaDH
-";
-
-
-// Nếu có từ khóa thì lọc theo Họ tên
-if ($keyword !== "") {
-    $keyword_safe = $conn->real_escape_string($keyword);
-    $sql .= " WHERE kh.HoTen LIKE '%$keyword_safe%'";
+$labels_rev = [];
+$data_rev   = [];
+$total_revenue = 0;
+while ($row = $result_revenue->fetch_assoc()) {
+    $labels_rev[] = $row['NgayLap'];
+    $data_rev[]   = $row['DoanhThu'];
+    $total_revenue += $row['DoanhThu'];
 }
 
+// Giá trị đơn hàng trung bình theo ngày
+$sql_avg = "SELECT dh.NgayLap, AVG(tong.TongTien) AS GiaTriTB
+            FROM DonHang dh
+            JOIN (
+                SELECT MaDH, SUM(SoLuong * DonGia) AS TongTien
+                FROM ChiTietDonHang
+                GROUP BY MaDH
+            ) tong ON dh.MaDH = tong.MaDH
+            GROUP BY dh.NgayLap
+            ORDER BY dh.NgayLap ASC";
+$result_avg = $conn->query($sql_avg);
 
-$sql .= " GROUP BY kh.MaKH, kh.HoTen, kh.Email, kh.DienThoai";
-
-
-
-$result = $conn->query($sql);
-
-// Debug nếu query lỗi
-if (!$result) {
-    die("Lỗi SQL: " . $conn->error);
+$labels_avg = [];
+$data_avg   = [];
+while ($row = $result_avg->fetch_assoc()) {
+    $labels_avg[] = $row['NgayLap'];
+    $data_avg[]   = $row['GiaTriTB'];
 }
+
+// Tính giá trị trung bình chung của tất cả đơn hàng
+$sql_avg_all = "SELECT AVG(tong.TongTien) AS GiaTriTBChung
+                FROM (
+                    SELECT MaDH, SUM(SoLuong * DonGia) AS TongTien
+                    FROM ChiTietDonHang
+                    GROUP BY MaDH
+                ) tong";
+$result_avg_all = $conn->query($sql_avg_all);
+$row_avg_all = $result_avg_all->fetch_assoc();
+$avg_all = $row_avg_all['GiaTriTBChung'];
 ?>
-
-
-<?php if (isset($_GET['success']) && $_GET['success'] == 1): ?>
-    <div style="padding: 10px; background: #d4edda; color: #155724; border: 1px solid #c3e6cb; border-radius: 5px; margin-bottom: 15px;">
-        ✅ Thêm khách hàng thành công!
-    </div>
-<?php endif; ?>
-
-<?php if (isset($_GET['error'])): ?>
-    <div style="padding: 10px; background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; border-radius: 5px; margin-bottom: 15px;">
-        ❌ Lỗi: <?php echo htmlspecialchars($_GET['error']); ?>
-    </div>
-<?php endif; ?>
-
 
 <!doctype html>
 <html lang="vi">
@@ -65,6 +55,7 @@ if (!$result) {
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Admin menu</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -80,7 +71,7 @@ if (!$result) {
       --surface-2: #f8fafc;    /* page */
       --chip: #eef2ff;         /* light chip */
     }
-    /* * { box-sizing: border-box; } */
+    * { box-sizing: border-box; }
     html, body { height: 100%; }
     body {
       margin: 0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
@@ -116,7 +107,6 @@ if (!$result) {
 
     /* Main layout */
     /* .main { display:grid; grid-template-columns: 1fr 320px; gap: 18px; padding: 18px; } */
-    .main { display:grid; gap: 18px; padding: 18px; }
 
     /* Banner */
     .banner { background:#eff6ff; border:1px dashed #bfdbfe; padding:12px 14px; border-radius:10px; display:flex; align-items:center; justify-content:space-between; gap:12px; }
@@ -172,7 +162,7 @@ if (!$result) {
 
       <nav class="nav">
         <div class="nav-section">
-          <a class="nav-item" href="manuadmin.php">
+          <a class="nav-item active" href="manuadmin.php">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 10.5 12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1v-10.5z" stroke-width="1.5"/></svg>
             Tổng quan
           </a>
@@ -180,10 +170,10 @@ if (!$result) {
           <a class="nav-item" href="products.php"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="14" rx="2" stroke-width="1.5"/><path d="M7 8h10M7 12h10" stroke-width="1.5"/></svg> Sản phẩm</a>
           <a class="nav-item" href="inventories.php"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9h18M5 9V5h14v4M5 9v10h14V9" stroke-width="1.5"/></svg> Quản lý kho</a>
           <a class="nav-item" href="employee.php"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4" stroke-width="1.5"/><path d="M4 21c1.5-4 6-6 8-6s6.5 2 8 6" stroke-width="1.5"/></svg> Nhân viên</a>
-          <a class="nav-item active" href="customers.php" style="color: lightblue;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4" stroke-width="1.5"/><path d="M4 21c1.5-4 6-6 8-6s6.5 2 8 6" stroke-width="1.5"/></svg> Khách hàng</a>
+          <a class="nav-item" href="customers.php" ><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4" stroke-width="1.5"/><path d="M4 21c1.5-4 6-6 8-6s6.5 2 8 6" stroke-width="1.5"/></svg> Khách hàng</a>
           <!-- <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 12h16M12 4v16" stroke-width="1.5"/></svg> Khuyến mại</a> -->
           <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="5" width="18" height="14" rx="2" stroke-width="1.5"/><path d="M7 9h6M7 13h10" stroke-width="1.5"/></svg> Sổ quỹ</a>
-          <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 6h16M4 12h16M4 18h10" stroke-width="1.5"/></svg> Báo cáo</a>
+          <a class="nav-item" href="reports.php"  style="color: lightblue;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 6h16M4 12h16M4 18h10" stroke-width="1.5"/></svg> Báo cáo</a>
         </div>
 
       </nav>
@@ -207,105 +197,87 @@ if (!$result) {
       </div>
 
       <!-- Main -->
-    <div class="main">
+      <div class="main">
         <!-- Left column -->
-        <div class="left">
+        <div class="left" style="margin:20px; font-family:Arial, sans-serif; background:#f5f5f5;">
+          
+        <h2 style="margin-bottom:20px;">📊 Dashboard Thống kê</h2>
 
-            <div class="left">
-                <div class="card">
-                <div class="card-hd">Danh sách khách hàng</div>
-                <div class="card-bd">
-                    <!-- Tabs -->
-                    <div style="border-bottom:1px solid var(--border); padding-bottom:12px; margin-bottom:12px;">
-                    <nav style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
-                        <div style="display:flex; align-items:center; gap:12px;">
-                        <button style="background:transparent; border:none; color:var(--primary); font-weight:700; padding:8px 12px; border-bottom:3px solid var(--primary);">Tất cả</button>
-                        </div>
-                        <div style="display:flex; gap:8px; align-items:center;">
-                        <a href="customersadd2.php"><button class="btn primary">Thêm khách hàng</button></a>
-                        </div>
-                    </nav>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+        <!-- Doanh thu theo ngày -->
+        <div style="background:#fff; border:1px solid #ddd; border-radius:8px; padding:15px;">
+            <h3 style="font-size:16px; margin-bottom:10px; text-align:center;">Doanh thu theo ngày</h3>
+             <p style="margin-top:10px; text-align:center; font-weight:bold; color:#2c7;">
+                <?php echo number_format($total_revenue, 0, ',', '.'); ?> VND
+            </p>
+            <canvas id="chartRevenue"></canvas>
+            <!-- <p style="margin-top:10px; text-align:center; font-weight:bold; color:#2c7;">Tổng doanh thu: 
+                <?php echo number_format($total_revenue, 0, ',', '.'); ?> VND
+            </p> -->
+        </div>
 
-                    <!-- Form tìm kiếm -->
-<form method="get" action="customers copy.php" style="margin-bottom:20px; display:flex; gap:10px;">
-    <input type="text" name="keyword" placeholder="Tìm kiếm theo tên khách hàng"
-           value="<?php echo htmlspecialchars($keyword); ?>"
-           style="flex:1; padding:8px 12px; border:1px solid #ccc; border-radius:5px;">
-    <button type="submit" style="padding:8px 16px; border:none; border-radius:5px; background:#007bff; color:#fff; cursor:pointer;">
-        Tìm kiếm
-    </button>
-    <a href="customers.php" style="padding:8px 16px; border-radius:5px; background:#6c757d; color:#fff; text-decoration:none;">
-        Xem tất cả
-    </a>
-</form>
+        <!-- Giá trị đơn hàng trung bình -->
+        <div style="background:#fff; border:1px solid #ddd; border-radius:8px; padding:15px;">
+            <h3 style="font-size:16px; margin-bottom:10px; text-align:center;">Giá trị đơn hàng trung bình</h3>
+            <p style="margin-top:10px; text-align:center; font-weight:bold; color:#c33;">
+                <?php echo number_format($avg_all, 0, ',', '.'); ?> VND
+            </p>
+            <canvas id="chartAvgOrder"></canvas>
+            <!-- <p style="margin-top:10px; text-align:center; font-weight:bold; color:#c33;">Giá trị TB chung: 
+                <?php echo number_format($avg_all, 0, ',', '.'); ?> VND
+            </p> -->
+        </div>
 
 
-                    </div>
+        <!-- <div style="background:#fff; border:1px dashed #ccc; border-radius:8px; padding:15px; display:flex; align-items:center; justify-content:center; color:#aaa;">
+            Biểu đồ khác
+        </div>
 
-                    <!-- Table -->
-                    <div style="overflow:auto;">
-    <table style="width:100%; border-collapse:collapse; background:#fff;">
-        <thead>
-            <tr style="background:#fafafa; color:var(--muted); text-align:left;">
-                <th style="width:48px; padding:14px; border-bottom:1px solid var(--border);"><input type="checkbox" /></th>
-                <th style="padding:14px; border-bottom:1px solid var(--border); width:120px;">Thông tin</th>
-                <th style="padding:14px; border-bottom:1px solid var(--border); width:120px;">Email</th>
-                <th style="padding:14px; border-bottom:1px solid var(--border); width:120px;">Điện thoại</th>
-                <th style="padding:14px; border-bottom:1px solid var(--border); width:150px;">Số đơn hàng</th>
-                <th style="padding:14px; border-bottom:1px solid var(--border); width:200px;">Đơn hàng gần nhất</th>
-                <th style="padding:14px; border-bottom:1px solid var(--border); width:160px;">Tổng chi tiêu</th>
-            </tr>
-        </thead>
-        <tbody>
-        <?php if ($result->num_rows > 0): ?>
-            <?php while($row = $result->fetch_assoc()): ?>
-                <tr>
-                    <td style="padding:14px; border-bottom:1px solid #f1f5f9;"><input type="checkbox" /></td>
-                    <td style="padding:14px; border-bottom:1px solid #f1f5f9;">
-                        <div style="display:flex; align-items:center; gap:12px;">
-                            <a href="customer_detail3.php?MaKH=<?php echo $row['MaKH']; ?>" 
-                              style="color:var(--primary); text-decoration:none; font-weight:500;">
-                                <?php echo htmlspecialchars($row['HoTen']); ?>
-                            </a>
 
-                        </div>
-                    </td>
-                    <td style="padding:14px; border-bottom:1px solid #f1f5f9;"><?php echo htmlspecialchars($row['Email']); ?></td>
-                    <td style="padding:14px; border-bottom:1px solid #f1f5f9;"><?php echo htmlspecialchars($row['DienThoai']); ?></td>
-                    <td style="padding:14px; border-bottom:1px solid #f1f5f9;"><?php echo $row['SoDonHang']; ?></td>
-                    <td style="padding:14px; border-bottom:1px solid #f1f5f9;">#<?php echo $row['DonHangGanNhat']; ?></td>
-                    <td style="padding:14px; border-bottom:1px solid #f1f5f9;">
-                        <?php echo number_format($row['TongChiTieu'], 0, ',', '.'); ?>
-                    </td>
-                </tr>
-            <?php endwhile; ?>
-        <?php else: ?>
-            <tr>
-                <td colspan="7" style="padding:14px; text-align:center;">Không có dữ liệu</td>
-            </tr>
-        <?php endif; ?>
-        </tbody>
-    </table>
-</div>
-
-                    <!-- Footer controls -->
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:14px;">
-                    <div style="color:var(--muted);">Từ 1 đến 1 trên tổng 1</div>
-                    <div style="display:flex; align-items:center; gap:8px;">
-                        <div style="color:var(--muted);">Hiển thị</div>
-                        <select style="padding:6px 8px; border:1px solid var(--border); border-radius:6px;"><option>20</option></select>
-                    </div>
-                    </div>
-
-                    <div style="text-align:center; margin-top:18px; color:var(--muted);">
-                    Tìm hiểu thêm về <a href="#">sản phẩm</a>
-                    </div>
-                </div>
-                </div>
-            </div>
-
-        </div> 
+        <div style="background:#fff; border:1px dashed #ccc; border-radius:8px; padding:15px; display:flex; align-items:center; justify-content:center; color:#aaa;">
+            Biểu đồ khác
+        </div> -->
     </div>
+
+    <script>
+        // Doanh thu
+        new Chart(document.getElementById('chartRevenue').getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: <?php echo json_encode($labels_rev); ?>,
+                datasets: [{
+                    label: 'Doanh thu (VND)',
+                    data: <?php echo json_encode($data_rev); ?>,
+                    borderColor: 'rgba(54,162,235,1)',
+                    backgroundColor: 'rgba(54,162,235,0.2)',
+                    tension: 0.3,
+                    fill: true
+                }]
+            },
+            options: { responsive: true }
+        });
+
+        // Giá trị đơn hàng trung bình
+        new Chart(document.getElementById('chartAvgOrder').getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: <?php echo json_encode($labels_avg); ?>,
+                datasets: [{
+                    label: 'Giá trị TB (VND)',
+                    data: <?php echo json_encode($data_avg); ?>,
+                    borderColor: 'rgba(255,99,132,1)',
+                    backgroundColor: 'rgba(255,99,132,0.2)',
+                    tension: 0.3,
+                    fill: true
+                }]
+            },
+            options: { responsive: true }
+        });
+    </script>
+            
+          
+        </div> 
+      </div>
     </section>
   </div>
 
