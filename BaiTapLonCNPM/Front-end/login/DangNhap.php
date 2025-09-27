@@ -11,24 +11,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($username === "" || $password === "") {
         $error_message = "Tên đăng nhập và mật khẩu không được để trống!";
     } else {
+        // Kiểm tra xem prepare có thành công không
         $stmt = $conn->prepare("SELECT * FROM nguoidung WHERE TenDangNhap=?");
+        if (!$stmt) {
+            die("Lỗi prepare: " . $conn->error);
+        }
         $stmt->bind_param("s", $username);
         $stmt->execute();
         $result = $stmt->get_result();
         $user = $result->fetch_assoc();
-        if ($user && $password === $user['MatKhau']) {
-    $_SESSION['username'] = $user['TenDangNhap'];
-    $_SESSION['quyenHan'] = $user['QuyenHan'];
-    header("Location: ../Trangchuafter/FE/orders.php");
-    exit();
-} else {
-    $error_message = "Tên đăng nhập hoặc mật khẩu không đúng!";
-}
 
+        // Dùng password_verify để so sánh mật khẩu
+        if ($user && password_verify($password, $user['MatKhau'])) {
+            $_SESSION['username'] = $user['TenDangNhap'];
+            $_SESSION['quyenHan'] = $user['QuyenHan'];
+            header("Location: ../Trangchuafter/FE/orders.php");
+            exit();
+        } else {
+            $error_message = "Tên đăng nhập hoặc mật khẩu không đúng!";
+        }
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="vi">
 

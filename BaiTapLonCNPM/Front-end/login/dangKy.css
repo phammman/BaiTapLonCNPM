@@ -1,79 +1,121 @@
-.box {
-    margin: 30px auto;
-    width: 500px;
-    border-radius: 10px;
-    padding:0 30px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border: 1px solid #CCD0D5;
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #74ebd5, #ACB6E5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
 }
+
 form {
-    justify-content: space-between;
-    border-radius: 15px solid #000;
+  background: #fff;
+  padding: 25px 30px;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  width: 380px;
+  animation: fadeIn 0.5s ease;
 }
+
 h2 {
-    text-align: center;
-    font-size: 40px;
-    margin-bottom: 20px;
-    color: #000;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
 }
+
 .dau_vao {
-    font-size: 20px;
-    position: relative;
-    border-bottom: 2px solid #ccc;
-    margin: 15px 0;
+  margin-bottom: 15px;
 }
-.dau_vao input {
-    padding-left: 10px;
-    z-index: 1;
-    height: 40px;
-    width: 100%;
-    color: #000;
-    background: transparent;
-    border: none;
-    outline: none;
-    font-size: 16px;
+
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: bold;
+  color: #444;
 }
-.eye{
-    padding: 0 10px;
-    color: #cecece;
-    z-index: 2;
-    cursor: pointer;
-    position: absolute;
-    right: 0; 
-    top: 70%;
-    transform: translateY(-50%);
+
+input, select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  outline: none;
+  transition: all 0.2s ease-in-out;
 }
-.gioi_tinh {
-    font-size: 20px;
-    margin: 15px 0;
+
+input:focus, select:focus {
+  border-color: #4facfe;
+  box-shadow: 0 0 6px rgba(79,172,254,0.4);
 }
-.gioi_tinh p {
-    margin-bottom: 10px;
+
+/* Nút submit */
+button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
-.gioi_tinh input{
-    margin-left: 20px;
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
 }
-.btn-dangKy{
-    text-align: center;
-    margin-bottom: 20px;
-    margin-top: 10px;
+
+/* CSS riêng cho Quyền hạn */
+/* Quyền hạn đẹp hơn */
+#quyenHan {
+  appearance: none; /* ẩn select mặc định */
+  color: white;
+  font-weight: bold;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  width: 100%;
+  cursor: pointer;
+  transition: 0.3s ease;
 }
+
+#quyenHan:hover {
+    background-color: rgb(13, 13, 13)
+}
+
+/* Thêm icon mũi tên cho select */
+#quyenHan {
+ 
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 14px;
+  background: #333;
+  background-color: #333;
+}
+
+/* Nút đăng ký ở giữa */
+.btn-dangKy {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
 .btn-dangKy button {
-    background: #87CEFA;
-    color: #2F4F4F;
-    font-weight: 600;
-    border: none;
-    padding: 12px 20px;
-    cursor: pointer;
-    border-radius: 3px;
-    font-size: 18px;
-    border-radius: 5px;
-    width: 40%;
+  width: 50%;
+  padding: 12px;
+  border: none;
+  border-radius: 25px;
+  background: #28a745; /* xanh lá */
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
 }
-.error {
-    color: red;
-    display: none;
-}
-.red {
-    color: red;
+
+.btn-dangKy button:hover {
+  background: #218838;
+  transform: scale(1.05);
 }

@@ -510,12 +510,28 @@ if ($result === false) {
 
         </div>
         <div class="topbar-actions">
-          <button class="icon-btn" title="Thông báo"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748b">
+          <button class="icon-btn" title="Thông báo">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748b">
               <path d="M15 17h5l-1.4-1.4A2 2 0 0 1 18 14.2V11a6 6 0 1 0-12 0v3.2c0 .5-.2 1-.6 1.4L4 17h5" stroke-width="1.5" />
               <path d="M10 19a2 2 0 0 0 4 0" stroke-width="1.5" />
-            </svg></button>
+            </svg>
+          </button>
+
+          <a href="/CNPM/BaiTapLonCNPM/BaiTapLonCNPM/Front-end/login/DangXuat.php" style="
+      background:#ef4444;
+      color:#fff;
+      padding:8px 14px;
+      border-radius:8px;
+      font-weight:600;
+      text-decoration:none;
+      transition:0.3s;
+  " onmouseover="this.style.background='#dc2626'" onmouseout="this.style.background='#ef4444'">
+            Đăng xuất
+          </a>
+
           <div class="avatar">cu</div>
         </div>
+
       </div>
 
       <!-- Main -->
