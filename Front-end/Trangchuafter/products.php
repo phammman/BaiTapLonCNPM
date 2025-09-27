@@ -98,6 +98,39 @@
       .brand { margin:0; }
       .main { grid-template-columns: 1fr; }
     }
+    .avatar-container {
+      position: relative;
+      display: inline-block;
+    }
+
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .dropdown {
+      display: none; /* ẩn mặc định */
+      position: absolute;
+      top: 50px; /* nằm dưới avatar */
+      right: 0;
+      background-color: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      min-width: 200px;
+      z-index: 1000;
+    }
+
+    .dropdown-item {
+      padding: 10px 15px;
+      cursor: pointer;
+    }
+
+    .dropdown-item:hover {
+      background-color: #f1f1f1;
+    }
   </style>
 </head>
 <body>
@@ -155,22 +188,22 @@
             <div onclick="location.href='DangNhap.php'" class="dropdown-item">Đăng xuất</div>
           </div>
           <script>
-        const avatarBtn = document.getElementById("avatarBtn");
-        const avatarDropdown = document.getElementById("avatarDropdown");
+            const avatarBtn = document.getElementById("avatarBtn");
+            const avatarDropdown = document.getElementById("avatarDropdown");
 
-        // toggle dropdown khi click avatar
-        avatarBtn.addEventListener("click", () => {
-          avatarDropdown.style.display = 
-            avatarDropdown.style.display === "block" ? "none" : "block";
-        });
+            // toggle dropdown khi click avatar
+            avatarBtn.addEventListener("click", () => {
+              avatarDropdown.style.display = 
+                avatarDropdown.style.display === "block" ? "none" : "block";
+            });
 
-        // ẩn dropdown khi click ra ngoài
-        window.addEventListener("click", (e) => {
-          if (!avatarBtn.contains(e.target) && !avatarDropdown.contains(e.target)) {
-            avatarDropdown.style.display = "none";
-          }
-        });
-      </script>
+            // ẩn dropdown khi click ra ngoài
+            window.addEventListener("click", (e) => {
+              if (!avatarBtn.contains(e.target) && !avatarDropdown.contains(e.target)) {
+                avatarDropdown.style.display = "none";
+              }
+            });
+          </script>
         </div>
       </div>
 
