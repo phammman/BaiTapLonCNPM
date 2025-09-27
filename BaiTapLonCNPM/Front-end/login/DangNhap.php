@@ -16,13 +16,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->execute();
         $result = $stmt->get_result();
         $user = $result->fetch_assoc();
-
-        if ($user && $password === $user['MatKhau']) {
-            $_SESSION['username'] = $user['TenDangNhap'];
-            $_SESSION['quyenHan'] = $user['QuyenHan'];
-            header("Location: ../Trangchuafter/FE/orders.php");
-            exit();
-        } 
         if ($user && $password === $user['MatKhau']) {
     $_SESSION['username'] = $user['TenDangNhap'];
     $_SESSION['quyenHan'] = $user['QuyenHan'];
