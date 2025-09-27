@@ -99,6 +99,39 @@
       .brand { margin:0; }
       .main { grid-template-columns: 1fr; }
     }
+    .avatar-container {
+      position: relative;
+      display: inline-block;
+    }
+
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .dropdown {
+      display: none; /* ẩn mặc định */
+      position: absolute;
+      top: 50px; /* nằm dưới avatar */
+      right: 0;
+      background-color: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      min-width: 200px;
+      z-index: 1000;
+    }
+
+    .dropdown-item {
+      padding: 10px 15px;
+      cursor: pointer;
+    }
+
+    .dropdown-item:hover {
+      background-color: #f1f1f1;
+    }
   </style>
 </head>
 <body>
@@ -124,6 +157,13 @@
           <!-- <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 12h16M12 4v16" stroke-width="1.5"/></svg> Khuyến mại</a> -->
           <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="5" width="18" height="14" rx="2" stroke-width="1.5"/><path d="M7 9h6M7 13h10" stroke-width="1.5"/></svg> Sổ quỹ</a>
           <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 6h16M4 12h16M4 18h10" stroke-width="1.5"/></svg> Báo cáo</a>
+          <a class="nav-item" href="my_account.php">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" width="24" height="24">
+              <circle cx="12" cy="7" r="4" stroke-width="1.5"/> 
+              <path d="M5.5 21c0-3.5 3-6 6.5-6s6.5 2.5 6.5 6" stroke-width="1.5"/>
+            </svg>
+            Tài khoản
+          </a>
         </div>
 
       </nav>
@@ -142,8 +182,30 @@
         </div>
         <div class="topbar-actions">
           <button class="icon-btn" title="Thông báo"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748b"><path d="M15 17h5l-1.4-1.4A2 2 0 0 1 18 14.2V11a6 6 0 1 0-12 0v3.2c0 .5-.2 1-.6 1.4L4 17h5" stroke-width="1.5"/><path d="M10 19a2 2 0 0 0 4 0" stroke-width="1.5"/></svg></button>
-          <div class="avatar">cu</div>
+          <div class="avatar" alt="Avatar" id="avatarBtn"><?php echo substr($_SESSION['TenDangNhap'], 0, 2); ?></div>
+          <div class="dropdown" id="avatarDropdown">
+            <div onclick="location.href='my_account.php'" class="dropdown-item">Tài khoản của tôi</div>
+            <div class="dropdown-item">Cài đặt</div>
+            <div onclick="location.href='DangNhap.php'" class="dropdown-item">Đăng xuất</div>
+          </div>
         </div>
+        <script>
+        const avatarBtn = document.getElementById("avatarBtn");
+        const avatarDropdown = document.getElementById("avatarDropdown");
+
+        // toggle dropdown khi click avatar
+        avatarBtn.addEventListener("click", () => {
+          avatarDropdown.style.display = 
+            avatarDropdown.style.display === "block" ? "none" : "block";
+        });
+
+        // ẩn dropdown khi click ra ngoài
+        window.addEventListener("click", (e) => {
+          if (!avatarBtn.contains(e.target) && !avatarDropdown.contains(e.target)) {
+            avatarDropdown.style.display = "none";
+          }
+        });
+      </script>
       </div>
 
       <!-- Main -->
@@ -162,7 +224,7 @@
                         <button style="background:transparent; border:none; color:var(--primary); font-weight:700; padding:8px 12px; border-bottom:3px solid var(--primary);">Tất cả</button>
                         </div>
                         <div style="display:flex; gap:8px; align-items:center;">
-                        <a href="quanlydonhang/add.php"><button class="btn primary">Thêm đơn hàng</button></a>
+                        <a href="quanlydonhang/add.html"><button class="btn primary">Thêm đơn hàng</button></a>
                         </div>
                     </nav>
 
@@ -201,11 +263,11 @@
                                 <th style="width:48px; padding:14px; border-bottom:1px solid var(--border);">
                                     <input type="checkbox" />
                                 </th>
-                                <th style="padding:14px; border-bottom:1px solid var(--border);">Mã đơn hàng</th>
-                                <th style="padding:14px; border-bottom:1px solid var(--border); width:120px;">Ngày đặt</th>
-                                <th style="padding:14px; border-bottom:1px solid var(--border); width:150px;">Khách hàng</th>
+                                <th style="padding:14px; border-bottom:1px solid var(--border); width:200px;">Mã đơn hàng</th>
+                                <th style="padding:14px; border-bottom:1px solid var(--border); width:200px;">Ngày đặt</th>
+                                <th style="padding:14px; border-bottom:1px solid var(--border); width:200px;">Khách hàng</th>
                                 <th style="padding:14px; border-bottom:1px solid var(--border); width:200px;">Thành tiền</th>
-                                <th style="padding:14px; border-bottom:1px solid var(--border); width:160px;">Trạng thái</th>
+                                <th style="padding:14px; border-bottom:1px solid var(--border); width:200px;">Trạng thái</th>
                             </tr>
                         </thead>
                         <tbody>

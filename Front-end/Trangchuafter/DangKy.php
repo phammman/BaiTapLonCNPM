@@ -98,7 +98,7 @@ mysqli_close($conn);
   </style>
 </head>
 <body>
-  <a href="" class="back-link">← Quay lại</a>
+  <a href="/Chuyen_de_dinh_huong_CNPM/Front-end/Trangchubefore/TrangChuBefore.php" class="back-link">← Quay lại</a>
   <div class="register-container">
     <div class="logo">Sapo</div>
     <h2>Dùng thử miễn phí 7 ngày</h2>

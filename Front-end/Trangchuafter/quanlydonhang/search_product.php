@@ -9,9 +9,9 @@ $data = [];
 
 if ($q !== '') {
     $q = mysqli_real_escape_string($conn, $q);
-    $sql = "SELECT MaSP, TenSP FROM sanpham 
-            WHERE TenSP LIKE '%$q%' OR MaSP LIKE '%$q%' 
-            LIMIT 10";
+    $sql = "SELECT MaSP, TenSP, GiaBan FROM sanpham 
+        WHERE TenSP LIKE '%$q%' OR MaSP LIKE '%$q%'  
+        LIMIT 10";
     $result = mysqli_query($conn, $sql);
 
     while ($row = mysqli_fetch_assoc($result)) {

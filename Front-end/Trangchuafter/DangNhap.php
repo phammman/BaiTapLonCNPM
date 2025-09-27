@@ -98,13 +98,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       color: #666;
       user-select: none;
     }
+    .login{
+      /* display: block; */
+      text-align: left;
+      /* margin: 5px 5px 15px; */
+      font-size: 0.9rem;
+      color: #00AEEF;
+      text-decoration: none;
+      margin-right:200px;
+    }
     .forgot-password {
-      display: block;
+      /* display: block; */
       text-align: right;
       margin: 5px 5px 15px;
       font-size: 0.9rem;
       color: #00AEEF;
       text-decoration: none;
+    }
+    .links{
+      display: flex;
+      justify-content: space-between;
+      margin-top: 15px;
     }
     .login-btn {
       width: 100%;
@@ -117,6 +131,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       cursor: pointer;
       margin-bottom: 15px;
       font-weight: bold;
+      margin-top: 15px;
     }
     .login-btn:hover {
       opacity: 0.9;
@@ -140,7 +155,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <input type="password" id="password" name="MatKhau" class="input-field" placeholder="Mật khẩu đăng nhập cửa hàng" required>
         <span class="toggle-password" id="togglePassword">👁</span>
       </div>
-      <a href="#" class="forgot-password">Quên mật khẩu</a>
+      <div class="links">
+        <a href="DangKy.php" class="login">Đăng Ký</a>
+        <a href="#" class="forgot-password">Quên mật khẩu</a>
+      </div>
       <button type="submit" class="login-btn">Đăng nhập</button>
     </form>
   </div>
