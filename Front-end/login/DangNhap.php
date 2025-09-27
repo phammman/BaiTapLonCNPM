@@ -3,8 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="dangNhap.css">
+    <link rel="stylesheet" href="DangNhap.css">
     <title>Đăng nhập</title>
+    <style>
+        .logo img{
+            height: 100px;
+        }
+        .badge {
+            background: #fff;
+            }
+        .dau_vao input {
+            padding-left: 10px;
+        }
+    </style>
 </head>
 <body>
     <?php
@@ -58,11 +69,11 @@
             <?php endif; ?>
             <div class="dau_vao">
                 <label for="TenDangNhap">Tên đăng nhập</label>
-                <input type="text" id="TenDangNhap" placeholder="Nhập tên đăng nhập của bạn" name="TenDangNhap" required>
+                <input type="text" id="TenDangNhap" placeholder="Nhập tên đăng nhập của bạn" name="TenDangNhap" required style="opacity: 0.6;">
             </div>
             <div class="dau_vao">
                 <label for="MatKhau">Mật khẩu</label>
-                <input type="password" id="MatKhau" placeholder="Nhập mật khẩu của bạn" name="MatKhau" required>
+                <input type="password" id="MatKhau" placeholder="Nhập mật khẩu của bạn" name="MatKhau" required style="opacity: 0.6;">
             </div>
             <div class="btn">
                 <button type="submit" name="dangnhap">Đăng nhập</button>

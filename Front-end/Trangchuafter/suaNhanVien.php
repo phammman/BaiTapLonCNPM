@@ -25,7 +25,7 @@
         
         .update {
             /* border: 2px solid #dbdbdb;  */
-            background-color: #fff;
+            
             padding: 10px 20px 30px;
             margin: 100px 0 150px 100px;
             margin-left: 100px;
@@ -62,6 +62,7 @@
             font-size: 22px;
         }
         .box{
+            background-color: #fff;
             font-size: 20px;
             padding: 10px 20px 20px 20px;
             border: 2px solid #dbdbdb;
@@ -110,6 +111,9 @@
             margin: 0 5px;
             cursor: pointer;
             color: white;
+        }
+        .btn:hover{
+            opacity: 0.8;
         }
     </style>
 </head>

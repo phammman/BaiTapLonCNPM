@@ -66,7 +66,7 @@
             align-items: center;
             }
         .title i{margin-right: 5px; font-size: 14px;}
-        .info-NV {margin: 30px ; border: 1px solid #cecece; border-radius: 10px; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        .info-NV {margin: 30px ; border: 1px solid #cecece; border-radius: 10px; box-shadow: 0 0 3px rgba(0, 0, 0, 0.3); background-color: white;
 }
         .all{
             margin: 5px; border-bottom: 1px solid #cecece;
@@ -80,7 +80,7 @@
             background-color: #bcbcbc;
         }
         table {
-            margin: 20px 0;font-size: 18px; width: 100%; border-collapse: collapse; border: none; border-color: #f8fafc;
+            margin: 20px 0;font-size: 18px; width: 100%; border-collapse: collapse; border: none;
         }
         th,td{
             text-align: center; padding: 10px;
@@ -95,22 +95,26 @@
             text-decoration: none; color: white; padding: 5px 20px; margin: 5px;
         }
         .name{color: rgb(0 136 255); tex-decoration: none; }
+        .name:hover{
+            text-decoration: underline; text-decoration-color: rgb(0 136 255);
+        }
         .them{
             display: inline-block; /* Để có thể căn giữa */
             text-align: center;
             margin: 20px;
             background-color: rgb(0 136 255); border-radius: 10px; color: white;
-            
         }
         .them:hover {
             opacity: 0.8; /* Độ mờ khi di chuột vào */
         }
         b{ padding-bottom: 3px;}
-        .xem{
-            background-color: rgb(8, 209, 95); border-radius: 10px;
-        }
         .sua{
-            background-color: rgb(247, 243, 15); color: black; border-radius: 10px;
+            color: rgba(9, 176, 81, 1); border-radius: 10px;
+            border: 1px solid rgba(14, 194, 92, 1);
+        }
+        .sua:hover{
+            color: green;
+            background-color: rgba(99, 245, 162, 1);
         }
         .xoa{
             border-radius: 10px; color: rgb(238, 71, 71); border: 1px solid rgba(227, 20, 5, 0.72);
@@ -118,6 +122,35 @@
         .xoa:hover{
             color: red;
             background-color:rgba(243, 189, 185, 0.72);
+        }
+        .info-footer{
+            display: flex; justify-content: space-between; align-items: center; padding: 0 20px; margin-bottom: 20px;
+        }
+        .pagination {
+            display: flex;
+            justify-content: center;
+        }
+        .pagination a {
+            font-size: 18px;
+            float: left;
+            padding: 0;
+            text-decoration: none;
+        }
+        .page-link {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 25px; 
+            height: 25px; 
+            border-radius: 50%; 
+            background-color: rgb(0 136 255); 
+            color: rgb(0 136 255); 
+            text-decoration: none; 
+            font-weight: bold; 
+            color: white;
+        }
+        .gray-link{
+            color: gray;
         }
     </style>
 </head>
@@ -169,37 +202,70 @@
                         <input type = "text" name = "TenDangNhap" placeholder="Tìm kiếm nhân viên theo tên đăng nhập" >
                     </div>
                 </form>
-                <table border = 2  align = "center";>
-                <tr>
-                    <th>Mã NV</th>
-                    <th>Họ tên</th>
-                    <th>Tên đăng nhập</th>
-                    <th>Chức vụ</th>
-                    <th>
-                        Trạng thái
-                </tr>
                 <?php
-                include("connect.php");
-                $sql = "SELECT nv.*, nd.SoDienThoai, nd.TenDangNhap, nd.MatKhau 
-                        FROM nhanvien nv 
-                        JOIN nguoidung nd ON nv.MaND = nd.MaND" ;
-                $result = mysqli_query($conn, $sql);
-                while ($row = mysqli_fetch_array($result)) {
+                    include("connect.php");
+
+                    $itemsPerPage = 10; 
+                    $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1; 
+                    $currentPage = max(1, $currentPage); 
+
+                    $sqlCount = "SELECT COUNT(*) AS total FROM nhanvien nv JOIN nguoidung nd ON nv.MaND = nd.MaND";
+                    $resultCount = mysqli_query($conn, $sqlCount);
+                    $totalEmployees = mysqli_fetch_assoc($resultCount)['total'];
+
+                    $totalPages = ceil($totalEmployees / $itemsPerPage); 
+                    $offset = ($currentPage - 1) * $itemsPerPage;
+
+                    $sql = "SELECT nv.*, nd.SoDienThoai, nd.TenDangNhap, nd.MatKhau 
+                            FROM nhanvien nv 
+                            JOIN nguoidung nd ON nv.MaND = nd.MaND 
+                            LIMIT $offset, $itemsPerPage"; 
+                    $result = mysqli_query($conn, $sql);
                 ?>
+                <table border="2" align="center">
                     <tr>
-                        <td><?php echo $row["MaNV"];?></td>
-                        <td><a class ="name" href="xemNhanVien.php?MaNV=<?php echo $row["MaNV"];?>">  <?php echo $row["HoTen"];?></a></td>
-                        <td><?php echo $row["TenDangNhap"]?></td>
-                        <td><?php echo $row["ChucVu"];?></td>
-                        <td>
-                            <a class = "sua" href="suaNhanVien.php?MaNV=<?php echo $row["MaNV"];?>">Cập nhật</a>
-                            <a class = "xoa" href="xoaNhanVien.php?MaNV=<?php echo $row["MaNV"];?>"><b>Xóa</b></a>
-                        </td>
+                        <th>Mã NV</th>
+                        <th>Họ tên</th>
+                        <th>Tên đăng nhập</th>
+                        <th>Chức vụ</th>
+                        <th>Trạng thái</th>
                     </tr>
-                <?php  
-                }
-                ?>
-            </table>
+                    <?php while ($row = mysqli_fetch_array($result)){ ?>
+                        <tr>
+                            <td><?php echo $row["MaNV"]; ?></td>
+                            <td><a class="name" href="xemNhanVien.php?MaNV=<?php echo $row["MaNV"]; ?>"><?php echo $row["HoTen"]; ?></a></td>
+                            <td><?php echo $row["TenDangNhap"]; ?></td>
+                            <td><?php echo $row["ChucVu"]; ?></td>
+                            <td>
+                                <a class="sua" href="suaNhanVien.php?MaNV=<?php echo $row["MaNV"]; ?>"><b>Cập nhật</b></a>
+                                <a class="xoa" href="xoaNhanVien.php?MaNV=<?php echo $row["MaNV"]; ?>"><b>Xóa</b></a>
+                            </td>
+                        </tr>
+                    <?php } ?>
+                </table>
+                    
+                <div class="info-footer">
+                    <div class="total-employ">
+                        <?php
+                            $start = ($currentPage - 1) * $itemsPerPage + 1; 
+                            $end = min($start + $itemsPerPage - 1, $totalEmployees); 
+                            
+                            if ($totalEmployees > 0) {
+                                echo "Từ $start đến $end trên tổng $totalEmployees";
+                            }
+                        ?>  
+                    </div>
+                    <div class="pagination">
+                        <a href="?page=<?php echo max(1, $currentPage - 1); ?>" class="gray-link"><</a>
+                        <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                            <a href="?page=<?php echo $i; ?>" class="page-link <?php if ($i == $currentPage) echo 'active'; ?>">
+                                <?php echo $i; ?>
+                            </a>
+                        <?php endfor; ?>
+                        <a href="?page=<?php echo min($totalPages, $currentPage + 1); ?>" class="gray-link">></a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </body>

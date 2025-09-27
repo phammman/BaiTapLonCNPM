@@ -54,7 +54,7 @@
         .view {
             padding: 10px 20px 30px;
             margin: 30px;
-            width: 50%;
+            width: 70%;
         }
         .title {
             display: flex;
@@ -70,10 +70,14 @@
             color: gray;
             text-decoration: none;
         }
+        .title a:hover{
+            background-color: #bdbdbd;
+        }
         .title h2 {
             margin: 0; 
         }
         table {
+            background-color: #fff;
             margin-top: 30px;
             border: 1px solid #cecece;
             width: 100%;
@@ -97,7 +101,7 @@
             margin: 5px;
         }
         .main{
-            margin-left: 30px;
+            margin-left: 100px;
         }
         .back{
             background-color: #1C8552;
@@ -108,20 +112,19 @@
 </head>
 <body>
     <?php
-    include("connect.php");
-    if (isset($_GET["MaNV"])) {
-        $MaNV = $_GET["MaNV"];
-    }
-    $sql = "SELECT nv.*, nd.SoDienThoai,nd.GioiTinh, nd.TenDangNhap, nd.MatKhau 
-            FROM nhanvien nv 
-            JOIN nguoidung nd ON nv.MaND = nd.MaND 
-            WHERE nv.MaNV = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $MaNV);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $row = $result->fetch_assoc();
-   
+        include("connect.php");
+        if (isset($_GET["MaNV"])) {
+            $MaNV = $_GET["MaNV"];
+        }
+        $sql = "SELECT nv.*, nd.SoDienThoai,nd.GioiTinh, nd.TenDangNhap, nd.MatKhau 
+                FROM nhanvien nv 
+                JOIN nguoidung nd ON nv.MaND = nd.MaND 
+                WHERE nv.MaNV = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $MaNV);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
     ?>
     <div class="container">
         <div class="sidebar">

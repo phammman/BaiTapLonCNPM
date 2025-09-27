@@ -10,6 +10,15 @@
     crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link rel="stylesheet" href="dangKy.css">
     <style>
+        h2{
+            margin: 20px 0;
+        }
+        .dau_vao input {
+            height: 35px;
+        }
+        .gioi_tinh p{
+            margin: 10px 0;
+        }
         .error {
             color: red;
             display: none;
