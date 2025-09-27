@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $sql = "UPDATE donhang SET NgayLap='$NgayLap', TrangThai='$TrangThai', MaKH='$MaKH', MaNV='$MaNV' WHERE MaDH='$id'";
     if ($conn->query($sql) === TRUE) {
-        header("Location: xemDonHang.php");
+        header("Location: orders.php");
     } else {
         echo "Lỗi: " . $conn->error;
     }
