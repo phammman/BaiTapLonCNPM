@@ -4,8 +4,7 @@ session_start();
 // Xóa toàn bộ session
 session_unset();
 session_destroy();
-
-// Quay về trang đăng nhập
+// Chuyển hướng về trang đăng nhập
 header("Location: DangNhap.php");
 exit;
 ?>
