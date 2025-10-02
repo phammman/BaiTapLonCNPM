@@ -1,5 +1,5 @@
 <?php
-include 'db_connect.php';
+include 'connect.php';
 
 // Truy vấn danh sách nhân viên + tài khoản
 $sql = "SELECT nv.MaNV, nv.HoTen, nv.ChucVu, nd.TenDangNhap, nd.QuyenHan

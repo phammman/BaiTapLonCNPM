@@ -181,9 +181,9 @@
                     <div style="overflow:auto;">
                     <div style="overflow:auto;">
 <?php
-include 'db_connect.php';
+include 'connect.php';
 
-// Truy vấn đơn hàng kèm tổng tiền
+
 $sql = "
     SELECT dh.MaDH, dh.NgayLap, dh.TrangThai,
            kh.HoTen AS TenKH,

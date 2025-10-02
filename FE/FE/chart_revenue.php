@@ -1,5 +1,5 @@
 <?php
-include 'db_connect.php';
+include 'connect.php';
 $sql = "
     SELECT DATE(dh.NgayLap) AS Ngay,
            SUM(ct.SoLuong * ct.DonGia) AS DoanhThu
