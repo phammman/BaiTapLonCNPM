@@ -1,4 +1,5 @@
 <?php
+    session_start();
     // $masp = $_GET['MaSP'];
 
     // include('connect.php');
@@ -38,7 +39,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    :root {
+    /* :root {
       --bg: #0b1220;
       --primary: #1373ff;
       --border: #e5e7eb;
@@ -55,9 +56,9 @@
       display: grid;
       grid-template-columns: 260px 1fr;
       min-height: 100vh;
-    }
+    } */
     /* Sidebar */
-    .sidebar {
+    /* .sidebar {
       background: var(--bg);
       color: #cbd5e1;
       padding: 18px 14px;
@@ -93,10 +94,10 @@
     .card button{
       background-color: #1373ff;
     }
-    .nav a:hover, .nav a.active { background:#0f1a33; color:#fff; }
+    .nav a:hover, .nav a.active { background:#0f1a33; color:#fff; } */
 
     /* Main Content */
-    .content { padding: 20px; }
+    .content2 { padding: 20px; }
     h2 { margin-top:0; font-size:20px; }
     .form-grid {
       display:grid;
@@ -169,7 +170,7 @@
     /* Header */
     .content { display:flex; flex-direction:column; }
     .topbar { background:#fff; border-bottom:1px solid var(--border); padding: 10px 18px; display:flex; align-items:center; gap:14px; }
-    .search { flex:1; display:flex; align-items:center; gap:10px; background:#f1f5f9; border:1px solid #e2e8f0; padding:10px 12px; border-radius:10px; }
+    .search { flex:1; display:flex; align-items:center; gap:10px; background:#f1f5f9; border:1px solid #e2e8f0; padding:3px 12px; border-radius:10px; }
     .search input { flex:1; border:none; outline:none; background:transparent; font-size:14px; }
     .topbar-actions { display:flex; align-items:center; gap:12px; }
     .chip { font-size:12px; padding:6px 10px; border-radius:999px; background: var(--chip); color:#3730a3; font-weight:600; }
@@ -244,6 +245,68 @@
         background-color: #e1e2e2ff;
         border: 3px solid #e1e2e2ff;
     }
+    .avatar-container {
+    position: relative;
+    display: inline-block;
+  }
+  .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  .dropdown {
+    display: none;
+    position: absolute;
+    top: 50px;
+    right: 0;
+    background-color: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    min-width: 200px;
+    z-index: 1000;
+  }
+  .dropdown-item {
+    padding: 10px 15px;
+    cursor: pointer;
+  }
+  .dropdown-item:hover {
+    background-color: #f1f1f1;
+  }
+   .avatar-container {
+      position: relative;
+      display: inline-block;
+    }
+
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .dropdown {
+      display: none; /* ẩn mặc định */
+      position: absolute;
+      top: 50px; /* nằm dưới avatar */
+      right: 0;
+      background-color: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      min-width: 200px;
+      z-index: 1000;
+    }
+
+    .dropdown-item {
+      padding: 10px 15px;
+      cursor: pointer;
+    }
+
+    .dropdown-item:hover {
+      background-color: #f1f1f1;
+    }
     .form-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -291,66 +354,18 @@
       text-align: center;
       display: inline-block;
     }
-      
   </style>
 </head>
 <body>
   <form class="app" action="update.php" method="post">
     <input type="hidden" name="MaKH" value="<?php echo $row['MaKH']; ?>">
     <!-- SIDEBAR -->
-    <aside class="sidebar">
-      <div class="brand">
-        <div class="brand-logo">Q</div>
-        <h1>QLYBanHang</h1>
-      </div>
-
-      <nav class="nav">
-        <div class="nav-section">
-          <a class="nav-item" href="/Chuyen_de_dinh_huong_CNPM/Front-end/Trangchuafter/manuadmin.php">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 10.5 12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1v-10.5z" stroke-width="1.5"/></svg>
-            Tổng quan
-          </a>
-          <a class="nav-item" href="/Chuyen_de_dinh_huong_CNPM/Front-end/Trangchuafter/orders.php" ><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 7h18M3 12h18M3 17h18" stroke-width="1.5"/></svg> Đơn hàng</a>
-          <a class="nav-item active" href="/Chuyen_de_dinh_huong_CNPM/Front-end/Trangchuafter/products.php" style="color: lightblue;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="14" rx="2" stroke-width="1.5"/><path d="M7 8h10M7 12h10" stroke-width="1.5"/></svg> Sản phẩm</a>
-          <a class="nav-item" href="/Chuyen_de_dinh_huong_CNPM/Front-end/Trangchuafter/inventories.php"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9h18M5 9V5h14v4M5 9v10h14V9" stroke-width="1.5"/></svg> Quản lý kho</a>
-          <a class="nav-item" href="/Chuyen_de_dinh_huong_CNPM/Front-end/Trangchuafter/employee.php"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4" stroke-width="1.5"/><path d="M4 21c1.5-4 6-6 8-6s6.5 2 8 6" stroke-width="1.5"/></svg> Nhân viên</a>
-          <a class="nav-item" href="/Chuyen_de_dinh_huong_CNPM/Front-end/Trangchuafter/customers.php" ><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4" stroke-width="1.5"/><path d="M4 21c1.5-4 6-6 8-6s6.5 2 8 6" stroke-width="1.5"/></svg> Khách hàng</a>
-          <!-- <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 12h16M12 4v16" stroke-width="1.5"/></svg> Khuyến mại</a> -->
-          <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="5" width="18" height="14" rx="2" stroke-width="1.5"/><path d="M7 9h6M7 13h10" stroke-width="1.5"/></svg> Sổ quỹ</a>
-          <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 6h16M4 12h16M4 18h10" stroke-width="1.5"/></svg> Báo cáo</a>
-          <a class="nav-item" href="my_account.php">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" width="24" height="24">
-              <circle cx="12" cy="7" r="4" stroke-width="1.5"/> 
-              <path d="M5.5 21c0-3.5 3-6 6.5-6s6.5 2.5 6.5 6" stroke-width="1.5"/>
-            </svg>
-            Tài khoản
-          </a>
-        </div>
-
-      </nav>
-
-      <!-- <div class="sidebar-footer">Cấu hình</div> -->
-    </aside>
+    <?php include '../headafter2.php'; ?>
 
     <!-- CONTENT -->
     <section class="content">
       <!-- Top bar -->
-      <div class="topbar">
-        <div class="search">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748b"><circle cx="11" cy="11" r="7" stroke-width="1.6"/><path d="M20 20l-3.5-3.5" stroke-width="1.6"/></svg>
-          <input placeholder="Tìm kiếm" />
-          
-        </div>
-        <div class="topbar-actions">
-          <button class="icon-btn" title="Thông báo"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748b"><path d="M15 17h5l-1.4-1.4A2 2 0 0 1 18 14.2V11a6 6 0 1 0-12 0v3.2c0 .5-.2 1-.6 1.4L4 17h5" stroke-width="1.5"/><path d="M10 19a2 2 0 0 0 4 0" stroke-width="1.5"/></svg></button>
-          <div class="avatar" alt="Avatar" id="avatarBtn"><?php echo substr($_SESSION['TenDangNhap'], 0, 2); ?></div>
-          <div class="dropdown" id="avatarDropdown">
-            <div onclick="location.href='my_account.php'" class="dropdown-item">Tài khoản của tôi</div>
-            <div class="dropdown-item">Cài đặt</div>
-            <div onclick="location.href='DangNhap.php'" class="dropdown-item">Đăng xuất</div>
-          </div>
-        </div>
-      </div>
+      <?php include '../topbar2.php'; ?>
 
       <!-- Main -->
     <div class="main">

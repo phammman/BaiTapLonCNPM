@@ -1,5 +1,33 @@
 <?php
-session_start();
+    session_start();
+    // $masp = $_GET['MaSP'];
+
+    // include('connect.php');
+
+    // $sua_sql = "SELECT * FROM sanpham WHERE MaSP=$masp";
+
+    // $result = mysqli_query($conn , $sua_sql);
+    // $row = mysqli_fetch_assoc($result);
+    // include('connect.php');
+    include __DIR__ . "/../connect.php";
+
+    $madh = isset($_GET['MaDH']) ? (int)$_GET['MaDH'] : 0;
+
+    if ($madh <= 0) {
+        die("Mã sản phẩm không hợp lệ");
+    }
+
+    $sua_sql = "SELECT * FROM donhang WHERE MaDH = $madh";
+    $result = mysqli_query($conn, $sua_sql);
+
+    if (!$result) {
+        die("Lỗi truy vấn: " . mysqli_error($conn));
+    }
+
+    $row = mysqli_fetch_assoc($result);
+    if (!$row) {
+        die("Không tìm thấy sản phẩm với MaDH = $madh");
+    }
 ?>
 <!doctype html>
 <html lang="vi">
@@ -286,6 +314,7 @@ session_start();
 </head>
 <body>
   <form class="app" action="add.php" method="post">
+    <input type="hidden" name="MaDH" value="<?php echo $madh; ?>" id="">
     <!-- SIDEBAR -->
     <?php include '../headafter2.php'; ?>
 
@@ -359,75 +388,6 @@ session_start();
                       }
                     });
                 });
-
-                // Hàm thêm thẻ sản phẩm
-                // function addProductCard(product) {
-                //   // Ẩn dòng "Bạn chưa thêm sản phẩm nào"
-                //   if (emptyMsg) {
-                //     emptyMsg.style.display = "none";
-                //   }
-
-                //   let card = document.createElement("div");
-                //   card.classList.add("product-card");
-                //   card.style.cssText = "border:1px solid #e5e7eb; border-radius:10px;padding:12px; margin-bottom:10px; background:#fff; display:flex; justify-content:space-between; align-items:center";
-
-                //   card.innerHTML = `
-                //     <div>
-                //       <strong>${product.TenSP}</strong><br>
-                //       Giá: ${Number(product.GiaBan?.replace(/\D/g, "")).toLocaleString()} đ
-                //     </div>
-                //     <div>
-                //       <label>Số lượng:</label>
-                //       <input id="soluong" type="number" value="1" min="1" style="width:60px; padding:4px; border:1px solid #ddd; border-radius:6px;">
-                //     </div>
-                //   `;
-                //   selectedProducts.appendChild(card);
-                // }
-
-                // var thanhtien = document.getElementById("totalAmount");
-                // var soluong = document.getElementById("soluong");
-                // var tongtien = document.getElementById("tongtien");
-                // soluong.onchange = function(){
-                //   tongtien = Number(soluong.value) * Number(thanhtien.value.replace(/\D/g, ""));
-                //   thanhtien.innerText = tongtien.toLocaleString() + "₫";
-                // }
-
-
-                // function addProductCard(product) {
-                //   if (emptyMsg) {
-                //     emptyMsg.style.display = "none";
-                //   }
-
-                //   let card = document.createElement("div");
-                //   card.classList.add("product-card");
-                //   card.style.cssText =
-                //     "border:1px solid #e5e7eb; border-radius:10px;padding:12px; margin-bottom:10px; background:#fff; display:flex; justify-content:space-between; align-items:center";
-
-                //   // Giá gốc (number)
-                //   // let gia = Number(product.GiaBan?.replace(/\D/g, ""));
-                //   // let gia = Number(String(product.GiaBan).replace(/[^\d]/g, ""));
-                //   let gia = parseFloat(product.GiaBan);
-
-                //   card.innerHTML = `
-                //     <div>
-                //       <strong>${product.TenSP}</strong><br>
-                //       Giá: ${gia.toLocaleString("vi-VN")} đ
-                //     </div>
-                //     <div>
-                //       <label>Số lượng:</label>
-                //       <input type="number" value="1" min="1" 
-                //             data-price="${gia}" 
-                //             class="soluong-input"
-                //             style="width:60px; padding:4px; border:1px solid #ddd; border-radius:6px;">
-                //     </div>
-                //   `;
-                //   selectedProducts.appendChild(card);
-
-
-                //   // Sau khi thêm sản phẩm, tính lại tổng
-                //   updateTotal();
-                // }
-
                 function addProductCard(product) {
                   if (emptyMsg) {
                     emptyMsg.style.display = "none";
@@ -520,7 +480,7 @@ session_start();
 
               <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 16px;">
                 <span>Thành tiền</span>
-                <span name="ThanhTien" id="tongtien"></span>
+                <span name="ThanhTien" id="tongtien"><?php echo htmlspecialchars($row['ThanhTien']); ?></span>
                 <input type="hidden" name="ThanhTien" id="ThanhTienInput">
               </div>
             </div>
@@ -536,7 +496,7 @@ session_start();
           <div style="position: relative; margin-bottom: 10px;margin-top: 20px; border: 1px solid #e5e7eb; border-radius: 10px; padding: 16px; background: #fff;">
             <label for="searchCustomer">Khách hàng</label>
             <input name="TenKH" type="text" id="searchCustomer" placeholder="Tìm khách hàng theo tên, email, số ĐT..."
-                style="flex:1; padding: 8px; border: 1px solid #e5e7eb; border-radius: 6px; margin-right: 10px; width:100%;" required>
+                style="flex:1; padding: 8px; border: 1px solid #e5e7eb; border-radius: 6px; margin-right: 10px; width:100%;" required <?php echo htmlspecialchars($row['TenKH']); ?>>
             
             <!-- Input ẩn lưu MaKH -->
             <input type="hidden" name="MaKH" id="customerId">
@@ -617,7 +577,7 @@ session_start();
 
               <div style="margin-bottom: 25px;">
                 <label style="display: block; font-size: 14px; font-weight: 500; margin-bottom: 4px;">Ngày đặt hàng</label>
-                <input name="NgayLap" type="date" style="width: 100%; padding: 8px; border: 1px solid #e5e7eb; border-radius: 6px;">
+                <input name="NgayLap" type="date" style="width: 100%; padding: 8px; border: 1px solid #e5e7eb; border-radius: 6px;" <?php echo htmlspecialchars($row['NgayLap']); ?>>
                 <small style="color: #94a3b8;">Giá trị chỉ ghi nhận khi tạo đơn hàng</small>
               </div>
 
