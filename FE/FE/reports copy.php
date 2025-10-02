@@ -47,6 +47,67 @@ $sql_avg_all = "SELECT AVG(tong.TongTien) AS GiaTriTBChung
 $result_avg_all = $conn->query($sql_avg_all);
 $row_avg_all = $result_avg_all->fetch_assoc();
 $avg_all = $row_avg_all['GiaTriTBChung'];
+
+
+// $sql_products = "
+//     SELECT sp.TenSP, SUM(ct.SoLuong * ct.DonGia) AS DoanhThu
+//     FROM ChiTietDonHang ct
+//     JOIN SanPham sp ON ct.MaSP = sp.MaSP
+//     GROUP BY sp.MaSP
+//     ORDER BY DoanhThu DESC
+//     LIMIT 5
+// ";
+// $res_products = $conn->query($sql_products);
+
+// $labels_products = [];
+// $data_products = [];
+// while ($row = $res_products->fetch_assoc()) {
+//     $labels_products[] = $row['TenSP'];
+//     $data_products[] = $row['DoanhThu'];
+// }
+
+$sql_products = "
+SELECT
+    sp.MaSP,
+    sp.TenSP,
+    sp.MaSKU,
+    sp.GiaBan,
+    COALESCE(SUM(ct.SoLuong), 0) AS SoLuongBan,
+    COALESCE(SUM(ct.SoLuong * ct.DonGia), 0.00) AS DoanhThu
+FROM SanPham sp
+JOIN ChiTietDonHang ct ON sp.MaSP = ct.MaSP
+JOIN DonHang dh ON dh.MaDH = ct.MaDH
+WHERE dh.TrangThai IS NULL OR dh.TrangThai != 'Đã hủy'
+GROUP BY sp.MaSP, sp.TenSP, sp.MaSKU, sp.GiaBan
+ORDER BY DoanhThu DESC
+LIMIT 5
+";
+$result = $conn->query($sql_products);
+$topProducts = [];
+if ($result && $result->num_rows > 0) {
+    while($row = $result->fetch_assoc()) {
+        $topProducts[] = $row;
+    }
+}
+function format_vnd($num) {
+    return number_format((float)$num, 0, '.', ',') . ' ₫';
+}
+
+// --- Số lượng đơn hàng theo ngày ---
+$sql_orders = "
+    SELECT NgayLap, COUNT(*) AS SoLuong
+    FROM DonHang
+    GROUP BY NgayLap
+    ORDER BY NgayLap ASC
+";
+$res_orders = $conn->query($sql_orders);
+
+$labels_orders = [];
+$data_orders = [];
+while ($row = $res_orders->fetch_assoc()) {
+    $labels_orders[] = $row['NgayLap'];
+    $data_orders[] = $row['SoLuong'];
+}
 ?>
 
 <!doctype html>
@@ -229,14 +290,47 @@ $avg_all = $row_avg_all['GiaTriTBChung'];
         </div>
 
 
-        <!-- <div style="background:#fff; border:1px dashed #ccc; border-radius:8px; padding:15px; display:flex; align-items:center; justify-content:center; color:#aaa;">
-            Biểu đồ khác
-        </div>
+        <div style="background:#fff; border:1px solid #ddd; border-radius:8px; padding:15px;">
+        <h3 style="font-size:16px; margin-bottom:10px; text-align:center;">Top 5 sản phẩm bán chạy</h3>
+        <?php if (!$topProducts): ?>
+            <div style="padding:20px; text-align:center; color:#666;">Chưa có dữ liệu bán hàng.</div>
+        <?php else: ?>
+            <table style="width:100%; border-collapse:collapse; font-size:14px; margin-top:10px;">
+                <thead>
+                    <tr>
+                        <th style="padding:8px; text-align:center; border-bottom:1px solid #eee;">#</th>
+                        <th style="padding:8px; text-align:left; border-bottom:1px solid #eee;">Sản phẩm</th>
+                        <th style="padding:8px; text-align:center; border-bottom:1px solid #eee;">Đã bán</th>
+                        <th style="padding:8px; text-align:right; border-bottom:1px solid #eee;">Doanh thu</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php foreach ($topProducts as $i => $p): ?>
+                    <tr>
+                        <td style="padding:8px; text-align:center; border-bottom:1px solid #f2f2f2; font-weight:bold;"><?php echo $i+1; ?></td>
+                        <td style="padding:8px; border-bottom:1px solid #f2f2f2;">
+                            <div style="font-weight:600;"><?php echo htmlspecialchars($p['TenSP']); ?></div>
+                            <?php if (!empty($p['MaSKU'])): ?>
+                                <div style="font-size:12px; color:#666;">SKU: <?php echo htmlspecialchars($p['MaSKU']); ?></div>
+                            <?php endif; ?>
+                        </td>
+                        <td style="padding:8px; text-align:center; border-bottom:1px solid #f2f2f2;"><?php echo number_format((int)$p['SoLuongBan']); ?></td>
+                        <td style="padding:8px; text-align:right; border-bottom:1px solid #f2f2f2;"><?php echo format_vnd($p['DoanhThu']); ?></td>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+        <?php endif; ?>
+    </div>
 
-
-        <div style="background:#fff; border:1px dashed #ccc; border-radius:8px; padding:15px; display:flex; align-items:center; justify-content:center; color:#aaa;">
-            Biểu đồ khác
-        </div> -->
+    <!-- Số lượng đơn hàng theo ngày -->
+    <div style="background:#fff; border:1px solid #ddd; border-radius:8px; padding:15px;">
+        <h3 style="font-size:16px; margin-bottom:10px; text-align:center;">Số lượng đơn hàng theo ngày</h3>
+        <p style="margin-top:10px; text-align:center; font-weight:bold; color:#06c;">
+            <?php echo array_sum($data_orders); ?> đơn
+        </p>
+        <canvas id="chartOrders"></canvas>
+    </div>
     </div>
 
     <script>
@@ -273,6 +367,49 @@ $avg_all = $row_avg_all['GiaTriTBChung'];
             },
             options: { responsive: true }
         });
+
+        
+
+
+
+    new Chart(document.getElementById('chartOrders').getContext('2d'), {
+        type: 'line',
+        data: {
+            labels: <?php echo json_encode($labels_orders); ?>,
+            datasets: [{
+                label: 'Số đơn',
+                data: <?php echo json_encode($data_orders); ?>,
+                borderColor: 'rgba(0,123,255,1)',
+                backgroundColor: 'rgba(0,123,255,0.2)',
+                tension: 0.3,
+                fill: true
+            }]
+        },
+        options: { 
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 1,   // mỗi nấc tăng 1
+                        precision: 0   // đảm bảo chỉ số nguyên
+                    },
+                    title: {
+                        display: true,
+                        text: 'Số đơn'
+                    }
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Ngày'
+                    }
+                }
+            }
+        }
+    });
+
+
     </script>
             
           

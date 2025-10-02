@@ -1,5 +1,5 @@
 <?php
-include 'db_connect.php';
+include 'connect.php';
 
 
 $MaKH = $_POST['MaKH']; 

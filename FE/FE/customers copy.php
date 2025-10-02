@@ -1,6 +1,6 @@
 <?php
 // Kết nối MySQL
-include 'db_connect.php';
+include 'connect.php';
 
 // Lấy từ khóa tìm kiếm
 $keyword = isset($_GET['keyword']) ? trim($_GET['keyword']) : "";

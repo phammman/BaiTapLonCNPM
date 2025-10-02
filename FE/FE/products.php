@@ -1,16 +1,6 @@
 <?php
 // Kết nối database
-$servername = "localhost";
-$username = "root"; // hoặc user bạn đã tạo
-$password = "";     // mật khẩu MySQL (nếu có)
-$dbname = "ql";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-$conn->set_charset("utf8");
-
-if ($conn->connect_error) {
-    die("Kết nối thất bại: " . $conn->connect_error);
-}
+include 'connect.php';
 
 // Truy vấn lấy sản phẩm + tên danh mục
 $sql = "SELECT sp.MaSP, sp.TenSP, sp.SoLuongTon, sp.GiaBan, sp.MaSKU, sp.MoTa, sp.GiaVon, dm.TenDM 

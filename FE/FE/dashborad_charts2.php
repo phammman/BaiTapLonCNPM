@@ -1,5 +1,5 @@
 <?php
-include 'db_connect.php';
+include 'connect.php';
 
 // Doanh thu theo ngày
 $sql_revenue = "SELECT dh.NgayLap, SUM(ct.SoLuong * ct.DonGia) AS DoanhThu

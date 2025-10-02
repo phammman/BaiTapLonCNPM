@@ -1,5 +1,5 @@
 <?php
-include 'db_connect.php';
+include 'connect.php';
 
 
 $MaKH = isset($_GET['MaKH']) ? intval($_GET['MaKH']) : 1;

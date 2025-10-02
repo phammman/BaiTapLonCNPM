@@ -1,6 +1,6 @@
 <?php
 // Kết nối MySQL
-include 'db_connect.php';
+include 'connect.php';
 
 // Query
 $sql = "

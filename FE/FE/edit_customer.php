@@ -1,5 +1,5 @@
 <?php
-include 'db_connect.php';
+include 'connect.php';
 
 if (isset($_GET['MaKH'])) {
     $MaKH = $_GET['MaKH'];
