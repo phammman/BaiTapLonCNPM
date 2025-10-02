@@ -24,8 +24,6 @@
         .nav-item svg { width:18px; height:18px; color:#94a3b8; }
         
         .update {
-            /* border: 2px solid #dbdbdb;  */
-            
             padding: 10px 20px 30px;
             margin: 100px 0 150px 100px;
             margin-left: 100px;
@@ -145,7 +143,9 @@
                 }
             }
         }
-        $sql = "SELECT nv.*, nd.SoDienThoai, nd.TenDangNhap, nd.MatKhau FROM nhanvien nv JOIN nguoidung nd ON nv.MaND = nd.MaND WHERE nv.MaNV = $MaNV";
+        $sql = "SELECT nv.*, nd.SoDienThoai, nd.TenDangNhap, nd.MatKhau FROM nhanvien nv 
+                JOIN nguoidung nd ON nv.MaND = nd.MaND 
+                WHERE nv.MaNV = $MaNV";
         $result = mysqli_query($conn, $sql);
         $row = mysqli_fetch_array($result);
 ?>

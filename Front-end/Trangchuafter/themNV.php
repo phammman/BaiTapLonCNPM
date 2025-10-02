@@ -26,7 +26,6 @@
         .nav-item svg { width:18px; height:18px; color:#94a3b8; }
 
         .creat {
-            background-color: #fff;
             padding: 20px 25px;
             margin: 100px ;
             margin-left: 100px;
@@ -63,17 +62,18 @@
             font-size: 22px;
         }
         .box{
+            background-color: #fff;
             font-size: 20px;
             padding: 10px 20px 20px 20px;
             border: 2px solid #dbdbdb;
             border-radius: 10px;
-            width: 700px;   
+            width: 750px;   
         }
         .dauvao {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 10px; /* Khoảng cách giữa các ô */
-            max-width: 680px; /* Chiều rộng tối đa của lưới */
+            max-width: 720px; /* Chiều rộng tối đa của lưới */
             margin: auto; /* Canh giữa lưới */
             /* margin: 0; */
         }
@@ -113,6 +113,7 @@
             color: white;
         }
         .btn:hover{ opacity: 0.8;}
+        
     </style>
 </head>
 <body>
@@ -131,7 +132,7 @@ if (isset($_POST["them"])) {
         $SoDienThoai = $_POST['SoDienThoai'];
         $GioiTinh = $_POST['GioiTinh'];
         $TenDangNhap = $_POST['TenDangNhap'];
-        $MatKhau = $_POST['MatKhau']; // Bảo mật mật khẩu
+        $MatKhau = $_POST['MatKhau']; 
 
         // Bước 1: Thêm người dùng vào bảng nguoidung
         $sqlUser = "INSERT INTO nguoidung (HoTen, SoDienThoai, GioiTinh, TenDangNhap, MatKhau, QuyenHan) VALUES (?, ?, ?, ?, ?, 'NhanVien')";
@@ -146,7 +147,6 @@ if (isset($_POST["them"])) {
             $stmtEmployee = $conn->prepare($sqlEmployee);
             $stmtEmployee->bind_param("ssi", $HoTen, $ChucVu, $MaND);
             if ($stmtEmployee->execute()) {
-                // Xóa thành công
                 header("Location: quanLyNhanVien.php");
                 exit;
             } else {
@@ -187,31 +187,41 @@ if (isset($_POST["them"])) {
                 <a href="quanLyNhanVien.php"><b>&larr;</b></a>
                 <h2>Thêm mới nhân viên</h2>
             </div>
-            <form action="" method="post">
+            <form id="formThemNV" action="" method="post">
                 <div class="box">
                     <p class="info-basic">Thông tin cơ bản</p>
                     <div class="dauvao">
                         <div class="info">
                             <label for="">Họ tên: </label>
-                            <input type="text" name = "HoTen" value = "" placeholder="Nhập họ và tên" style="opacity: 0.6;">
+                            <input type="text" id="HoTen" name = "HoTen" value = "" placeholder="Nhập họ và tên" style="opacity: 0.6;">
+                            <span style="font-size: 18px; color: red; padding-left: 20px; display: none;" class="error" id="HoTenError"> Họ và tên không được để trống</span>
                         </div>
+
                         <div class="info">
                             <label for="">Số điện thoại: </label>
-                            <input type="text" name="SoDienThoai" value="" placeholder="Nhập số điện thoại" style="opacity: 0.6;">
+                            <input type="text" id="SoDienThoai" name="SoDienThoai" value="" placeholder="Nhập số điện thoại" style="opacity: 0.6;">
+                            <span style="font-size: 18px; color: red; padding-left: 20px; display: none;" class="error" id="SoDienThoaiError"> Số điện thoại không được để trống</span>
                         </div>
+
                         <div class="info">
                             <label for="">Tên đăng nhập: </label>
-                            <input type="text" name="TenDangNhap" value="" placeholder="Nhập tên đăng nhập" style="opacity: 0.6;">
+                            <input type="text" id="TenDangNhap" name="TenDangNhap" value="" placeholder="Nhập tên đăng nhập" style="opacity: 0.6;">
+                            <span style="font-size: 18px; color: red; padding-left: 20px; display: none;" class="error" id="TenDangNhapError"> Tên đăng nhập không được để trống</span>
                         </div>
+
                         <div class="info">
                             <label for="">Mật khẩu: </label>
-                            <input type="password" name="MatKhau" value="" placeholder="Nhập mật khẩu" style="opacity: 0.6;">
+                            <input type="password" id="MatKhau" name="MatKhau" value="" placeholder="Nhập mật khẩu" style="opacity: 0.6;">
+                            <span style=" font-size: 18px; color: red; padding-left: 20px; display: none;" class="error" id="MatKhauError"> Mật khẩu không được để trống</span>
                         </div>
+
                         <div class="gioi_tinh">
                             <p>Giới tính:</p>
                             <input type="radio" name="GioiTinh" value="Nam">Nam
-                            <input type="radio" name="GioiTinh" value="Nữ">Nữ
+                            <input type="radio" name="GioiTinh" value="Nữ">Nữ <br>
+                            <span style="font-size: 18px; color: red; padding-left: 20px; display: none;" class="error" id="GioiTinhError"> Giới tính không được để trống</span>
                         </div>
+
                         <div class="info">
                             <label for="">Chức vụ: </label>                    
                                 <select name="ChucVu" >
@@ -228,5 +238,59 @@ if (isset($_POST["them"])) {
             </form>        
         </div>
     </div>
+    <script>
+        var formThemNV = document.getElementById('formThemNV')
+        var HoTen = document.getElementById('HoTen');
+        var SoDienThoai = document.getElementById('SoDienThoai');
+        var TenDangNhap = document.getElementById('TenDangNhap');
+        var MatKhau = document.getElementById('MatKhau');
+
+        var HoTenError = document.getElementById('HoTenError');
+        var SoDienThoaiError = document.getElementById('SoDienThoaiError');
+        var TenDangNhapError = document.getElementById('TenDangNhapError');
+        var MatKhauError = document.getElementById('MatKhauError');
+        var GioiTinhError = document.getElementById('GioiTinhError');
+
+        formThemNV.addEventListener("submit", function (e) { 
+            var check = true;
+            if (HoTen.value.trim() === "") { 
+                check = false;
+                HoTenError.style.display = "block";
+            }
+            else { 
+                HoTenError.style.display = "none";
+            }
+
+            if (SoDienThoai.value.trim() === "") { 
+                SoDienThoaiError.style.display = "block";
+            } else {
+                SoDienThoaiError.style.display = "none";
+            }
+
+            if (TenDangNhap.value.trim() === "") {
+                check = false;
+                TenDangNhapError.style.display = "block";
+            } else {
+                TenDangNhapError.style.display = "none";
+            }
+
+            if (MatKhau.value.trim() === "") {
+                check = false;
+                MatKhauError.style.display = "block";
+            } else {
+                MatKhauError.style.display = "none";
+            }
+            var genderSelected = document.querySelector('input[name="GioiTinh"]:checked');
+            if (!genderSelected) {
+                check = false;
+                GioiTinhError.style.display = "block";
+            } else {
+                GioiTinhError.style.display = "none";
+            }
+                if (!check) {
+                    e.preventDefault();
+                }
+            })
+    </script>
 </body>
 </html>

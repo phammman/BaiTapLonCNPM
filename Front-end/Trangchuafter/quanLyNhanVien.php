@@ -55,6 +55,7 @@
         .info{width: 98%; margin:0 20px;
         }
         .title{
+            background-color: #fff;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -66,7 +67,7 @@
             align-items: center;
             }
         .title i{margin-right: 5px; font-size: 14px;}
-        .info-NV {margin: 30px ; border: 1px solid #cecece; border-radius: 10px; box-shadow: 0 0 3px rgba(0, 0, 0, 0.3); background-color: white;
+        .info-NV {margin: 30px 40px; border: 1px solid #cecece; border-radius: 10px; box-shadow: 0 0 3px rgba(0, 0, 0, 0.3); background-color: white;
 }
         .all{
             margin: 5px; border-bottom: 1px solid #cecece;
@@ -99,7 +100,7 @@
             text-decoration: underline; text-decoration-color: rgb(0 136 255);
         }
         .them{
-            display: inline-block; /* Để có thể căn giữa */
+            display: inline-block; 
             text-align: center;
             margin: 20px;
             background-color: rgb(0 136 255); border-radius: 10px; color: white;
@@ -115,6 +116,7 @@
         .sua:hover{
             color: green;
             background-color: rgba(99, 245, 162, 1);
+            border: 2px solid rgba(14, 194, 92, 1);
         }
         .xoa{
             border-radius: 10px; color: rgb(238, 71, 71); border: 1px solid rgba(227, 20, 5, 0.72);
@@ -122,6 +124,7 @@
         .xoa:hover{
             color: red;
             background-color:rgba(243, 189, 185, 0.72);
+            border: 2px solid rgba(227, 20, 5, 0.72);
         }
         .info-footer{
             display: flex; justify-content: space-between; align-items: center; padding: 0 20px; margin-bottom: 20px;
@@ -183,8 +186,22 @@
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748b"><circle cx="11" cy="11" r="7" stroke-width="1.6"/><path d="M20 20l-3.5-3.5" stroke-width="1.6"/></svg>
                     <input placeholder="Tìm kiếm" />
                 </div>
+                
                 <div class="topbar-actions">
-                    <button class="icon-btn" title="Thông báo"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748b"><path d="M15 17h5l-1.4-1.4A2 2 0 0 1 18 14.2V11a6 6 0 1 0-12 0v3.2c0 .5-.2 1-.6 1.4L4 17h5" stroke-width="1.5"/><path d="M10 19a2 2 0 0 0 4 0" stroke-width="1.5"/></svg></button>
+                    <button class="icon-btn" title="Thông báo">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748b"><path d="M15 17h5l-1.4-1.4A2 2 0 0 1 18 14.2V11a6 6 0 1 0-12 0v3.2c0 .5-.2 1-.6 1.4L4 17h5" stroke-width="1.5"/><path d="M10 19a2 2 0 0 0 4 0" stroke-width="1.5"/></svg>
+                </button>
+                <a href="../login/DangXuat.php" style="
+                    background:#ef4444;
+                    color:#fff;
+                    padding:8px 14px;
+                    border-radius:8px;
+                    font-weight:600;
+                    text-decoration:none;
+                    transition:0.3s;
+                " onmouseover="this.style.background='#dc2626'" onmouseout="this.style.background='#ef4444'">
+                            Đăng xuất
+                </a>
                     <div class="avatar">cu</div>
                 </div>
             </div>
@@ -203,27 +220,15 @@
                     </div>
                 </form>
                 <?php
-                    include("connect.php");
-
-                    $itemsPerPage = 10; 
-                    $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1; 
-                    $currentPage = max(1, $currentPage); 
-
-                    $sqlCount = "SELECT COUNT(*) AS total FROM nhanvien nv JOIN nguoidung nd ON nv.MaND = nd.MaND";
-                    $resultCount = mysqli_query($conn, $sqlCount);
-                    $totalEmployees = mysqli_fetch_assoc($resultCount)['total'];
-
-                    $totalPages = ceil($totalEmployees / $itemsPerPage); 
-                    $offset = ($currentPage - 1) * $itemsPerPage;
-
+                include("connect.php");
                     $sql = "SELECT nv.*, nd.SoDienThoai, nd.TenDangNhap, nd.MatKhau 
                             FROM nhanvien nv 
-                            JOIN nguoidung nd ON nv.MaND = nd.MaND 
-                            LIMIT $offset, $itemsPerPage"; 
+                            JOIN nguoidung nd ON nv.MaND = nd.MaND ";
                     $result = mysqli_query($conn, $sql);
                 ?>
                 <table border="2" align="center">
                     <tr>
+                        <th><input type="checkbox" name="" id=""></th>
                         <th>Mã NV</th>
                         <th>Họ tên</th>
                         <th>Tên đăng nhập</th>
@@ -232,6 +237,7 @@
                     </tr>
                     <?php while ($row = mysqli_fetch_array($result)){ ?>
                         <tr>
+                            <th><input type="checkbox" name="" id=""></th>
                             <td><?php echo $row["MaNV"]; ?></td>
                             <td><a class="name" href="xemNhanVien.php?MaNV=<?php echo $row["MaNV"]; ?>"><?php echo $row["HoTen"]; ?></a></td>
                             <td><?php echo $row["TenDangNhap"]; ?></td>
@@ -243,28 +249,6 @@
                         </tr>
                     <?php } ?>
                 </table>
-                    
-                <div class="info-footer">
-                    <div class="total-employ">
-                        <?php
-                            $start = ($currentPage - 1) * $itemsPerPage + 1; 
-                            $end = min($start + $itemsPerPage - 1, $totalEmployees); 
-                            
-                            if ($totalEmployees > 0) {
-                                echo "Từ $start đến $end trên tổng $totalEmployees";
-                            }
-                        ?>  
-                    </div>
-                    <div class="pagination">
-                        <a href="?page=<?php echo max(1, $currentPage - 1); ?>" class="gray-link"><</a>
-                        <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-                            <a href="?page=<?php echo $i; ?>" class="page-link <?php if ($i == $currentPage) echo 'active'; ?>">
-                                <?php echo $i; ?>
-                            </a>
-                        <?php endfor; ?>
-                        <a href="?page=<?php echo min($totalPages, $currentPage + 1); ?>" class="gray-link">></a>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
