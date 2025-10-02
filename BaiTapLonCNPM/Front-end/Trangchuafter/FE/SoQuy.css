@@ -1,0 +1,94 @@
+body {
+      font-family: Arial, sans-serif;
+      background: #f9fafb;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .flex {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .summary span {
+      margin-right: 20px;
+      font-weight: 500;
+    }
+
+    .summary .green {
+      color: #16a34a;
+    }
+    .summary .red {
+      color: #dc2626;
+    }
+
+    .btn {
+      background: #2563eb;
+      color: white;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 20px;
+      border-bottom: 2px solid #e5e7eb;
+      margin-top: 10px;
+    }
+    .tabs button {
+      background: none;
+      border: none;
+      padding: 10px 0;
+      cursor: pointer;
+      font-weight: 500;
+      color: #6b7280;
+    }
+    .tabs .active {
+      border-bottom: 2px solid #2563eb;
+      color: #2563eb;
+    }
+
+    .filters {
+      margin: 15px 0;
+      display: flex;
+      gap: 10px;
+    }
+    .filters input, .filters select, .filters button {
+      padding: 8px;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    thead {
+      background: #f3f4f6;
+    }
+    th, td {
+      padding: 10px 15px;
+      text-align: left;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    td:first-child {
+      color: #2563eb;
+      font-weight: 500;
+    }
+    tr:hover {
+      background: #f9fafb;
+    }
