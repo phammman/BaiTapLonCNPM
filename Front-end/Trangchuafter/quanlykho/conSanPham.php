@@ -1,13 +1,9 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quản lý nhân viên</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" 
-    integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" 
-    crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <title>Sản phẩm còn hàng</title>
     <style>
         :root {
         --bg: #0b1220;           
@@ -52,79 +48,67 @@
         .icon-btn { width:36px; height:36px; display:grid; place-items:center; border:1px solid var(--border); background:#fff; border-radius:10px; cursor:pointer; }
         .avatar { width:32px; height:32px; border-radius:50%; background:#22c55e; display:grid; place-items:center; color:#fff; font-weight:700; }
 
-        .info{width: 98%; margin:0 20px;
+
+        .info{
+            margin: 0 20px; 
         }
         .title{
-            background-color: #fff;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid #cecece;
         }
-        .title h2{margin:20px; font-size: 30px;}
-        .title a{
-            display: flex;
-            align-items: center;
-            }
-        .title i{margin-right: 5px; font-size: 14px;}
-        .info-NV {margin: 30px 40px; border: 1px solid #cecece; border-radius: 10px; box-shadow: 0 0 3px rgba(0, 0, 0, 0.3); background-color: white;
-}
+        .title h2{
+            margin:20px; font-size: 26px;
+        }
+        .info-kho {
+            margin: 0 40px; border: 1px solid #cecece; border-radius: 10px; box-shadow: 0 0 3px rgba(0, 0, 0, 0.3); background-color: white; 
+        }
+        
+        .info-title{
+            margin: 5px ; border-bottom: 1px solid #cecece; padding: 8px 0;
+        }
+        .conhang{
+            font-size: 18px; border:none; background: none; padding:8px 16px; color:rgb(0 136 255); border-bottom: 3px solid rgb(0 136 255); cursor: pointer; margin:0 10px;
+        } 
         .all{
-            margin: 5px; border-bottom: 1px solid #cecece;
+            font-size: 18px; border:none; background: none; padding:8px 16px; color: gray; cursor: pointer; 
         }
-        .all-css{
-            font-size: 20px; border:none; background: none; padding:8px 16px; color:rgb(0 136 255); border-bottom: 3px solid rgb(0 136 255); cursor: pointer;
+        .all:hover{
+            border-bottom: 3px solid gray; color: black;
+        } 
+        .hethang{
+            font-size: 18px; border:none; background: none; padding:8px 16px; color:gray; cursor: pointer;
+        } 
+        .hethang:hover{
+            border-bottom: 3px solid gray; color: black;
         }
-        .search-nv {width: 60%; margin: 20px ; flex:1; display:flex; align-items:center; justify-self: center; gap:10px;background-color: #ececec; border:1px solid #e2e8f0; padding:10px 12px; border-radius:10px; }
-        .search-nv input { flex:1; border:none; outline:none; background:transparent; font-size:14px;}
-        .search-nv:hover{
-            background-color: #bcbcbc;
+        .table-container {
+            margin: 20px 0;
+            width: 100%; /* Chiều rộng của container */
+            overflow-x: auto; /* Kích hoạt thanh cuộn ngang */
         }
         table {
-            margin: 20px 0;font-size: 18px; width: 100%; border-collapse: collapse; border: none;
+            width: 120%; /* Chiều rộng của bảng lớn hơn container */
+            border-collapse: collapse; /* Gộp các đường viền */
+            border: none;
+            background: transparent;
+            margin-bottom: 10px;
         }
-        th,td{
-            text-align: center; padding: 10px;
+        th, td {
+            border: none; /* Không có đường viền cho các ô */
+            padding: 8px; /* Khoảng cách trong ô */
+            text-align: center; /* Căn trái cho văn bản */
+            background: transparent;
+        }
+        .name{color: rgb(0 136 255); tex-decoration: none; }
+        .name:hover{
+            text-decoration: underline; text-decoration-color: rgb(0 136 255);
         }
         tr:nth-child(even) {
             background-color: #ffffff; /* Màu nền cho hàng chẵn */
         }
         tr:nth-child(odd) {
             background-color: #f2f2f2; /* Màu nền cho hàng lẻ */
-        }
-        a{
-            text-decoration: none; color: white; padding: 5px 20px; margin: 5px;
-        }
-        .name{color: rgb(0 136 255); tex-decoration: none; }
-        .name:hover{
-            text-decoration: underline; text-decoration-color: rgb(0 136 255);
-        }
-        .them{
-            display: inline-block; 
-            text-align: center;
-            margin: 20px;
-            background-color: rgb(0 136 255); border-radius: 10px; color: white;
-        }
-        .them:hover {
-            opacity: 0.8; /* Độ mờ khi di chuột vào */
-        }
-        b{ padding-bottom: 3px;}
-        .sua{
-            color: rgba(9, 176, 81, 1); border-radius: 10px;
-            border: 1px solid rgba(14, 194, 92, 1);
-        }
-        .sua:hover{
-            color: green;
-            background-color: rgba(99, 245, 162, 1);
-            border: 2px solid rgba(14, 194, 92, 1);
-        }
-        .xoa{
-            border-radius: 10px; color: rgb(238, 71, 71); border: 1px solid rgba(227, 20, 5, 0.72);
-        }
-        .xoa:hover{
-            color: red;
-            background-color:rgba(243, 189, 185, 0.72);
-            border: 2px solid rgba(227, 20, 5, 0.72);
         }
         .info-footer{
             display: flex; justify-content: space-between; align-items: center; padding: 0 20px; margin-bottom: 20px;
@@ -151,6 +135,7 @@
             text-decoration: none; 
             font-weight: bold; 
             color: white;
+            margin: 0 10px;
         }
         .gray-link{
             color: gray;
@@ -158,7 +143,7 @@
     </style>
 </head>
 <body>
-    <div class="container">
+<div class="container">
         <div class="sidebar">
             <div class="brand">
                 <div class="brand-logo">Q</div>
@@ -172,8 +157,8 @@
                     </a>
                     <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 7h18M3 12h18M3 17h18" stroke-width="1.5"/></svg> Đơn hàng</a>
                     <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="14" rx="2" stroke-width="1.5"/><path d="M7 8h10M7 12h10" stroke-width="1.5"/></svg> Sản phẩm</a>
-                    <a class="nav-item" href="./quanLyKho/quanLyKho.php"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9h18M5 9V5h14v4M5 9v10h14V9" stroke-width="1.5"/></svg> Quản lý kho</a>
-                    <a class="nav-item" href="quanLyNhanVien.php"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4" stroke-width="1.5"/><path d="M4 21c1.5-4 6-6 8-6s6.5 2 8 6" stroke-width="1.5"/></svg> Nhân viên</a>
+                    <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9h18M5 9V5h14v4M5 9v10h14V9" stroke-width="1.5"/></svg> Quản lý kho</a>
+                    <a class="nav-item" href=""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4" stroke-width="1.5"/><path d="M4 21c1.5-4 6-6 8-6s6.5 2 8 6" stroke-width="1.5"/></svg> Nhân viên</a>
                     <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4" stroke-width="1.5"/><path d="M4 21c1.5-4 6-6 8-6s6.5 2 8 6" stroke-width="1.5"/></svg> Khách hàng</a>
                     <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="5" width="18" height="14" rx="2" stroke-width="1.5"/><path d="M7 9h6M7 13h10" stroke-width="1.5"/></svg> Sổ quỹ</a>
                     <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 6h16M4 12h16M4 18h10" stroke-width="1.5"/></svg> Báo cáo</a>
@@ -206,52 +191,85 @@
                 </div>
             </div>
             <div class="title">
-                <h2>Danh sách nhân viên</h2>
-                <a class = "them" href="themNV.php"><i class="fa-solid fa-plus"></i><b>Thêm nhân viên</b></a>
+                <h2>Quản lý kho</h2>
             </div>
-            <div class="info-NV">
-                <div class="all">
-                    <button class = "all-css"><b>Tất cả</b></button>
+            <div class="info-kho">
+                <div class="info-title">
+                    <a class = "all" href = "quanLyKho.php">Tất cả</a>
+                    <a class = "conhang" href="conSanPham.php">Còn hàng</a>
+                    <a class = "hethang" href="hetSanPham.php">Hết hàng</a>
                 </div>
-                <form action="searchNhanVien.php" method="get">
-                    <div class="search-nv">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748b"><circle cx="11" cy="11" r="7" stroke-width="1.6"/><path d="M20 20l-3.5-3.5" stroke-width="1.6"/></svg>
-                        <input type = "text" name = "TenDangNhap" placeholder="Tìm kiếm nhân viên theo tên đăng nhập" >
-                    </div>
-                </form>
-                <?php
-                include("connect.php");
-                    
-                    $sql = "SELECT nv.*, nd.SoDienThoai, nd.TenDangNhap, nd.MatKhau 
-                            FROM nhanvien nv 
-                            JOIN nguoidung nd ON nv.MaND = nd.MaND ";
-                    $result = mysqli_query($conn, $sql);
-                ?>
-                <table border="2" align="center">
-                    <tr>
-                        <th><input type="checkbox" name="" id=""></th>
-                        <th>Mã NV</th>
-                        <th>Họ tên</th>
-                        <th>Tên đăng nhập</th>
-                        <th>Chức vụ</th>
-                        <th>Trạng thái</th>
-                    </tr>
-                    <?php while ($row = mysqli_fetch_array($result)){ ?>
+                <div class="table-container">
+                    <?php
+                        include("connect.php");
+                        $itemsPerPage = 10; 
+                        $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1; 
+                        $currentPage = max(1, $currentPage); 
+
+                        $sqlCount = "SELECT COUNT(*) AS total FROM sanpham";
+                        $resultCount = mysqli_query($conn, $sqlCount);
+                        $totalProduct = mysqli_fetch_assoc($resultCount)['total'];
+
+                        $totalPages = ceil($totalProduct / $itemsPerPage); 
+                        $offset = ($currentPage - 1) * $itemsPerPage;
+                        $sql = "SELECT * FROM sanpham WHERE SoLuongTon > 0 LIMIT $offset, $itemsPerPage";
+                        $result = mysqli_query($conn, $sql);
+                    ?>
+                    <!-- <?php
+                        include("connect.php");
+                        $sql = "SELECT * FROM sanpham WHERE SoLuongTon > 0";
+                        $result = mysqli_query($conn, $sql);
+                    ?> -->
+                    <table>
                         <tr>
                             <th><input type="checkbox" name="" id=""></th>
-                            <td><?php echo $row["MaNV"]; ?></td>
-                            <td><a class="name" href="xemNhanVien.php?MaNV=<?php echo $row["MaNV"]; ?>"><?php echo $row["HoTen"]; ?></a></td>
-                            <td><?php echo $row["TenDangNhap"]; ?></td>
-                            <td><?php echo $row["ChucVu"]; ?></td>
-                            <td>
-                                <a class="sua" href="suaNhanVien.php?MaNV=<?php echo $row["MaNV"]; ?>"><b>Cập nhật</b></a>
-                                <a class="xoa" href="xoaNhanVien.php?MaNV=<?php echo $row["MaNV"]; ?>"><b>Xóa</b></a>
-                            </td>
+                            <th style ="width: 300px; text-align: left;">Sản phẩm</th>
+                            <th>SKU</th>
+                            <th>Barcode</th>
+                            <th>Đơn vị tính</th>
+                            <th>Tồn kho</th>
+                            <th>Giá bán</th>
+                            <th>Giá vốn</th>
                         </tr>
-                    <?php } ?>
-                </table>
+                        <?php while ($row = mysqli_fetch_array($result)){ ?>
+                        <tr>
+                            <th><input type="checkbox" name="" id=""></th>
+                            <td style = "text-align: left;"><a class="name" href=""><?php echo $row["TenSP"]; ?></a></td>
+                            <td><?php echo $row["MaSKU"]; ?></td>
+                            <td><?php echo $row["MaBarcode"]; ?></td>
+                            <td ><?php echo $row["DVTinh"]; ?></td>
+                            <td><?php echo $row['SoLuongTon']?></td>
+                            <td><?php echo $row["GiaBan"]; ?></td>
+                            <td><?php echo $row["GiaVon"]; ?></td>
+                        </tr>
+                        <?php } ?>
+                        
+                    </table>
+                </div>
+                <div class="info-footer">
+                    <div class="total-employ">
+                        <?php
+                            $start = ($currentPage - 1) * $itemsPerPage + 1; 
+                            $end = min($start + $itemsPerPage - 1, $totalProduct); 
+                            
+                            if ($totalProduct > 0) {
+                                echo "Từ $start đến $end trên tổng $totalProduct";
+                            }
+                        ?>  
+                    </div>
+                    <div class="pagination">
+                        <a href="?page=<?php echo max(1, $currentPage - 1); ?>" class="gray-link"><</a>
+                        <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                            <a href="?page=<?php echo $i; ?>" class="page-link <?php if ($i == $currentPage) echo 'active'; ?>">
+                                <?php echo $i; ?>
+                            </a>
+                        <?php endfor; ?>
+                        <a href="?page=<?php echo min($totalPages, $currentPage + 1); ?>" class="gray-link">></a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+</div>
 </body>
 </html>
