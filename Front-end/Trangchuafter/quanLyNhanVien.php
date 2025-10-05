@@ -61,7 +61,7 @@
             align-items: center;
             border-bottom: 1px solid #cecece;
         }
-        .title h2{margin:20px; font-size: 30px;}
+        .title h2{margin:20px; font-size: 30px; font-weight: 550;}
         .title a{
             display: flex;
             align-items: center;

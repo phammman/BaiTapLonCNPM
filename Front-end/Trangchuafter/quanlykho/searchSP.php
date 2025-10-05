@@ -1,3 +1,18 @@
+<?php
+include("connect.php");
+
+if (isset($_GET['TenSP'])) {
+    $TenSP = $_GET['TenSP'];
+    
+    $TenSP = mysqli_real_escape_string($conn, $TenSP);
+    
+    $sql = "SELECT *  
+            FROM sanpham 
+            WHERE TenSP LIKE '%$TenSP%'";
+    
+    $result = mysqli_query($conn, $sql);
+}
+?>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -58,7 +73,7 @@
             align-items: center;
         }
         .title h2{
-            margin:20px; font-size: 26px; font-weight: 550;
+            margin:20px; font-size: 26px;font-weight: 550;
         }
         .info-kho {
             margin: 0 40px; border: 1px solid #cecece; border-radius: 10px; box-shadow: 0 0 3px rgba(0, 0, 0, 0.3); background-color: white; 
@@ -181,7 +196,7 @@
                     <button class="icon-btn" title="Thông báo">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748b"><path d="M15 17h5l-1.4-1.4A2 2 0 0 1 18 14.2V11a6 6 0 1 0-12 0v3.2c0 .5-.2 1-.6 1.4L4 17h5" stroke-width="1.5"/><path d="M10 19a2 2 0 0 0 4 0" stroke-width="1.5"/></svg>
                 </button>
-                <a href=".../login/DangXuat.php" style="
+                <a href="../login/DangXuat.php" style="
                     background:#ef4444;
                     color:#fff;
                     padding:8px 14px;
@@ -196,7 +211,7 @@
                 </div>
             </div>
             <div class="title">
-                <h2>Quản lý kho: Cửa hàng chính</h2>
+                <h2>Quản lý kho</h2>
             </div>
             <div class="info-kho">
                 <div class="info-title">
@@ -204,28 +219,13 @@
                     <a class = "conhang" href="conSanPham.php">Còn hàng</a>
                     <a class = "hethang" href="hetSanPham.php">Hết hàng</a>
                 </div>
-                <form action="searchSP.php" method="get">
+                <form action="searchNhanVien.php" method="get">
                     <div class="search-sp">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748b"><circle cx="11" cy="11" r="7" stroke-width="1.6"/><path d="M20 20l-3.5-3.5" stroke-width="1.6"/></svg>
                         <input type = "text" name = "TenSP" placeholder="Tìm kiếm sản phẩm theo tên" >
                     </div>
                 </form>
-                <div class="table-container">
-                    <?php
-                        include("connect.php");
-                        $itemsPerPage = 10; 
-                        $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1; 
-                        $currentPage = max(1, $currentPage); 
-
-                        $sqlCount = "SELECT COUNT(*) AS total FROM sanpham";
-                        $resultCount = mysqli_query($conn, $sqlCount);
-                        $totalProduct = mysqli_fetch_assoc($resultCount)['total'];
-
-                        $totalPages = ceil($totalProduct / $itemsPerPage); 
-                        $offset = ($currentPage - 1) * $itemsPerPage;
-                        $sql = "SELECT * FROM sanpham LIMIT $offset, $itemsPerPage";
-                        $result = mysqli_query($conn, $sql);
-                    ?>
+                <div class="table-container">             
                     <table>
                         <tr>
                             <th><input type="checkbox" name="" id=""></th>
@@ -237,40 +237,27 @@
                             <th>Giá bán</th>
                             <th>Giá vốn</th>
                         </tr>
-                        <?php while ($row = mysqli_fetch_array($result)){ ?>
-                        <tr>
-                            <th><input type="checkbox" name="" id=""></th>
-                            <td style = "text-align: left;"><a class="name" href=""><?php echo $row["TenSP"]; ?></a></td>
-                            <td><?php echo $row["MaSKU"]; ?></td>
-                            <td><?php echo $row["MaBarcode"]; ?></td>
-                            <td ><?php echo $row["DVTinh"]; ?></td>
-                            <td><?php echo $row['SoLuongTon']?></td>
-                            <td><?php echo $row["GiaBan"]; ?></td>
-                            <td><?php echo $row["GiaVon"]; ?></td>
-                        </tr>
-                        <?php } ?>
+                        <?php 
+                        if(mysqli_num_rows($result) > 0){
+                        while ($row = mysqli_fetch_array($result)){ 
+                        ?>
+                            <tr>
+                                <th><input type="checkbox" name="" id=""></th>
+                                <td style = "text-align: left;"><a class="name" href=""><?php echo $row["TenSP"]; ?></a></td>
+                                <td><?php echo $row["MaSKU"]; ?></td>
+                                <td><?php echo $row["MaBarcode"]; ?></td>
+                                <td ><?php echo $row["DVTinh"]; ?></td>
+                                <td><?php echo $row['SoLuongTon']?></td>
+                                <td><?php echo $row["GiaBan"]; ?></td>
+                                <td><?php echo $row["GiaVon"]; ?></td>
+                            </tr>
+                        <?php 
+                            } 
+                        } else{
+                            echo "<tr><td colspan='8' class='error-message'>Không tìm thấy sản phẩm nào.</td></tr>";
+                        }
+                    ?>
                     </table>
-                </div>
-                <div class="info-footer">
-                    <div class="total-employ">
-                        <?php
-                            $start = ($currentPage - 1) * $itemsPerPage + 1; 
-                            $end = min($start + $itemsPerPage - 1, $totalProduct); 
-                            
-                            if ($totalProduct > 0) {
-                                echo "Từ $start đến $end trên tổng $totalProduct";
-                            }
-                        ?>  
-                    </div>
-                    <div class="pagination">
-                        <a href="?page=<?php echo max(1, $currentPage - 1); ?>" class="gray-link"><</a>
-                        <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-                            <a href="?page=<?php echo $i; ?>" class="page-link <?php if ($i == $currentPage) echo 'active'; ?>">
-                                <?php echo $i; ?>
-                            </a>
-                        <?php endfor; ?>
-                        <a href="?page=<?php echo min($totalPages, $currentPage + 1); ?>" class="gray-link">></a>
-                    </div>
                 </div>
             </div>
         </div>

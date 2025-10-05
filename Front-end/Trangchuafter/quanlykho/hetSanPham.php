@@ -58,7 +58,7 @@
             align-items: center;
         }
         .title h2{
-            margin:20px; font-size: 26px;
+            margin:20px; font-size: 26px; font-weight: 550;
         }
         .info-kho {
             margin: 0 40px; border: 1px solid #cecece; border-radius: 10px; box-shadow: 0 0 3px rgba(0, 0, 0, 0.3); background-color: white; 
@@ -81,6 +81,11 @@
         } 
         .all:hover{
             border-bottom: 3px solid gray; color: black;
+        }
+        .search-sp {width: 60%; margin: 20px ; flex:1; display:flex; align-items:center; justify-self: center; gap:10px;background-color: #ececec; border:1px solid #e2e8f0; padding:10px 12px; border-radius:10px; }
+        .search-sp input { flex:1; border:none; outline:none; background:transparent; font-size:14px;}
+        .search-sp:hover{
+            background-color: #bcbcbc;
         }
         .table-container {
             margin: 20px 0;
@@ -199,6 +204,12 @@
                     <a class = "conhang" href="conSanPham.php">Còn hàng</a>
                     <a class = "hethang" href="hetSanPham.php">Hết hàng</a>
                 </div>
+                <form action="searchSP.php" method="get">
+                    <div class="search-sp">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748b"><circle cx="11" cy="11" r="7" stroke-width="1.6"/><path d="M20 20l-3.5-3.5" stroke-width="1.6"/></svg>
+                        <input type = "text" name = "TenSP" placeholder="Tìm kiếm sản phẩm theo tên" >
+                    </div>
+                </form>
                 <div class="table-container">
                     <?php
                         include("connect.php");
@@ -206,7 +217,7 @@
                         $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1; 
                         $currentPage = max(1, $currentPage); 
 
-                        $sqlCount = "SELECT COUNT(*) AS total FROM sanpham";
+                        $sqlCount = "SELECT COUNT(*) AS total FROM sanpham WHERE SoLuongTon = 0";
                         $resultCount = mysqli_query($conn, $sqlCount);
                         $totalProduct = mysqli_fetch_assoc($resultCount)['total'];
 
