@@ -4,7 +4,7 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
 // include connect
-require_once __DIR__ . '/connect.php'; // chỉnh đường dẫn nếu cần
+require_once __DIR__ . '/connect.php';
 
 // kiểm tra $conn
 if (!isset($conn) || !($conn instanceof mysqli)) {
@@ -483,7 +483,7 @@ if ($result === false) {
               <path d="M4 21c1.5-4 6-6 8-6s6.5 2 8 6" stroke-width="1.5" />
             </svg> Khách hàng</a>
           <!-- <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 12h16M12 4v16" stroke-width="1.5"/></svg> Khuyến mại</a> -->
-          <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <a class="nav-item" href="SoQuy.php"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
               <rect x="3" y="5" width="18" height="14" rx="2" stroke-width="1.5" />
               <path d="M7 9h6M7 13h10" stroke-width="1.5" />
             </svg> Sổ quỹ</a>
