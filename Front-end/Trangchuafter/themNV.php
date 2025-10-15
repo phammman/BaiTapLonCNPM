@@ -120,8 +120,22 @@
     <?php
     
 include("connect.php");
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        // Lấy tên đăng nhập từ form
+        $TenDangNhap = $_POST['TenDangNhap'];
 
-if (isset($_POST["them"])) {
+        // Kiểm tra tên đăng nhập đã tồn tại trong cơ sở dữ liệu chưa
+        $sql = "SELECT * FROM nguoidung WHERE TenDangNhap = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", $TenDangNhap);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            // Tên đăng nhập đã tồn tại
+            $error = "Tên đăng nhập đã tồn tại. Vui lòng chọn tên khác.";
+        }
+else {
     // Kiểm tra các trường bắt buộc
     if (!empty($_POST['HoTen']) && !empty($_POST['ChucVu']) && 
         !empty($_POST['SoDienThoai']) && !empty($_POST['GioiTinh']) && 
@@ -158,6 +172,7 @@ if (isset($_POST["them"])) {
         }
         $stmtUser->close();
     } 
+}
 }
 ?>
     <div class="container">
@@ -206,6 +221,7 @@ if (isset($_POST["them"])) {
                         <div class="info">
                             <label for="">Tên đăng nhập: </label>
                             <input type="text" id="TenDangNhap" name="TenDangNhap" value="" placeholder="Nhập tên đăng nhập" style="opacity: 0.6;">
+                            <span style="font-size: 18px; color: red; padding-left: 20px;"><?php echo empty($error) ? ' ' : $error ?></span>
                             <span style="font-size: 18px; color: red; padding-left: 20px; display: none;" class="error" id="TenDangNhapError"> Tên đăng nhập không được để trống</span>
                         </div>
 

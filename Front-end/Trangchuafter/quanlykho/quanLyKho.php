@@ -181,7 +181,7 @@
                     <button class="icon-btn" title="Thông báo">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748b"><path d="M15 17h5l-1.4-1.4A2 2 0 0 1 18 14.2V11a6 6 0 1 0-12 0v3.2c0 .5-.2 1-.6 1.4L4 17h5" stroke-width="1.5"/><path d="M10 19a2 2 0 0 0 4 0" stroke-width="1.5"/></svg>
                 </button>
-                <a href=".../login/DangXuat.php" style="
+                <a href="../../login/DangXuat.php" style="
                     background:#ef4444;
                     color:#fff;
                     padding:8px 14px;
@@ -245,8 +245,8 @@
                             <td><?php echo $row["MaBarcode"]; ?></td>
                             <td ><?php echo $row["DVTinh"]; ?></td>
                             <td><?php echo $row['SoLuongTon']?></td>
-                            <td><?php echo $row["GiaBan"]; ?></td>
-                            <td><?php echo $row["GiaVon"]; ?></td>
+                            <td><?php echo number_format($row["GiaBan"], 0, ',', '.'); ?></td>
+                             <td><?php echo number_format($row["GiaVon"], 0, ',', '.'); ?></td>
                         </tr>
                         <?php } ?>
                     </table>
