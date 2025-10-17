@@ -4,6 +4,8 @@ session_start();
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+$MaND = $_SESSION['MaND'];
+
 
 // Kết nối CSDL
 $conn = new mysqli("localhost", "root", "", "chuyendedinhhuongcnpm");
@@ -13,7 +15,8 @@ if ($conn->connect_error) {
 $conn->set_charset("utf8");
 
 // Truy vấn sản phẩm
-$sql = "SELECT MaSP, TenSP, MaSKU, SoLuongTon, GiaBan, GiaVon FROM SanPham";
+$sql = "SELECT MaSP, TenSP, MaSKU, SoLuongTon, GiaBan, GiaVon FROM SanPham
+        WHERE MaND = '$MaND'";
 $result = $conn->query($sql);
 ?>
 <!doctype html>

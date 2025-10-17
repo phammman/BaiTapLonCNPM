@@ -275,7 +275,7 @@
   </style>
 </head>
 <body>
-  <form class="app" action="update.php" method="post">
+  <form class="app" action="update.php" method="post" enctype="multipart/form-data">
       <input type="hidden" name="MaSP" value="<?php echo $masp; ?>" id="">
     <!-- SIDEBAR -->
      <?php include('../headafter2.php'); ?>
@@ -337,9 +337,21 @@
                 <!-- Right column -->
                 <div>
                 <div class="card">
-                    <h3>Ảnh sản phẩm</h3>
-                    <input type="file">
+                  <h3>Ảnh sản phẩm</h3>
+                  
+                 <?php if (!empty($row['img'])): ?>
+                    <div style="margin-bottom: 8px;">
+                        <img src="<?php echo '../' . htmlspecialchars($row['img']); ?>" 
+                            alt="Ảnh sản phẩm hiện tại" 
+                            style="width: 120px; height: 120px; object-fit: cover; border-radius: 8px; border: 1px solid #ccc;">
+                    </div>
+                    <input type="hidden" name="old_img" value="<?php echo htmlspecialchars($row['img']); ?>">
+                <?php endif; ?>
+
+                <input type="file" name="img">
                 </div>
+
+
 
                 <div class="card">
                     <h3>Danh mục & Thuộc tính</h3>

@@ -282,7 +282,7 @@ session_start();
   </style>
 </head>
 <body>
-  <form class="app" action="add.php" method="post">
+  <form class="app" action="add.php" method="post" enctype="multipart/form-data">
     <!-- SIDEBAR -->
     <?php include('../headafter2.php')?>
 
@@ -337,7 +337,7 @@ session_start();
                 <div>
                 <div class="card">
                     <h3>Ảnh sản phẩm</h3>
-                    <input type="file">
+                    <input type="file" name="img">
                 </div>
 
                 <div class="card">

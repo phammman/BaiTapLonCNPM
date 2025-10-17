@@ -20,8 +20,7 @@ header {
   box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
 
-.logo a{
-  text-decoration: none;
+.logo {
   font-size: 28px;
   font-weight: bold;
   color: #00b894;
@@ -413,7 +412,6 @@ nav ul li a:hover {
   background: linear-gradient(90deg, #00d692, #00c1ff);
   text-align: center;
   padding: 60px 20px;
-  border-radius: 0 0 50px 50px;
   color: #fff;
 }
 
@@ -486,3 +484,4 @@ nav ul li a:hover {
 .footer-col ul li a:hover {
   color: #00d692;
 }
+

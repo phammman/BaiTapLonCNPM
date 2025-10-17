@@ -14,7 +14,7 @@
     $madh = isset($_GET['MaDH']) ? (int)$_GET['MaDH'] : 0;
 
     if ($madh <= 0) {
-        die("Mã sản phẩm không hợp lệ");
+        die("Mã đơn hàng không hợp lệ");
     }
 
     $sua_sql = "SELECT * FROM donhang WHERE MaDH = $madh";
@@ -313,7 +313,7 @@
   </style>
 </head>
 <body>
-  <form class="app" action="add.php" method="post">
+  <form class="app" action="update.php" method="post">
     <input type="hidden" name="MaDH" value="<?php echo $madh; ?>" id="">
     <!-- SIDEBAR -->
     <?php include '../headafter2.php'; ?>
@@ -494,12 +494,12 @@
                 style="position:absolute; margin-top:5px; left:0; background:white; border:1px solid #ddd; border-radius:6px;max-height:200px; overflow-y:auto; display:none; width:100%; z-index:10;"></div>
           </div> -->
           <div style="position: relative; margin-bottom: 10px;margin-top: 20px; border: 1px solid #e5e7eb; border-radius: 10px; padding: 16px; background: #fff;">
+            <input type="hidden" name="MaKH" value="<?php echo htmlspecialchars($row['MaKH']); ?>">
             <label for="searchCustomer">Khách hàng</label>
             <input name="TenKH" type="text" id="searchCustomer" placeholder="Tìm khách hàng theo tên, email, số ĐT..."
-                style="flex:1; padding: 8px; border: 1px solid #e5e7eb; border-radius: 6px; margin-right: 10px; width:100%;" required <?php echo htmlspecialchars($row['TenKH']); ?>>
+                style="flex:1; padding: 8px; border: 1px solid #e5e7eb; border-radius: 6px; margin-right: 10px; width:100%;" value="<?php echo htmlspecialchars($row['TenKH']); ?>">
             
             <!-- Input ẩn lưu MaKH -->
-            <input type="hidden" name="MaKH" id="customerId">
 
             <div id="customerSuggestions"
                 style="position:absolute; margin-top:5px; left:0; background:white; border:1px solid #ddd; border-radius:6px;max-height:200px; overflow-y:auto; display:none; width:100%; z-index:10;">
@@ -564,20 +564,41 @@
                 </select>
               </div>
 
-              <div style="margin-bottom: 25px;">
-                <label style="display: block; font-size: 14px; font-weight: 500; margin-bottom: 4px;">Nhân viên phụ trách</label>
-                <select style="width: 100%; padding: 8px; border: 1px solid #e5e7eb; border-radius: 6px;">
-                  <!-- <input type="hidden" name="MaNV" value="<?php echo $_SESSION['MaNV']; ?>"> -->
-                  <option>Chọn nhân viên</option>
-                  <option>Nhân viên A</option>
-                  <option>Nhân viên B</option>
+              <div style="margin-bottom: 25px;">  
+                <label style="display: block; font-size: 14px; font-weight: 500; margin-bottom: 4px;">
+                  Nhân viên phụ trách
+                </label>
+
+                <select name="MaNV" style="width: 100%; padding: 8px; border: 1px solid #e5e7eb; border-radius: 6px;">
+                  <option value="">Chọn nhân viên</option>
+                  <?php
+                  include '../connect.php';
+
+                  if ($conn) {
+                      $sql_nv = "SELECT MaNV, HoTen FROM nhanvien";
+                      $result_nv = $conn->query($sql_nv);
+
+                      if ($result_nv && $result_nv->num_rows > 0) {
+                          while ($row_nv = $result_nv->fetch_assoc()) {
+                              // Kiểm tra nếu MaNV trong bảng = MaNV đang được xem (để đánh dấu selected)
+                              $selected = ($row_nv['MaNV'] == $row['MaNV']) ? 'selected' : '';
+                              echo "<option value='" . htmlspecialchars($row_nv['MaNV']) . "' $selected>"
+                                  . htmlspecialchars($row_nv['HoTen']) .
+                                  "</option>";
+                          }
+                      } else {
+                          echo "<option value=''>Không có nhân viên</option>";
+                      }
+                  } else {
+                      echo "<option value=''>Lỗi kết nối CSDL</option>";
+                  }
+                  ?>
                 </select>
               </div>
-
-
+ 
               <div style="margin-bottom: 25px;">
                 <label style="display: block; font-size: 14px; font-weight: 500; margin-bottom: 4px;">Ngày đặt hàng</label>
-                <input name="NgayLap" type="date" style="width: 100%; padding: 8px; border: 1px solid #e5e7eb; border-radius: 6px;" <?php echo htmlspecialchars($row['NgayLap']); ?>>
+                <input name="NgayLap" type="date" style="width: 100%; padding: 8px; border: 1px solid #e5e7eb; border-radius: 6px;" value="<?php echo htmlspecialchars($row['NgayLap']); ?>">
                 <small style="color: #94a3b8;">Giá trị chỉ ghi nhận khi tạo đơn hàng</small>
               </div>
 

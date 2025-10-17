@@ -9,7 +9,10 @@
     <div class="avatar" alt="Avatar" id="avatarBtn"><?php echo substr($_SESSION['TenDangNhap'], 0, 2); ?></div>
     <div class="dropdown" id="avatarDropdown">
         <div onclick="location.href='my_account.php'" class="dropdown-item">Tài khoản của tôi</div>
-        <div class="dropdown-item">Cài đặt</div>
+        <div onclick="window.open('myshop/Trangchu.php', '_blank')" class="dropdown-item">
+            Website của tôi
+        </div>
+
         <div onclick="location.href='DangNhap.php'" class="dropdown-item">Đăng xuất</div>
     </div>
     </div>

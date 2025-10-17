@@ -1,17 +1,23 @@
 <?php
+session_start();
 header("Content-Type: application/json; charset=UTF-8");
-include __DIR__ . "/../connect.php"; // chỉnh đúng đường dẫn file connect.php
 
+include __DIR__ . "/../connect.php";
+
+$MaND = $_SESSION['MaND'] ?? null;
 $q = $_GET['q'] ?? '';
 $q = trim($q);
-
 $data = [];
 
-if ($q !== '') {
+if ($MaND && $q !== '') {
     $q = mysqli_real_escape_string($conn, $q);
-    $sql = "SELECT MaSP, TenSP, GiaBan FROM sanpham 
-        WHERE TenSP LIKE '%$q%' OR MaSP LIKE '%$q%'  
-        LIMIT 10";
+    $sql = "
+        SELECT MaSP, TenSP, GiaBan 
+        FROM sanpham
+        WHERE MaND = '$MaND'
+          AND (TenSP LIKE '%$q%' OR MaSP LIKE '%$q%')
+        LIMIT 10
+    ";
     $result = mysqli_query($conn, $sql);
 
     while ($row = mysqli_fetch_assoc($result)) {
@@ -20,5 +26,4 @@ if ($q !== '') {
 }
 
 echo json_encode($data, JSON_UNESCAPED_UNICODE);
-
 ?>

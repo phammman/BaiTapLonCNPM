@@ -182,6 +182,7 @@ session_start();
                     <div style="overflow:auto;">
                     <?php
                     $conn = new mysqli("localhost", "root", "", "chuyendedinhhuongcnpm");
+                    $MaND = $_SESSION['MaND'];
                     if ($conn->connect_error) {
                         die("Kết nối thất bại: " . $conn->connect_error);
                     }
@@ -190,6 +191,7 @@ session_start();
                     // Truy vấn lấy tất cả đơn hàng từ bảng donhang
                     $sql = "SELECT MaDH, NgayLap, TrangThai, ThanhTien, MaKH, TenKH, MaNV 
                             FROM donhang
+                            WHERE MaND = '$MaND'
                             ORDER BY MaDH ASC";
 
                     $result = $conn->query($sql);
@@ -215,7 +217,8 @@ session_start();
                                     echo "<tr>";
                                     echo "<td style='padding:14px; border-bottom:1px solid #f1f5f9;'><input type='checkbox' /></td>";
                                     echo "<td style='padding:14px; border-bottom:1px solid #f1f5f9;'>
-                                            <a href='quanlydonhang/edit_orders.php' style='color:var(--primary); font-weight:500;'>#" . $row['MaDH'] . "</a>
+                                            <a href='quanlydonhang/edit_orders.php?MaDH=" . $row['MaDH'] . "' 
+                                              style='color:var(--primary); font-weight:500;'>#" . $row['MaDH'] . "</a>
                                           </td>";
                                     echo "<td style='padding:14px; border-bottom:1px solid #f1f5f9;'>" .
                                             date("d/m/Y", strtotime($row['NgayLap'])) . "</td>";

@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 ?>
 <!doctype html>
 <html lang="vi">
@@ -192,9 +193,23 @@ session_start();
                         <tbody>
 
                         <?php
-                        include('connect.php');
+                        include "connect.php";
 
-                        $lietke_sql = "SELECT * FROM sanpham order by MaSP, TenSP, GiaBan, SoLuongTon, MaDM, MaSKU, MoTa, GiaVon";
+                        if (!isset($_SESSION['MaND'])) {
+                            echo "<script>alert('Bạn cần đăng nhập trước!'); window.location.href='DangNhap.php';</script>";
+                            exit();
+                        }
+
+                        $MaND = $_SESSION['MaND'];
+
+                        // Lọc sản phẩm theo người dùng hiện tại, vẫn lấy đầy đủ các cột
+                        $lietke_sql = "
+                            SELECT MaSP, TenSP, GiaBan, SoLuongTon, MaDM, MaSKU, MoTa, GiaVon, img 
+                            FROM sanpham
+                            WHERE MaND = '$MaND'
+                            ORDER BY MaSP DESC
+                        ";
+
 
                         $result = mysqli_query($conn, $lietke_sql);
 
@@ -204,7 +219,16 @@ session_start();
                             <td style="padding:14px; border-bottom:1px solid #f1f5f9;"><input type="checkbox" /></td>
                             <td style="padding:14px; border-bottom:1px solid #f1f5f9;">
                             <div style="display:flex; align-items:center; gap:12px;">
-                                <div style="width:48px; height:48px; border-radius:8px; background:#f1f5f9; display:grid; place-items:center; color:var(--muted);">📷</div>
+                                <!-- <div style="width:48px; height:48px; border-radius:8px; background:#f1f5f9; display:grid; place-items:center; color:var(--muted);">📷</div> -->
+                                 <div style="width:48px; height:48px; border-radius:8px; background:#f1f5f9; display:grid; place-items:center; overflow:hidden;">
+                                    <?php if (!empty($r['img'])): ?>
+                                        <img src="<?php echo htmlspecialchars($r['img']); ?>" alt="Ảnh sản phẩm" style="width:100%; height:100%; object-fit:cover; border-radius:8px;">
+                                    <?php else: ?>
+                                        <span style="color:#94a3b8; font-size:12px;">No image</span>
+                                    <?php endif; ?>
+                                </div>
+
+
                                 <a href="quanlysp/edit_products.php?MaSP=<?php echo $r['MaSP'];?>" class="click" style="color:var(--primary); text-decoration:none; font-weight:500;"><?php echo $r['TenSP']; ?></a>
                             </div>
                             </td>

@@ -1,35 +1,95 @@
 <?php
-        // include('/Chuyen_de_dinh_huong_CNPM/Front-end/Trangchuafter/connect.php');
-        include __DIR__ . "/../connect.php";
+session_start();
+include(__DIR__ . "/../connect.php");
 
-        $ngaylap = $_POST['NgayLap'] ?? '';
-        // $trangthai = $_POST['TrangThai'] ?? '';
-        $thanhtien = $_POST['ThanhTien'] ?? '';
-        $tenkh = $_POST['TenKH'] ?? '';
-        $madh = $_POST['MaDH'] ?? '';
-        $maskh = $_POST['MaKH'] ?? '';
+if (!isset($_SESSION['MaND'])) {
+    die("Bạn chưa đăng nhập!");
+}
 
+$MaND = $_SESSION['MaND'];
 
-        $checkKH = mysqli_query($conn, "SELECT * FROM khachhang WHERE MaKH = '$maskh'");
-        if(mysqli_num_rows($checkKH) == 0) {
-            die("Khách hàng không tồn tại, vui lòng thêm khách hàng trước!");
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $MaKH = $_POST["MaKH"] ?? null;
+    $MaNV = $_POST["MaNV"] ?? null;
+    $TenKH = $_POST["TenKH"] ?? '';
+    $NgayLap = $_POST["NgayLap"] ?? date("Y-m-d");
+    $ThanhTien = $_POST["ThanhTien"] ?? 0;
+    $TrangThai = $_POST["TrangThai"] ?? "Chờ xử lý";
+
+    // ✅ Kiểm tra mã khách hàng
+    $checkKH = $conn->prepare("SELECT MaKH FROM khachhang WHERE MaKH = ?");
+    $checkKH->bind_param("i", $MaKH);
+    $checkKH->execute();
+    $checkKH->store_result();
+    if ($checkKH->num_rows === 0) {
+        echo "<script>
+                alert('Khách hàng không tồn tại. Vui lòng chọn lại!');
+                window.history.back();
+              </script>";
+        exit();
+    }
+    $checkKH->close();
+
+    // ✅ Kiểm tra mã nhân viên
+    $checkNV = $conn->prepare("SELECT MaNV FROM nhanvien WHERE MaNV = ?");
+    $checkNV->bind_param("i", $MaNV);
+    $checkNV->execute();
+    $checkNV->store_result();
+    if ($checkNV->num_rows === 0) {
+        echo "<script>
+                alert('Nhân viên không tồn tại. Vui lòng chọn lại!');
+                window.history.back();
+              </script>";
+        exit();
+    }
+    $checkNV->close();
+
+    // ✅ Thêm đơn hàng
+    $sql = "INSERT INTO donhang (MaKH, MaNV, NgayLap, ThanhTien, TrangThai, MaND, TenKH)
+            VALUES (?, ?, ?, ?, ?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+
+    if (!$stmt) {
+        die("Lỗi chuẩn bị truy vấn: " . $conn->error);
+    }
+
+    $stmt->bind_param("iisdsss", $MaKH, $MaNV, $NgayLap, $ThanhTien, $TrangThai, $MaND, $TenKH);
+
+    if ($stmt->execute()) {
+        $MaDH = $stmt->insert_id; // ✅ Lấy mã đơn hàng vừa thêm
+
+        // ✅ Thêm chi tiết đơn hàng (nếu có sản phẩm)
+        if (!empty($_POST["MaSP"]) && !empty($_POST["soluong"])) {
+            $MaSPs = $_POST["MaSP"];
+            $soluongs = $_POST["soluong"];
+
+            $sql_ct = "INSERT INTO chitietdonhang (MaDH, MaSP, SoLuong) VALUES (?, ?, ?)";
+            $stmt_ct = $conn->prepare($sql_ct);
+
+            if ($stmt_ct) {
+                for ($i = 0; $i < count($MaSPs); $i++) {
+                    $MaSP = (int)$MaSPs[$i];
+                    $SoLuong = (int)$soluongs[$i];
+                    $stmt_ct->bind_param("iii", $MaDH, $MaSP, $SoLuong);
+                    $stmt_ct->execute();
+                }
+                $stmt_ct->close();
+            }
         }
 
-        $sql_nv = "SELECT MaNV, HoTen FROM nhanvien";
-        $result_nv = mysqli_query($conn, $sql_nv);
-        $themsql = "INSERT INTO donhang (NgayLap, ThanhTien, TenKH, MaDH, MaKH) VALUE ('$ngaylap', '$thanhtien', '$tenkh', '$madh', '$maskh')";
+        echo "<script>
+                alert('Thêm đơn hàng thành công!');
+                window.location.href = '/Chuyen_de_dinh_huong_CNPM/Front-end/Trangchuafter/orders.php';
+              </script>";
+    } else {
+        echo "<script>
+                alert('Lỗi khi thêm đơn hàng!');
+                window.history.back();
+              </script>";
+    }
 
-        mysqli_query($conn, $themsql);
+    $stmt->close();
+}
 
-        // header("location:/Chuyen_de_dinh_huong_CNPM/Front-end/Trangchuafter/products.php");
-        header("Location: ../orders.php");
-
-
-        // // Truy vấn lấy tất cả đơn hàng từ bảng donhang
-        // $sql = "SELECT MaNV, HoTen, ChucVu
-        //         FROM nhanvien
-        //         ORDER BY MaNV ASC";
-
-        // $result = $conn->query($sql);
-
-    ?>
+$conn->close();
+?>

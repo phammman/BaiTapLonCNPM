@@ -3,7 +3,7 @@ session_start();
 // Kết nối MySQL
 $conn = new mysqli("localhost", "root", "", "chuyendedinhhuongcnpm");
 $conn->set_charset("utf8");
-
+$MaND = $_SESSION['MaND'];
 // Query
 $sql = "
     SELECT 
@@ -17,6 +17,7 @@ $sql = "
     FROM KhachHang kh
     LEFT JOIN DonHang dh ON kh.MaKH = dh.MaKH
     LEFT JOIN ChiTietDonHang ct ON dh.MaDH = ct.MaDH
+    WHERE kh.MaND = '$MaND'
     GROUP BY kh.MaKH, kh.HoTen, kh.Email, kh.DienThoai
 ";
 

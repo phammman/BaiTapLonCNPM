@@ -7,33 +7,23 @@
  <link rel="stylesheet" href="sapo.css">
  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-<style>
-  .logo a{
-    text-decoration: none;
-    font-size: 28px;
-    font-weight: bold;
-    color: #00b894;
-  }
-</style>
+
 </head>
 <body>
   <header>
-    <div class="logo">
-      <a href="TrangChuBefore.php">
-        Sapo
-      </a>
+    <div class="logo">Sapo
     </div>
     <nav>
       <ul>
-        <li><a href="sapo.php">Sapo</a></li>
-        <li><a href="BangGia.php">Bảng giá</a></li>
-        <li><a href="KhachHang.php">Khách hàng</a></li>
+        <li><a href="#">Sapo</a></li>
+        <li><a href="#">Bảng giá</a></li>
+        <li><a href="#">Hướng dẫn</a></li>
         <li><a href="#">Tra cứu</a></li>
       </ul>
     </nav>
     <div class="auth">
-      <button class="login">Đăng nhập</button>
-      <button class="register">Đăng ký</button>
+     <a href="../login/DangNhap.php"><button class="login">Đăng nhập</button></a>
+      <a href="../login/dangKy.php"><button class="register">Đăng ký</button></a>
     </div>
   </header>
   <!-- Banner -->
@@ -41,10 +31,10 @@
     <div class="banner-text">
       <h1>SAPO<br>Xuất hoá đơn điện tử từ máy tính tiền - ngay trên điện thoại</h1>
       <p>Hóa đơn điện tử. Chữ ký số. Quản lý bán hàng. <span>Dành riêng cho hộ kinh doanh.</span></p>
-      <a href="#" class="btn">Mua ngay →</a>
+      <a href="BaiTapLonCNPM/Front-end/login/DangNhap/DangNhap.php" class="btn">Mua ngay →</a>
     </div>
     <div class="banner-img">
-      <img src="img/4.jpg" alt="Sapo demo">
+      <img src="img/anh2.jpg" alt="Sapo demo">
     </div>
   </section>
 <section class="business-section">
@@ -55,7 +45,7 @@
     </h2>
     <div class="business-content">
       <div class="business-left">
-        <img src="img/ảnh3.jpg" alt="Hộ kinh doanh">
+        <img src="img/anh1.jpg" alt="Hộ kinh doanh">
       </div>
       <div class="business-right">
         <p>

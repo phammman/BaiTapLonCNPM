@@ -7,6 +7,7 @@ $page_group = [
     'edit_products.php'          => 'products',
 
     'add_orders.php'       => 'orders',
+    'edit_orders.php'       => 'orders',
     // 'order_detail.php' => 'orders',
 
     'inventories.php'  => 'inventories',
@@ -16,7 +17,9 @@ $page_group = [
     'add_customer.php'    => 'customers',
     'edit_customer.php'    => 'customers',
 
-    'manuadmin.php'    => 'manuadmin'
+    'manuadmin.php'    => 'manuadmin',
+    
+    'report.php' => 'report'
 ];
 
 // Xác định trang hiện tại thuộc nhóm nào
@@ -42,7 +45,7 @@ $active_group = isset($page_group[$current_page]) ? $page_group[$current_page] :
         <a class="nav-item <?php echo ($active_group == 'customers') ? 'active' : ''; ?>" href="../customers.php" ><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4" stroke-width="1.5"/><path d="M4 21c1.5-4 6-6 8-6s6.5 2 8 6" stroke-width="1.5"/></svg> Khách hàng</a>
         <!-- <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 12h16M12 4v16" stroke-width="1.5"/></svg> Khuyến mại</a> -->
         <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="5" width="18" height="14" rx="2" stroke-width="1.5"/><path d="M7 9h6M7 13h10" stroke-width="1.5"/></svg> Sổ quỹ</a>
-        <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 6h16M4 12h16M4 18h10" stroke-width="1.5"/></svg> Báo cáo</a>
+        <a class="nav-item <?php echo ($active_group == 'report') ? 'active' : ''; ?>" href="../report.php"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 6h16M4 12h16M4 18h10" stroke-width="1.5"/></svg> Báo cáo</a>
         <!-- <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 6h16M4 12h16M4 18h10" stroke-width="1.5"/></svg> Tài khoản</a> -->
         <a class="nav-item <?php echo ($active_group == 'my_account') ? 'active' : ''; ?>" href="../my_account.php">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" width="24" height="24">
