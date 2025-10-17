@@ -1,3 +1,63 @@
+<?php
+// Kết nối MySQL
+include 'connect.php';
+
+// Lấy từ khóa tìm kiếm
+$keyword = isset($_GET['keyword']) ? trim($_GET['keyword']) : "";
+
+
+
+
+
+// Câu query gốc
+$sql = "
+    SELECT 
+        kh.MaKH,
+        kh.HoTen,
+        kh.Email,
+        kh.DienThoai,
+        COUNT(DISTINCT dh.MaDH) AS SoDonHang,
+        MAX(dh.MaDH) AS DonHangGanNhat,
+        COALESCE(SUM(ct.SoLuong * ct.DonGia), 0) AS TongChiTieu
+    FROM KhachHang kh
+    LEFT JOIN DonHang dh ON kh.MaKH = dh.MaKH
+    LEFT JOIN ChiTietDonHang ct ON dh.MaDH = ct.MaDH
+";
+
+
+// Nếu có từ khóa thì lọc theo Họ tên
+if ($keyword !== "") {
+    $keyword_safe = $conn->real_escape_string($keyword);
+    $sql .= " WHERE kh.HoTen LIKE '%$keyword_safe%'";
+}
+
+
+$sql .= " GROUP BY kh.MaKH, kh.HoTen, kh.Email, kh.DienThoai";
+
+
+
+$result = $conn->query($sql);
+
+// Debug nếu query lỗi
+if (!$result) {
+    die("Lỗi SQL: " . $conn->error);
+}
+?>
+
+
+<?php if (isset($_GET['success']) && $_GET['success'] == 1): ?>
+    <div style="padding: 10px; background: #d4edda; color: #155724; border: 1px solid #c3e6cb; border-radius: 5px; margin-bottom: 15px;">
+        ✅ Thêm khách hàng thành công!
+    </div>
+<?php endif; ?>
+
+<?php if (isset($_GET['error'])): ?>
+    <div style="padding: 10px; background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; border-radius: 5px; margin-bottom: 15px;">
+        ❌ Lỗi: <?php echo htmlspecialchars($_GET['error']); ?>
+    </div>
+<?php endif; ?>
+
+
 <!doctype html>
 <html lang="vi">
 <head>
@@ -19,7 +79,7 @@
       --surface-2: #f8fafc;    /* page */
       --chip: #eef2ff;         /* light chip */
     }
-    * { box-sizing: border-box; }
+    /* * { box-sizing: border-box; } */
     html, body { height: 100%; }
     body {
       margin: 0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
@@ -116,10 +176,10 @@
             Tổng quan
           </a>
           <a class="nav-item" href="orders.php"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 7h18M3 12h18M3 17h18" stroke-width="1.5"/></svg> Đơn hàng</a>
-          <a class="nav-item active" href="products.php" style="color: lightblue;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="14" rx="2" stroke-width="1.5"/><path d="M7 8h10M7 12h10" stroke-width="1.5"/></svg> Sản phẩm</a>
+          <a class="nav-item" href="products.php"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="14" rx="2" stroke-width="1.5"/><path d="M7 8h10M7 12h10" stroke-width="1.5"/></svg> Sản phẩm</a>
           <a class="nav-item" href="inventories.php"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9h18M5 9V5h14v4M5 9v10h14V9" stroke-width="1.5"/></svg> Quản lý kho</a>
           <a class="nav-item" href="employee.php"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4" stroke-width="1.5"/><path d="M4 21c1.5-4 6-6 8-6s6.5 2 8 6" stroke-width="1.5"/></svg> Nhân viên</a>
-          <a class="nav-item" href="customers.php" ><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4" stroke-width="1.5"/><path d="M4 21c1.5-4 6-6 8-6s6.5 2 8 6" stroke-width="1.5"/></svg> Khách hàng</a>
+          <a class="nav-item active" href="customers.php" style="color: lightblue;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4" stroke-width="1.5"/><path d="M4 21c1.5-4 6-6 8-6s6.5 2 8 6" stroke-width="1.5"/></svg> Khách hàng</a>
           <!-- <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 12h16M12 4v16" stroke-width="1.5"/></svg> Khuyến mại</a> -->
           <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="5" width="18" height="14" rx="2" stroke-width="1.5"/><path d="M7 9h6M7 13h10" stroke-width="1.5"/></svg> Sổ quỹ</a>
           <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 6h16M4 12h16M4 18h10" stroke-width="1.5"/></svg> Báo cáo</a>
@@ -152,7 +212,7 @@
 
             <div class="left">
                 <div class="card">
-                <div class="card-hd">Danh sách sản phẩm</div>
+                <div class="card-hd">Danh sách khách hàng</div>
                 <div class="card-bd">
                     <!-- Tabs -->
                     <div style="border-bottom:1px solid var(--border); padding-bottom:12px; margin-bottom:12px;">
@@ -161,51 +221,71 @@
                         <button style="background:transparent; border:none; color:var(--primary); font-weight:700; padding:8px 12px; border-bottom:3px solid var(--primary);">Tất cả</button>
                         </div>
                         <div style="display:flex; gap:8px; align-items:center;">
-                        <a href="#"><button class="btn primary">Thêm sản phẩm</button></a>
+                        <a href="customersadd2.php"><button class="btn primary">Thêm khách hàng</button></a>
                         </div>
                     </nav>
 
-                    <div style="margin-top:12px; display:flex; gap:12px; align-items:center;">
-                        <input placeholder="Tìm kiếm theo mã sản phẩm, tên sản phẩm, barcode" style="flex:1; padding:12px 14px; border:1px solid var(--border); border-radius:10px; background:#fff;" />
-                        <!-- <div style="display:flex; gap:8px;">
-                        <select style="padding:8px 10px; border:1px solid var(--border); border-radius:8px; background:#fff;"><option>Kênh bán hàng</option></select>
-                        <select style="padding:8px 10px; border:1px solid var(--border); border-radius:8px; background:#fff;"><option>Loại sản phẩm</option></select>
-                        <select style="padding:8px 10px; border:1px solid var(--border); border-radius:8px; background:#fff;"><option>Tag</option></select>
-                        <button class="btn">Bộ lọc khác</button>
-                        </div> -->
-                    </div>
+                    <!-- Form tìm kiếm -->
+<form method="get" action="customers copy.php" style="margin-bottom:20px; display:flex; gap:10px;">
+    <input type="text" name="keyword" placeholder="Tìm kiếm theo tên khách hàng"
+           value="<?php echo htmlspecialchars($keyword); ?>"
+           style="flex:1; padding:8px 12px; border:1px solid #ccc; border-radius:5px;">
+    <button type="submit" style="padding:8px 16px; border:none; border-radius:5px; background:#007bff; color:#fff; cursor:pointer;">
+        Tìm kiếm
+    </button>
+    <a href="customers copy.php" style="padding:8px 16px; border-radius:5px; background:#6c757d; color:#fff; text-decoration:none;">
+        Xem tất cả
+    </a>
+</form>
+
+
                     </div>
 
                     <!-- Table -->
                     <div style="overflow:auto;">
-                    <table style="width:100%; border-collapse:collapse; background:#fff;">
-                        <thead>
-                        <tr style="background:#fafafa; color:var(--muted); text-align:left;">
-                            <th style="width:48px; padding:14px; border-bottom:1px solid var(--border);"><input type="checkbox" /></th>
-                            <th style="padding:14px; border-bottom:1px solid var(--border);">Sản phẩm</th>
-                            <th style="padding:14px; border-bottom:1px solid var(--border); width:120px;">Có thể bán</th>
-                            <th style="padding:14px; border-bottom:1px solid var(--border); width:150px;">Loại</th>
-                            <th style="padding:14px; border-bottom:1px solid var(--border); width:200px;">Nhãn hiệu</th>
-                            <th style="padding:14px; border-bottom:1px solid var(--border); width:160px;">Giá</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td style="padding:14px; border-bottom:1px solid #f1f5f9;"><input type="checkbox" /></td>
-                            <td style="padding:14px; border-bottom:1px solid #f1f5f9;">
-                            <div style="display:flex; align-items:center; gap:12px;">
-                                <div style="width:48px; height:48px; border-radius:8px; background:#f1f5f9; display:grid; place-items:center; color:var(--muted);">📷</div>
-                                <a href="#" style="color:var(--primary); text-decoration:none; font-weight:500;">cafe</a>
-                            </div>
-                            </td>
-                            <td style="padding:14px; border-bottom:1px solid #f1f5f9;">0</td>
-                            <td style="padding:14px; border-bottom:1px solid #f1f5f9;"></td>
-                            <td style="padding:14px; border-bottom:1px solid #f1f5f9;"></td>
-                            <td style="padding:14px; border-bottom:1px solid #f1f5f9;">28/08/2025</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    </div>
+    <table style="width:100%; border-collapse:collapse; background:#fff;">
+        <thead>
+            <tr style="background:#fafafa; color:var(--muted); text-align:left;">
+                <th style="width:48px; padding:14px; border-bottom:1px solid var(--border);"><input type="checkbox" /></th>
+                <th style="padding:14px; border-bottom:1px solid var(--border); width:120px;">Thông tin</th>
+                <th style="padding:14px; border-bottom:1px solid var(--border); width:120px;">Email</th>
+                <th style="padding:14px; border-bottom:1px solid var(--border); width:120px;">Điện thoại</th>
+                <th style="padding:14px; border-bottom:1px solid var(--border); width:150px;">Số đơn hàng</th>
+                <th style="padding:14px; border-bottom:1px solid var(--border); width:200px;">Đơn hàng gần nhất</th>
+                <th style="padding:14px; border-bottom:1px solid var(--border); width:160px;">Tổng chi tiêu</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php if ($result->num_rows > 0): ?>
+            <?php while($row = $result->fetch_assoc()): ?>
+                <tr>
+                    <td style="padding:14px; border-bottom:1px solid #f1f5f9;"><input type="checkbox" /></td>
+                    <td style="padding:14px; border-bottom:1px solid #f1f5f9;">
+                        <div style="display:flex; align-items:center; gap:12px;">
+                            <a href="customer_detail3.php?MaKH=<?php echo $row['MaKH']; ?>" 
+                              style="color:var(--primary); text-decoration:none; font-weight:500;">
+                                <?php echo htmlspecialchars($row['HoTen']); ?>
+                            </a>
+
+                        </div>
+                    </td>
+                    <td style="padding:14px; border-bottom:1px solid #f1f5f9;"><?php echo htmlspecialchars($row['Email']); ?></td>
+                    <td style="padding:14px; border-bottom:1px solid #f1f5f9;"><?php echo htmlspecialchars($row['DienThoai']); ?></td>
+                    <td style="padding:14px; border-bottom:1px solid #f1f5f9;"><?php echo $row['SoDonHang']; ?></td>
+                    <td style="padding:14px; border-bottom:1px solid #f1f5f9;">#<?php echo $row['DonHangGanNhat']; ?></td>
+                    <td style="padding:14px; border-bottom:1px solid #f1f5f9;">
+                        <?php echo number_format($row['TongChiTieu'], 0, ',', '.'); ?>
+                    </td>
+                </tr>
+            <?php endwhile; ?>
+        <?php else: ?>
+            <tr>
+                <td colspan="7" style="padding:14px; text-align:center;">Không có dữ liệu</td>
+            </tr>
+        <?php endif; ?>
+        </tbody>
+    </table>
+</div>
 
                     <!-- Footer controls -->
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-top:14px;">
