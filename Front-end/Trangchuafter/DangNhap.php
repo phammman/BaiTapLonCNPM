@@ -1,8 +1,8 @@
 <?php
 session_start();
+include('connect.php'); // ✅ Luôn luôn kết nối CSDL
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    include('connect.php');
 
     $tendangnhap = mysqli_real_escape_string($conn, $_POST['TenDangNhap']);
     $matkhau = mysqli_real_escape_string($conn, $_POST['MatKhau']);
@@ -19,6 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $_SESSION['MaNV'] = $user['MaNV'];
         $_SESSION['MaKH'] = $user['MaKH'];
 
+        // ✅ Điều hướng theo quyền hạn
         if ($user['QuyenHan'] == 'Admin') {
             header('Location: manuadmin.php');
             exit();
@@ -33,7 +34,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $error = "Sai tên đăng nhập hoặc mật khẩu!";
     }
 }
+
+// ❌ Không cần dòng này, vì có thể $user chưa tồn tại
+// $_SESSION['MaND'] = $user['MaND'];
+
+// ✅ Đóng kết nối CSDL nếu có
+if (isset($conn)) {
+    mysqli_close($conn);
+}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="vi">
@@ -98,13 +108,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       color: #666;
       user-select: none;
     }
+    .login{
+      /* display: block; */
+      text-align: left;
+      /* margin: 5px 5px 15px; */
+      font-size: 0.9rem;
+      color: #00AEEF;
+      text-decoration: none;
+      margin-right:200px;
+    }
     .forgot-password {
-      display: block;
+      /* display: block; */
       text-align: right;
       margin: 5px 5px 15px;
       font-size: 0.9rem;
       color: #00AEEF;
       text-decoration: none;
+    }
+    .links{
+      display: flex;
+      justify-content: space-between;
+      margin-top: 15px;
     }
     .login-btn {
       width: 100%;
@@ -117,6 +141,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       cursor: pointer;
       margin-bottom: 15px;
       font-weight: bold;
+      margin-top: 15px;
     }
     .login-btn:hover {
       opacity: 0.9;
@@ -129,7 +154,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 <body>
   <div class="login-container">
-    <div class="logo">Sapo</div>
+    <div onclick="location.href='../Trangchubefore/TrangChuBefore.php'" class="logo">Sapo</div>
     <h2>Đăng nhập vào cửa hàng của bạn</h2>
 
     <?php if (!empty($error)) echo "<p class='error'>$error</p>"; ?>
@@ -140,7 +165,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <input type="password" id="password" name="MatKhau" class="input-field" placeholder="Mật khẩu đăng nhập cửa hàng" required>
         <span class="toggle-password" id="togglePassword">👁</span>
       </div>
-      <a href="#" class="forgot-password">Quên mật khẩu</a>
+      <div class="links">
+        <a href="DangKy.php" class="login">Đăng Ký</a>
+        <a href="#" class="forgot-password">Quên mật khẩu</a>
+      </div>
       <button type="submit" class="login-btn">Đăng nhập</button>
     </form>
   </div>

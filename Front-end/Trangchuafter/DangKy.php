@@ -3,13 +3,25 @@
 include __DIR__ . "/connect.php";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $TenDangNhap  = mysqli_real_escape_string($conn, $_POST['TenDangNhap']);
-    $MatKhau = mysqli_real_escape_string($conn, $_POST['MatKhau']);
-    // $XacNhanMatKhau     = mysqli_real_escape_string($conn, $_POST['XacNhanMatKhau']);
-    $QuyenHan      = mysqli_real_escape_string($conn, $_POST['QuyenHan']);
-    $SDT   = mysqli_real_escape_string($conn, $_POST['SDT']);
+    $TenDangNhap = mysqli_real_escape_string($conn, $_POST['TenDangNhap']);
+    $MatKhau     = mysqli_real_escape_string($conn, $_POST['MatKhau']);
+    $QuyenHan    = mysqli_real_escape_string($conn, $_POST['QuyenHan']);
+    $SDT         = mysqli_real_escape_string($conn, $_POST['SDT']);
 
-    // Sửa lại bảng thành 'nguoidung'
+    // --- KIỂM TRA TÊN ĐĂNG NHẬP ĐÃ TỒN TẠI CHƯA ---
+    $check_sql = "SELECT * FROM nguoidung WHERE TenDangNhap = '$TenDangNhap'";
+    $check_result = mysqli_query($conn, $check_sql);
+
+    if (mysqli_num_rows($check_result) > 0) {
+        // Nếu tên đăng nhập đã tồn tại
+        echo "<script>
+                alert('Tên đăng nhập đã tồn tại, vui lòng chọn tên khác!');
+                window.history.back(); // Quay lại trang trước
+              </script>";
+        exit;
+    }
+
+    // --- NẾU CHƯA TỒN TẠI THÌ THÊM MỚI ---
     $sql = "INSERT INTO nguoidung (TenDangNhap, MatKhau, QuyenHan, SDT) 
             VALUES ('$TenDangNhap', '$MatKhau', '$QuyenHan', '$SDT')";
 
@@ -20,12 +32,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
               </script>";
         exit;
     } else {
-        echo "Lỗi: " . mysqli_error($conn);
+        echo "Lỗi khi đăng ký: " . mysqli_error($conn);
     }
 }
 
 mysqli_close($conn);
 ?>
+
 
 <!DOCTYPE html>
 <html lang="vi">
@@ -92,15 +105,17 @@ mysqli_close($conn);
     .back-link {
       position: absolute; top: 20px; left: 20px;
       text-decoration: none; font-size: 0.95rem; color: #0077ff;
+      border:none;
+      background-color: #f5f8fc;
     }
     .message { margin: 10px 0; font-weight: bold; color: #008000; }
     .message.error { color: red; }
   </style>
 </head>
 <body>
-  <a href="" class="back-link">← Quay lại</a>
+  <button class="back-link" onclick="window.history.back()">← Quay lại</button>
   <div class="register-container">
-    <div class="logo">Sapo</div>
+    <div class="logo" onclick="location.href='../Trangchubefore/TrangChuBefore.php'">Sapo</div>
     <h2>Dùng thử miễn phí 7 ngày</h2>
     <p class="subtitle">Để khám phá tại sao +230,000 nhà bán hàng tin dùng Sapo</p>
 

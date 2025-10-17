@@ -1,8 +1,11 @@
 <?php
+session_start();
 // Bật hiển thị lỗi PHP để dễ debug
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+$MaND = $_SESSION['MaND'];
+
 
 // Kết nối CSDL
 $conn = new mysqli("localhost", "root", "", "chuyendedinhhuongcnpm");
@@ -12,7 +15,8 @@ if ($conn->connect_error) {
 $conn->set_charset("utf8");
 
 // Truy vấn sản phẩm
-$sql = "SELECT MaSP, TenSP, MaSKU, SoLuongTon, GiaBan, GiaVon FROM SanPham";
+$sql = "SELECT MaSP, TenSP, MaSKU, SoLuongTon, GiaBan, GiaVon FROM SanPham
+        WHERE MaND = '$MaND'";
 $result = $conn->query($sql);
 ?>
 <!doctype html>
@@ -115,52 +119,50 @@ $result = $conn->query($sql);
       .brand { margin:0; }
       .main { grid-template-columns: 1fr; }
     }
+    .avatar-container {
+      position: relative;
+      display: inline-block;
+    }
+
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .dropdown {
+      display: none; /* ẩn mặc định */
+      position: absolute;
+      top: 50px; /* nằm dưới avatar */
+      right: 0;
+      background-color: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      min-width: 200px;
+      z-index: 1000;
+    }
+
+    .dropdown-item {
+      padding: 10px 15px;
+      cursor: pointer;
+    }
+
+    .dropdown-item:hover {
+      background-color: #f1f1f1;
+    }
   </style>
 </head>
 <body>
   <div class="app">
     <!-- SIDEBAR -->
-    <aside class="sidebar">
-      <div class="brand">
-        <div class="brand-logo">Q</div>
-        <h1>QLYBanHang</h1>
-      </div>
-
-      <nav class="nav">
-        <div class="nav-section">
-          <a class="nav-item" href="manuadmin.php">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 10.5 12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1v-10.5z" stroke-width="1.5"/></svg>
-            Tổng quan
-          </a>
-          <a class="nav-item" href="orders.php"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 7h18M3 12h18M3 17h18" stroke-width="1.5"/></svg> Đơn hàng</a>
-          <a class="nav-item" href="products.php"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="14" rx="2" stroke-width="1.5"/><path d="M7 8h10M7 12h10" stroke-width="1.5"/></svg> Sản phẩm</a>
-          <a class="nav-item active" href="inventories.php" style="color: lightblue;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9h18M5 9V5h14v4M5 9v10h14V9" stroke-width="1.5"/></svg> Quản lý kho</a>
-          <a class="nav-item" href="employee.php"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4" stroke-width="1.5"/><path d="M4 21c1.5-4 6-6 8-6s6.5 2 8 6" stroke-width="1.5"/></svg> Nhân viên</a>
-          <a class="nav-item" href="customers.php" ><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4" stroke-width="1.5"/><path d="M4 21c1.5-4 6-6 8-6s6.5 2 8 6" stroke-width="1.5"/></svg> Khách hàng</a>
-          <!-- <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 12h16M12 4v16" stroke-width="1.5"/></svg> Khuyến mại</a> -->
-          <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="5" width="18" height="14" rx="2" stroke-width="1.5"/><path d="M7 9h6M7 13h10" stroke-width="1.5"/></svg> Sổ quỹ</a>
-          <a class="nav-item" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 6h16M4 12h16M4 18h10" stroke-width="1.5"/></svg> Báo cáo</a>
-        </div>
-
-      </nav>
-
-      <!-- <div class="sidebar-footer">Cấu hình</div> -->
-    </aside>
+    <?php include 'headafter.php'; ?>
 
     <!-- CONTENT -->
     <section class="content">
       <!-- Top bar -->
-      <div class="topbar">
-        <div class="search">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748b"><circle cx="11" cy="11" r="7" stroke-width="1.6"/><path d="M20 20l-3.5-3.5" stroke-width="1.6"/></svg>
-          <input placeholder="Tìm kiếm" />
-          
-        </div>
-        <div class="topbar-actions">
-          <button class="icon-btn" title="Thông báo"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748b"><path d="M15 17h5l-1.4-1.4A2 2 0 0 1 18 14.2V11a6 6 0 1 0-12 0v3.2c0 .5-.2 1-.6 1.4L4 17h5" stroke-width="1.5"/><path d="M10 19a2 2 0 0 0 4 0" stroke-width="1.5"/></svg></button>
-          <div class="avatar">cu</div>
-        </div>
-      </div>
+      <?php include 'topbar.php'; ?>
 
       <!-- Main -->
     <div class="main">

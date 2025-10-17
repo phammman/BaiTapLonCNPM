@@ -1,3 +1,7 @@
+<?php
+session_start();
+
+?>
 <!doctype html>
 <html lang="vi">
 <head>
@@ -98,6 +102,39 @@
       .brand { margin:0; }
       .main { grid-template-columns: 1fr; }
     }
+    .avatar-container {
+      position: relative;
+      display: inline-block;
+    }
+
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .dropdown {
+      display: none; /* ẩn mặc định */
+      position: absolute;
+      top: 50px; /* nằm dưới avatar */
+      right: 0;
+      background-color: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      min-width: 200px;
+      z-index: 1000;
+    }
+
+    .dropdown-item {
+      padding: 10px 15px;
+      cursor: pointer;
+    }
+
+    .dropdown-item:hover {
+      background-color: #f1f1f1;
+    }
   </style>
 </head>
 <body>
@@ -142,21 +179,13 @@
       <!-- <div class="sidebar-footer">Cấu hình</div> -->
     </aside>
 
+    <?php include 'headafter.php'; ?>
+
+
     <!-- CONTENT -->
     <section class="content">
       <!-- Top bar -->
-      <div class="topbar">
-        <div class="search">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748b"><circle cx="11" cy="11" r="7" stroke-width="1.6"/><path d="M20 20l-3.5-3.5" stroke-width="1.6"/></svg>
-          <input placeholder="Tìm kiếm" />
-          
-        </div>
-        <div class="topbar-actions">
-          <button class="icon-btn" title="Thông báo"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748b"><path d="M15 17h5l-1.4-1.4A2 2 0 0 1 18 14.2V11a6 6 0 1 0-12 0v3.2c0 .5-.2 1-.6 1.4L4 17h5" stroke-width="1.5"/><path d="M10 19a2 2 0 0 0 4 0" stroke-width="1.5"/></svg></button>
-          <div class="avatar">cu</div>
-        </div>
-      </div>
-
+      <?php include 'topbar.php'; ?>
       <!-- Main -->
     <div class="main">
         <!-- Left column -->
@@ -174,9 +203,13 @@
                         </div>
                         <div style="display:flex; gap:8px; align-items:center;">
 
+
                         <a href="#"><button class="btn primary">Thêm sản phẩm</button></a>
 
                         <a href="quanlysp/add.html"><button class="btn primary">Thêm sản phẩm</button></a>
+
+                        <a href="quanlysp/add_products.php"><button class="btn primary">Thêm sản phẩm</button></a>
+
                         </div>
                     </nav>
 
@@ -209,9 +242,23 @@
 
 
                         <?php
-                        include('connect.php');
+                        include "connect.php";
 
-                        $lietke_sql = "SELECT * FROM sanpham order by MaSP, TenSP, GiaBan, SoLuongTon, MaDM, MaSKU, MoTa, GiaVon";
+                        if (!isset($_SESSION['MaND'])) {
+                            echo "<script>alert('Bạn cần đăng nhập trước!'); window.location.href='DangNhap.php';</script>";
+                            exit();
+                        }
+
+                        $MaND = $_SESSION['MaND'];
+
+                        // Lọc sản phẩm theo người dùng hiện tại, vẫn lấy đầy đủ các cột
+                        $lietke_sql = "
+                            SELECT MaSP, TenSP, GiaBan, SoLuongTon, MaDM, MaSKU, MoTa, GiaVon, img 
+                            FROM sanpham
+                            WHERE MaND = '$MaND'
+                            ORDER BY MaSP DESC
+                        ";
+
 
                         $result = mysqli_query($conn, $lietke_sql);
 
@@ -221,6 +268,7 @@
                             <td style="padding:14px; border-bottom:1px solid #f1f5f9;"><input type="checkbox" /></td>
                             <td style="padding:14px; border-bottom:1px solid #f1f5f9;">
                             <div style="display:flex; align-items:center; gap:12px;">
+
                                 <div style="width:48px; height:48px; border-radius:8px; background:#f1f5f9; display:grid; place-items:center; color:var(--muted);">📷</div>
 
                                 <a href="#" style="color:var(--primary); text-decoration:none; font-weight:500;">cafe</a>
@@ -229,6 +277,19 @@
                             <td style="padding:14px; border-bottom:1px solid #f1f5f9;">0</td>
 
                                 <a href="quanlysp/edit.php?MaSP=<?php echo $r['MaSP'];?>" class="click" style="color:var(--primary); text-decoration:none; font-weight:500;"><?php echo $r['TenSP']; ?></a>
+
+                                <!-- <div style="width:48px; height:48px; border-radius:8px; background:#f1f5f9; display:grid; place-items:center; color:var(--muted);">📷</div> -->
+                                 <div style="width:48px; height:48px; border-radius:8px; background:#f1f5f9; display:grid; place-items:center; overflow:hidden;">
+                                    <?php if (!empty($r['img'])): ?>
+                                        <img src="<?php echo htmlspecialchars($r['img']); ?>" alt="Ảnh sản phẩm" style="width:100%; height:100%; object-fit:cover; border-radius:8px;">
+                                    <?php else: ?>
+                                        <span style="color:#94a3b8; font-size:12px;">No image</span>
+                                    <?php endif; ?>
+                                </div>
+
+
+                                <a href="quanlysp/edit_products.php?MaSP=<?php echo $r['MaSP'];?>" class="click" style="color:var(--primary); text-decoration:none; font-weight:500;"><?php echo $r['TenSP']; ?></a>
+
                             </div>
                             </td>
                             <td style="padding:14px; border-bottom:1px solid #f1f5f9;"><?php echo $r['SoLuongTon']; ?></td>

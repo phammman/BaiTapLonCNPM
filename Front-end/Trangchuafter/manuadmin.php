@@ -9,6 +9,7 @@ session_start();
   <title>Admin menu</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -100,6 +101,39 @@ session_start();
       .brand { margin:0; }
       .main { grid-template-columns: 1fr; }
     }
+    .avatar-container {
+      position: relative;
+      display: inline-block;
+    }
+
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .dropdown {
+      display: none; /* ẩn mặc định */
+      position: absolute;
+      top: 50px; /* nằm dưới avatar */
+      right: 0;
+      background-color: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      min-width: 200px;
+      z-index: 1000;
+    }
+
+    .dropdown-item {
+      padding: 10px 15px;
+      cursor: pointer;
+    }
+
+    .dropdown-item:hover {
+      background-color: #f1f1f1;
+    }
   </style>
 </head>
 <body>
@@ -157,6 +191,12 @@ session_start();
           <div class="avatar"><?php echo substr($_SESSION['TenDangNhap'], 0, 2); ?></div>
         </div>
       </div>
+
+     <?php include 'headafter.php'; ?>
+    <!-- CONTENT -->
+    <section class="content">
+      <!-- Top bar -->
+      <?php include 'topbar.php'; ?>
 
       <!-- Main -->
       <div class="main">
